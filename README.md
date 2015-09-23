@@ -10,6 +10,8 @@ Esse projeto tem o objetivo de criar uma **Ferramenta de Coleta de Feedback para
 
 ###Portais de Dados Abertos no Brasil
 
+Aqui estão listados alguns dos mais relevantes portais de dados abertos do Brasil, agrupandos pelas esferas da federação.
+
 - Federal - Dados Abertos Brasil - http://www.dadosabertosbrasil.com.br/index.php
 - Federal - Governo Federal - http://dados.gov.br/
 - Federal - Senado - http://dadosabertos.senado.gov.br/
