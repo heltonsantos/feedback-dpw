@@ -27,3 +27,5 @@ Aqui estão listados alguns dos mais relevantes portais de dados abertos do Bras
 - Municipal - Curitiba - http://www.curitiba.pr.gov.br/conteudo/dados-abertos-consulta/1498	
 - Municipal - São Paulo - http://www.prefeitura.sp.gov.br/cidade/secretarias/desenvolvimento_urbano/dados_abertos/	
 - Municipal - Fortaleza - http://dados.fortaleza.ce.gov.br/catalogo/
+
+###Referências
