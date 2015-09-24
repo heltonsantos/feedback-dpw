@@ -6,7 +6,7 @@ O ecossistema de dados armazenados na *Web* é atualmente um recurso bastante ac
 
 ###Objetivo
 
-Esse projeto tem o objetivo de criar uma **Ferramenta de Coleta de Feedback para Dados Publicados na Web**, onde a partir desses *feedbacks* que serão providos através consumidores desses dados, poderemos disponibilizar uma forma de comunicação entre os provedores desses dados e seus consumidores. Essa comunicação entre essas duas partes, ajudará na identificação de possíveis falhas desses conjuntos de dados, no qual após essa identificação, os provedores terão conhecimento dessas falhas e passarão a trabalhar emcima das possíveis correções, melhorando assim a qualidade desses dados e dos datasets que são publicados constantemente nesse ecossistema de dados na *Web*. 
+Esse projeto tem o objetivo de criar uma **Ferramenta de Coleta de Feedback para Dados Publicados na Web**, onde a partir desses *feedbacks* que serão providos através consumidores desses dados, poderemos disponibilizar uma forma de comunicação entre os provedores desses dados e seus consumidores. Essa comunicação entre essas duas partes, ajudará na identificação de possíveis falhas desses conjuntos de dados, no qual após essa identificação, os provedores terão conhecimento dessas falhas e passarão a trabalhar em cima das possíveis correções, melhorando assim a qualidade desses dados e dos datasets que são publicados constantemente nesse ecossistema de dados na *Web*. 
 
 ###Portais de Dados Abertos no Brasil
 
