@@ -30,10 +30,10 @@ Aqui estão listados alguns dos mais relevantes portais de dados abertos do Bras
 
 ###Referências
 
-[1] Lóscio, B.F.; Stephan, E.; Purohit, S. Dataset Usage Vocabulary <http://www.w3.org/TR/vocab-duv/>. Acesso em: 15 de Setembro de 2015.
+[1] Lóscio B.F., Stephan E., Purohit S. Dataset Usage Vocabulary <http://www.w3.org/TR/vocab-duv/>. Acesso em: 15 de Setembro de 2015.
 
-[2] Lóscio B.F.; Burle, C.; Calegari, N. Data on the Web Best Practices <http://www.w3.org/TR/dwbp/>. Acesso em: 15 de Setembro de 2015.
+[2] Lóscio B.F., Burle C., Calegari, N. Data on the Web Best Practices <http://www.w3.org/TR/dwbp/>. Acesso em: 15 de Setembro de 2015.
 
-[3] Albertoni R.; Guéret C.; Isaac A. Data Quality Vocabulary, 2015. Disponível em: <http://www.w3.org/TR/vocab-dqv/>. Acesso em: 15 de Setembro de 2015.
- 
-[4] Lóscio B.; Batista M.; Souza D.; Salgado A. Using Information Quality for the Identification of Relevant Web Data Sources.
+[3] Albertoni R., Guéret C., Isaac A. Data Quality Vocabulary, 2015. Disponível em: <http://www.w3.org/TR/vocab-dqv/>. Acesso em: 15 de Setembro de 2015.
+
+[4] Lóscio B.F., Batista M., Souza D., Salgado A. Using Information Quality for the Identification of Relevant Web Data Sources.
