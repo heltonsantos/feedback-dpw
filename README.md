@@ -8,7 +8,7 @@ A publicação de dados  na *Web* permite o compartilhamento de dados em larga e
 
 ###Objetivo
 
-Esse projeto tem o objetivo de criar uma **Ferramenta de Coleta de Feedback para Dados Publicados na Web**, onde a partir desses feedbacks que serão providos através consumidores dos dados, poderemos disponibilizar uma forma de comunicação entre os provedores desses dados e seus consumidores. Essa comunicação entre essas duas partes, ajudará na identificação de possíveis falhas desses conjuntos de dados, no qual após essa identificação, os provedores ou publicadores terão conhecimento dessas falhas e passarão a trabalhar em cima das possíveis correções, melhorando assim a qualidade desses dados e dos datasets que são publicados constantemente nesse ecossistema de dados na *Web*. Isso estabelece um canal de comunicação entre publicadores de dados e seus consumidores, construindo um ambiente colaborativo e construtivo. 
+Esse projeto tem o objetivo de criar uma **Ferramenta de Feedback para Dados Publicados na Web**, onde a partir desses feedbacks que serão providos através consumidores dos dados, poderemos disponibilizar uma forma de comunicação entre os provedores desses dados e seus consumidores. Essa comunicação entre essas duas partes, ajudará na identificação de possíveis falhas desses conjuntos de dados, no qual após essa identificação, os provedores ou publicadores terão conhecimento dessas falhas e passarão a trabalhar em cima das possíveis correções, melhorando assim a qualidade desses dados e dos datasets que são publicados constantemente nesse ecossistema de dados na *Web*. Isso estabelece um canal de comunicação entre publicadores de dados e seus consumidores, construindo um ambiente colaborativo e construtivo. 
 
 ###Dados Publicados na Web
 
