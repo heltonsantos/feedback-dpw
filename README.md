@@ -1,4 +1,4 @@
-## Ferramenta de Feedback para Dados na Web
+## Ferramenta de Feedback para Dados Publicados na Web
 
 ###Introdução
 
