@@ -10,7 +10,7 @@ import com.br.datafeed.model.FeedbackTest;
 public class ServiceTest {
 	
 	@GET
-    @Path("/getJson/")
+    @Path("/get/json/")
     @Produces("application/json")
     public FeedbackTest getFeedback(){
 		
