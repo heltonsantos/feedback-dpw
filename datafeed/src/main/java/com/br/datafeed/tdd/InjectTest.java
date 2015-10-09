@@ -1,7 +1,5 @@
 package com.br.datafeed.tdd;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 import com.br.datafeed.inject.FeedbackTestModule;

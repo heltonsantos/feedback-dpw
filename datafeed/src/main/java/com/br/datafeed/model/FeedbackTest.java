@@ -2,8 +2,8 @@ package com.br.datafeed.model;
 
 public class FeedbackTest {
 	
-	int id;
-	String comentario;
+	private int id;
+	private String comentario;
 	
 	public FeedbackTest() {
 		super();

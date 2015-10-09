@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+ 
+<hibernate-mapping>
+    <class name="com.br.datafeed.model.Comentario" table="comentario">
+        
+        <id name="id" type="integer">
+            <column name="ID" />
+            <generator class="identity" />
+        </id>
+        
+       <property name="comentario" type="string">
+       		<column name="COMENTARIO"/>
+       </property>
+       
+       <property name="avaliacao" type="double">
+            <column name="AVALIACAO" default="0" not-null="true"/>
+        </property>
+        
+		<set name="resposta" table="resposta" fetch="join" inverse="true" lazy="false">
+			<key column="ID"/>
+			<one-to-many class="com.br.datafeed.model.Resposta"/>
+		</set>
+		
+		<many-to-one name="feedback" class="com.br.datafeed.model.Feedback" fetch="join" column="FEEDBACK_ID" lazy="false"/>
+    
+    </class>
+</hibernate-mapping>
