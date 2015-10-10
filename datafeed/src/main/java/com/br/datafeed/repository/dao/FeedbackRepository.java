@@ -1,5 +1,6 @@
 package com.br.datafeed.repository.dao;
 
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
@@ -15,8 +16,15 @@ public class FeedbackRepository implements IFeedbackRepository{
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
         session.beginTransaction();
-        session.save(feedback);
-        session.getTransaction().commit();
+        
+        try{
+	        session.save(feedback);
+	        session.getTransaction().commit();
+        
+        }catch(HibernateException e){
+        	session.getTransaction().rollback();
+		}
+        
         session.close();
 		
 	}
@@ -25,10 +33,15 @@ public class FeedbackRepository implements IFeedbackRepository{
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
         session.beginTransaction();
-        		
-        Feedback feedback = (Feedback) session.createCriteria(Feedback.class).add(Restrictions.eq("dataset_id", dataset_id)).uniqueResult();
-        session.getTransaction().commit();
-	
+        Feedback feedback;
+
+        try{
+	        feedback = (Feedback) session.createCriteria(Feedback.class).add(Restrictions.eq("dataset_id", dataset_id)).uniqueResult();
+	        session.getTransaction().commit();
+        }catch(HibernateException e){
+        	session.getTransaction().rollback();
+        	return null;
+        }
 		session.close();
 		
 		return feedback;
