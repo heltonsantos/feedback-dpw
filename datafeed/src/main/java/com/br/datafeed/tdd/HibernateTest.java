@@ -16,6 +16,7 @@ import com.br.datafeed.model.Comentario;
 import com.br.datafeed.model.Feedback;
 import com.br.datafeed.model.FeedbackTest;
 import com.br.datafeed.model.Resposta;
+import com.google.gson.Gson;
 
 public class HibernateTest {
 
@@ -73,7 +74,7 @@ public class HibernateTest {
 		session.close();
 		
 		List<Comentario> list = new ArrayList<Comentario>(feedback.getComentario());
-		
+				
 	}
 
 }

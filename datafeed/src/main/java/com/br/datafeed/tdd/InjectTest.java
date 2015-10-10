@@ -16,5 +16,6 @@ public class InjectTest {
 		
 		System.out.println(servico.testInject());
 	}
+	
 
 }
