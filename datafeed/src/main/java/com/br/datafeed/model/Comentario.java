@@ -1,10 +1,15 @@
 package com.br.datafeed.model;
 
+import java.sql.Date;
+
 public class Comentario {
 	
 	private Integer id;
-	private String comentario;
+	private Date data_avaliacao;
+	private String nome_usuario;
+	private String email_usuario;
 	private Double avaliacao;
+	private String comentario;
 	private Feedback feedback;
 	
 	public Comentario() {
@@ -20,12 +25,28 @@ public class Comentario {
 		this.id = id;
 	}
 
-	public String getComentario() {
-		return comentario;
+	public Date getData_avaliacao() {
+		return data_avaliacao;
 	}
 
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
+	public void setData_avaliacao(Date data_avaliacao) {
+		this.data_avaliacao = data_avaliacao;
+	}
+
+	public String getNome_usuario() {
+		return nome_usuario;
+	}
+
+	public void setNome_usuario(String nome_usuario) {
+		this.nome_usuario = nome_usuario;
+	}
+
+	public String getEmail_usuario() {
+		return email_usuario;
+	}
+
+	public void setEmail_usuario(String email_usuario) {
+		this.email_usuario = email_usuario;
 	}
 
 	public Double getAvaliacao() {
@@ -36,6 +57,14 @@ public class Comentario {
 		this.avaliacao = avaliacao;
 	}
 
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
 	public Feedback getFeedback() {
 		return feedback;
 	}
@@ -43,6 +72,7 @@ public class Comentario {
 	public void setFeedback(Feedback feedback) {
 		this.feedback = feedback;
 	}
+
 
 		
 }
