@@ -17,11 +17,6 @@
        <property name="avaliacao" type="double">
             <column name="AVALIACAO" default="0" not-null="true"/>
         </property>
-        
-		<set name="resposta" table="resposta" fetch="join" inverse="true" lazy="false">
-			<key column="ID"/>
-			<one-to-many class="com.br.datafeed.model.Resposta"/>
-		</set>
 		
 		<many-to-one name="feedback" class="com.br.datafeed.model.Feedback" fetch="join" column="FEEDBACK_ID" lazy="false"/>
     

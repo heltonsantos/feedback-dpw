@@ -1,14 +1,10 @@
 package com.br.datafeed.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class Comentario {
 	
 	private Integer id;
 	private String comentario;
 	private Double avaliacao;
-	private Set<Resposta> resposta = new HashSet<Resposta>();
 	private Feedback feedback;
 	
 	public Comentario() {
@@ -38,14 +34,6 @@ public class Comentario {
 
 	public void setAvaliacao(Double avaliacao) {
 		this.avaliacao = avaliacao;
-	}
-
-	public Set<Resposta> getResposta() {
-		return resposta;
-	}
-
-	public void setResposta(Set<Resposta> resposta) {
-		this.resposta = resposta;
 	}
 
 	public Feedback getFeedback() {

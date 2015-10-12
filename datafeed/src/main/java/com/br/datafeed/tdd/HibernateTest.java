@@ -15,8 +15,6 @@ import com.br.datafeed.hibernate.util.HibernateUtil;
 import com.br.datafeed.model.Comentario;
 import com.br.datafeed.model.Feedback;
 import com.br.datafeed.model.FeedbackTest;
-import com.br.datafeed.model.Resposta;
-import com.google.gson.Gson;
 
 public class HibernateTest {
 
@@ -35,7 +33,7 @@ public class HibernateTest {
         session.close();
 	}
 	
-	//@Test
+	@Test
 	public void setFeedback() {
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
         session.beginTransaction();
@@ -45,24 +43,18 @@ public class HibernateTest {
         feedback.setAvaliacao_media(8.5);
         session.save(feedback);
         
-        Comentario comentario = new Comentario();
-        comentario.setId(1);
-        comentario.setComentario("up up");
-        comentario.setAvaliacao(5.5);
-        comentario.setFeedback(feedback);
-        session.save(comentario);
-        
-        Resposta resposta = new Resposta();
-        resposta.setId(1);
-        resposta.setResposta("up");
-        resposta.setComentario(comentario); 
-        session.save(resposta);
-        
+//        Comentario comentario = new Comentario();
+//        comentario.setId(1);
+//        comentario.setComentario("up up");
+//        comentario.setAvaliacao(5.5);
+//        comentario.setFeedback(feedback);
+//        session.save(comentario);
+              
         session.getTransaction().commit();
         session.close();
 	
 	}
-	@Test
+	//@Test
 	public void getFeedback() {
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
         session.beginTransaction();
