@@ -15,7 +15,13 @@ public class FeedbackService implements IFeedbackService{
 		repository.adicionarFeedback(feedback);	
 	}
 
+	public void atualizarFeedback(Feedback feedback) {
+		repository.atualizarFeedback(feedback);
+		
+	}
+
 	public Feedback pegarFeedback(int dataset_id) {
 		return repository.pegarFeedback(dataset_id);
 	}
+
 }

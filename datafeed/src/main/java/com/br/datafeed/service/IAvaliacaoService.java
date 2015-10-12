@@ -1,5 +1,10 @@
 package com.br.datafeed.service;
 
-public interface IAvaliacaoService {
+import com.br.datafeed.model.Avaliacao;
 
+public interface IAvaliacaoService {
+	
+	public void adicionarAvaliacao(Avaliacao avaliacao);
+	public void atualizarAvaliacao(Avaliacao avaliacao);
+	
 }

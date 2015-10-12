@@ -29,6 +29,23 @@ public class FeedbackRepository implements IFeedbackRepository{
 		
 	}
 
+	public void atualizarFeedback(Feedback feedback) {
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();	 
+        session.beginTransaction();
+        
+        try{
+	        session.update(feedback);
+	        session.getTransaction().commit();
+        
+        }catch(HibernateException e){
+        	session.getTransaction().rollback();
+		}
+        
+        session.close();
+		
+	}
+	
 	public Feedback pegarFeedback(int dataset_id) {
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();	 

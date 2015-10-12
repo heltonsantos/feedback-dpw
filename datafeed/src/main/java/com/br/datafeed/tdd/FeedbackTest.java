@@ -20,6 +20,17 @@ public class FeedbackTest {
 	IFeedbackService servico = injector.getInstance(IFeedbackService.class);
 
 	//@Test
+	public void adicionarFeedback() {
+		
+		Feedback feedback = new Feedback();   
+        feedback.setDataset_id(1);
+        feedback.setAvaliacao_media(8.5);
+        
+        servico.adicionarFeedback(feedback);
+		
+	}
+	
+	//@Test
 	public void pegarFeedback() {
 		Feedback feedback = servico.pegarFeedback(1);
 		List<Avaliacao> listAvaliacao = new ArrayList<Avaliacao>(feedback.getAvaliacao());
@@ -29,8 +40,14 @@ public class FeedbackTest {
 				
 	}
 	
-	@Test
-	public void adicionarFeedback() {
+	//@Test
+	public void atualizarFeedback() {
+		
+		Feedback feedback = servico.pegarFeedback(1);
+		
+        feedback.setAvaliacao_media(9.5);
+        
+        servico.atualizarFeedback(feedback);
 		
 	}
 
