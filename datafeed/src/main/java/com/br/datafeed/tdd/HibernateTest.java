@@ -1,6 +1,8 @@
 package com.br.datafeed.tdd;
 
+import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -39,16 +41,21 @@ public class HibernateTest {
         session.beginTransaction();
         
         Feedback feedback = new Feedback();
-        feedback.setDataset_id(1);
+        feedback.setDataset_id(2);
         feedback.setAvaliacao_media(8.5);
         session.save(feedback);
         
-//        Comentario comentario = new Comentario();
-//        comentario.setId(1);
-//        comentario.setComentario("up up");
-//        comentario.setAvaliacao(5.5);
-//        comentario.setFeedback(feedback);
-//        session.save(comentario);
+        Date sqlDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        
+        Comentario comentario = new Comentario();
+        comentario.setId(1);
+        comentario.setData_avaliacao(sqlDate);
+        comentario.setNome_usuario("helton");
+        comentario.setEmail_usuario("helton@gmail.com");
+        comentario.setComentario("up up");
+        comentario.setAvaliacao(5.5);
+        comentario.setFeedback(feedback);
+        session.save(comentario);
               
         session.getTransaction().commit();
         session.close();
