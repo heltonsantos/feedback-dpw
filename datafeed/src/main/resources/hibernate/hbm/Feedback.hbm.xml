@@ -15,12 +15,12 @@
        </property>
        
        <property name="avaliacao_media" type="double">
-            <column name="AVALIACAO_MEDIA" default="0" not-null="true" unique="false" />
+            <column name="AVALIACAO_MEDIA" default="0" not-null="true"/>
         </property>
         
-		<set name="comentario" table="comentario" fetch="join" inverse="true" lazy="false">
-			<key column="ID"/>
-			<one-to-many class="com.br.datafeed.model.Comentario"/>
+		<set name="avaliacao" table="avaliacao" fetch="join" inverse="true" lazy="false">
+			<key column="FEEDBACK_ID"/>
+			<one-to-many class="com.br.datafeed.model.Avaliacao"/>
 		</set>
 		
     </class>

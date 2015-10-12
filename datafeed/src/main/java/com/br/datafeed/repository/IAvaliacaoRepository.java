@@ -1,5 +1,5 @@
 package com.br.datafeed.repository;
 
-public interface IComentarioRepository {
+public interface IAvaliacaoRepository {
 
 }

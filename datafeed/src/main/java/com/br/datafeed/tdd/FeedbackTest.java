@@ -8,7 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.br.datafeed.inject.FeedbackModule;
-import com.br.datafeed.model.Comentario;
+import com.br.datafeed.model.Avaliacao;
 import com.br.datafeed.model.Feedback;
 import com.br.datafeed.service.IFeedbackService;
 import com.google.inject.Guice;
@@ -22,10 +22,10 @@ public class FeedbackTest {
 	//@Test
 	public void pegarFeedback() {
 		Feedback feedback = servico.pegarFeedback(1);
-		List<Comentario> listComentario = new ArrayList<Comentario>(feedback.getComentario());
+		List<Avaliacao> listAvaliacao = new ArrayList<Avaliacao>(feedback.getAvaliacao());
 		
 		System.out.println(feedback.getDataset_id());
-		System.out.println(listComentario.get(0).getComentario());
+		System.out.println(listAvaliacao.get(0).getComentario());
 				
 	}
 	

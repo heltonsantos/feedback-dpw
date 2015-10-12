@@ -8,7 +8,7 @@ public class Feedback {
 	private Integer id;
 	private Integer dataset_id;
 	private double avaliacao_media;
-	private Set<Comentario> comentario = new HashSet<Comentario>();
+	private Set<Avaliacao> avaliacao = new HashSet<Avaliacao>();
 	
 	public Feedback() {
 		super();
@@ -33,11 +33,11 @@ public class Feedback {
 	public void setAvaliacao_media(double avaliacao_media) {
 		this.avaliacao_media = avaliacao_media;
 	}
-	public Set<Comentario> getComentario() {
-		return comentario;
+	public Set<Avaliacao> getAvaliacao() {
+		return avaliacao;
 	}
-	public void setComentario(Set<Comentario> comentario) {
-		this.comentario = comentario;
+	public void setAvaliacao(Set<Avaliacao> avaliacao) {
+		this.avaliacao = avaliacao;
 	}
 	
 }

@@ -14,6 +14,6 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<mapping resource="hibernate/hbm/FeedbackTest.hbm.xml"></mapping>
 		<mapping resource="hibernate/hbm/Feedback.hbm.xml"></mapping>
-		<mapping resource="hibernate/hbm/Comentario.hbm.xml"></mapping>
+		<mapping resource="hibernate/hbm/Avaliacao.hbm.xml"></mapping>
 	</session-factory>
 </hibernate-configuration>

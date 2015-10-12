@@ -3,7 +3,7 @@
 "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
  
 <hibernate-mapping>
-    <class name="com.br.datafeed.model.Comentario" table="comentario">
+    <class name="com.br.datafeed.model.Avaliacao" table="avaliacao">
         
         <id name="id" type="integer">
             <column name="ID" />
@@ -19,7 +19,7 @@
        </property>
        
        <property name="email_usuario" type="string">
-       		<column name="EMAIL_USUARIO" not-null="true"/>
+       		<column name="EMAIL_USUARIO" not-null="true" unique="true"/>
        </property>
         
        <property name="comentario" type="string">

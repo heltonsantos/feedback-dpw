@@ -2,7 +2,7 @@ package com.br.datafeed.model;
 
 import java.sql.Date;
 
-public class Comentario {
+public class Avaliacao {
 	
 	private Integer id;
 	private Date data_avaliacao;
@@ -12,7 +12,7 @@ public class Comentario {
 	private String comentario;
 	private Feedback feedback;
 	
-	public Comentario() {
+	public Avaliacao() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
