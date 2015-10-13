@@ -4,7 +4,9 @@ import com.br.datafeed.model.Avaliacao;
 
 public interface IAvaliacaoService {
 	
-	public void adicionarAvaliacao(Avaliacao avaliacao);
+	public void adicionarAvaliacao(int dataset_id, Avaliacao avaliacao);
 	public void atualizarAvaliacao(Avaliacao avaliacao);
+	public Avaliacao buscarAvaliacao(int avaliacao_id);
+	public void deletarAvaliacao(int avaliacao_id);
 	
 }

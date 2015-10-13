@@ -20,8 +20,8 @@ public class FeedbackService implements IFeedbackService{
 		
 	}
 
-	public Feedback pegarFeedback(int dataset_id) {
-		return repository.pegarFeedback(dataset_id);
+	public Feedback buscarFeedback(int dataset_id) {
+		return repository.buscarFeedback(dataset_id);
 	}
 
 }

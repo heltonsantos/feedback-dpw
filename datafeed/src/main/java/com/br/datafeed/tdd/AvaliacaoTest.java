@@ -28,30 +28,41 @@ public class AvaliacaoTest {
 
 	//@Test
 	public void adicionarAvaliacao() {
-		
-		Feedback feedback = servicoFeedback.pegarFeedback(1);
-		
+			
 		Date sqlDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		Avaliacao avaliacao = new Avaliacao();
         avaliacao.setData_avaliacao(sqlDate);
         avaliacao.setNome_usuario("helton1");
         avaliacao.setEmail_usuario("helton1@gmail.com");
         avaliacao.setComentario("up up");
-        avaliacao.setAvaliacao(5.5);
-        avaliacao.setFeedback(feedback);
+        avaliacao.setAvaliacao(6.0);
         
-        servicoAvaliacao.adicionarAvaliacao(avaliacao);
+        servicoAvaliacao.adicionarAvaliacao(2, avaliacao);
 	}
 	
 	//@Test
 	public void atualizarAvaliacao() {
 		
-		Feedback feedback = servicoFeedback.pegarFeedback(1);
+		Feedback feedback = servicoFeedback.buscarFeedback(1);
 		List<Avaliacao> listAvaliacao = new ArrayList<Avaliacao>(feedback.getAvaliacao());
 		
 		listAvaliacao.get(0).setComentario("alterou");
         
         servicoAvaliacao.atualizarAvaliacao(listAvaliacao.get(0));
 	}
+	
+	//@Test
+	public void buscarAvaliacao() {
+        
+        Avaliacao avaliacao = servicoAvaliacao.buscarAvaliacao(2);
+        System.out.println(avaliacao.getComentario());
+	}
+	
+	//@Test
+	public void deletaAvaliacao() {
+        
+		servicoAvaliacao.deletarAvaliacao(8);
+	}
+
 
 }

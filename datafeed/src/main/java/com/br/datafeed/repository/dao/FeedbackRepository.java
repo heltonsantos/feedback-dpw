@@ -46,7 +46,7 @@ public class FeedbackRepository implements IFeedbackRepository{
 		
 	}
 	
-	public Feedback pegarFeedback(int dataset_id) {
+	public Feedback buscarFeedback(int dataset_id) {
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
         session.beginTransaction();
