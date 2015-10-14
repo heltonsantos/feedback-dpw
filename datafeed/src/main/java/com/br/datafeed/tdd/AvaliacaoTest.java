@@ -35,7 +35,7 @@ public class AvaliacaoTest {
         avaliacao.setNome_usuario("helton1");
         avaliacao.setEmail_usuario("helton1@gmail.com");
         avaliacao.setComentario("up up");
-        avaliacao.setAvaliacao(6.0);
+        avaliacao.setAvaliacao(10.0);
         
         servicoAvaliacao.adicionarAvaliacao(1, avaliacao);
 	}
@@ -44,10 +44,10 @@ public class AvaliacaoTest {
 	public void atualizarAvaliacao() {
 		
 		Feedback feedback = servicoFeedback.buscarFeedback(1);
-		List<Avaliacao> list = new ArrayList<Avaliacao>(feedback.getAvaliacao());
+		List<Avaliacao> list = feedback.getAvaliacao();
 		
 		list.get(0).setComentario("alterou");
-		list.get(0).setAvaliacao(7.0);
+		list.get(0).setAvaliacao(10.0);
 		 
         servicoAvaliacao.atualizarAvaliacao(1, list.get(0));
 	}
@@ -62,7 +62,7 @@ public class AvaliacaoTest {
 	//@Test
 	public void deletaAvaliacao() {
         
-		servicoAvaliacao.deletarAvaliacao(8);
+		servicoAvaliacao.deletarAvaliacao(1);
 	}
 
 }

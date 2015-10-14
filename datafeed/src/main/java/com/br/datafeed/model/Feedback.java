@@ -2,11 +2,30 @@ package com.br.datafeed.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="feedback")
 public class Feedback {
 	
+	@Id
+	@GeneratedValue
+	@Column(name="ID")
 	private int id;
+	
+	@Column(name="DATASET_ID", unique=true, nullable=false)
 	private int dataset_id;
+	
+	@Column(name="AVALIACAO_MEDIA", nullable=false)
 	private double avaliacao_media;
+	
+	@OneToMany(mappedBy="feedback", fetch = FetchType.EAGER)
 	private List<Avaliacao> avaliacao;
 	
 	public Feedback() {
@@ -41,5 +60,4 @@ public class Feedback {
 		this.avaliacao = avaliacao;
 	}
 
-	
 }

@@ -2,14 +2,40 @@ package com.br.datafeed.model;
 
 import java.sql.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="avaliacao")
 public class Avaliacao {
 	
+	@Id
+    @GeneratedValue
+    @Column(name="ID")
 	private int id;
+	
+	@Column(name="DATA_AVALIACAO", nullable=false)
 	private Date data_avaliacao;
+	
+	@Column(name="NOME_USUARIO", nullable=false)
 	private String nome_usuario;
+	
+	@Column(name="EMAIL_USUARIO", nullable=false)
 	private String email_usuario;
+	
+	@Column(name="AVALIACAO", nullable=false)
 	private double avaliacao;
+	
+	@Column(name="COMENTARIO")
 	private String comentario;
+	
+	@ManyToOne
+	@JoinColumn(name="FEEDBACK_ID", nullable=false)
 	private Feedback feedback;
 	
 	public Avaliacao() {
@@ -72,7 +98,5 @@ public class Avaliacao {
 	public void setFeedback(Feedback feedback) {
 		this.feedback = feedback;
 	}
-
-
 		
 }
