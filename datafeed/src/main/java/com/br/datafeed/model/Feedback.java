@@ -4,8 +4,8 @@ import java.util.List;
 
 public class Feedback {
 	
-	private Integer id;
-	private Integer dataset_id;
+	private int id;
+	private int dataset_id;
 	private double avaliacao_media;
 	private List<Avaliacao> avaliacao;
 	
@@ -14,16 +14,16 @@ public class Feedback {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
-	public Integer getDataset_id() {
+	public int getDataset_id() {
 		return dataset_id;
 	}
-	public void setDataset_id(Integer dataset_id) {
+	public void setDataset_id(int dataset_id) {
 		this.dataset_id = dataset_id;
 	}
 	public double getAvaliacao_media() {

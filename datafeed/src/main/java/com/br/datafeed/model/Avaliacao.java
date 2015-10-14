@@ -4,11 +4,11 @@ import java.sql.Date;
 
 public class Avaliacao {
 	
-	private Integer id;
+	private int id;
 	private Date data_avaliacao;
 	private String nome_usuario;
 	private String email_usuario;
-	private Double avaliacao;
+	private double avaliacao;
 	private String comentario;
 	private Feedback feedback;
 	
@@ -17,11 +17,11 @@ public class Avaliacao {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Integer getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -49,11 +49,11 @@ public class Avaliacao {
 		this.email_usuario = email_usuario;
 	}
 
-	public Double getAvaliacao() {
+	public double getAvaliacao() {
 		return avaliacao;
 	}
 
-	public void setAvaliacao(Double avaliacao) {
+	public void setAvaliacao(double avaliacao) {
 		this.avaliacao = avaliacao;
 	}
 
