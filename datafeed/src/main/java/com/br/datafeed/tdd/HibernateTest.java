@@ -1,14 +1,8 @@
 package com.br.datafeed.tdd;
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.junit.Test;
