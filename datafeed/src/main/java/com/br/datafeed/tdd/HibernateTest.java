@@ -52,17 +52,15 @@ public class HibernateTest {
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
         session.beginTransaction();
         Feedback feedback = null;		
-	
+        
         feedback = (Feedback) session.createCriteria(Feedback.class).add(Restrictions.eq("id", 1)).uniqueResult();
         session.getTransaction().commit();
 	
 		session.close();
-		
-		List<Avaliacao> list = new ArrayList<Avaliacao>(feedback.getAvaliacao());
 				
 	}
 	
-	@Test
+	//@Test
 	public void adicionarFeedbackComAvaliacao() {
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
         session.beginTransaction();

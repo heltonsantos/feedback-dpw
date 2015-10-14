@@ -18,10 +18,10 @@
             <column name="AVALIACAO_MEDIA" default="0" not-null="true"/>
         </property>
         
-		<set name="avaliacao" table="avaliacao" fetch="join" inverse="true" lazy="false">
-			<key column="FEEDBACK_ID"/>
+		<bag name="avaliacao" table="avaliacao" fetch="join" inverse="true">
+			<key column="FEEDBACK_ID" not-null="true"/>
 			<one-to-many class="com.br.datafeed.model.Avaliacao"/>
-		</set>
+		</bag>
 		
     </class>
 </hibernate-mapping>

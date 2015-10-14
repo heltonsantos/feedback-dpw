@@ -1,6 +1,8 @@
 package com.br.datafeed.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Feedback {
@@ -8,7 +10,7 @@ public class Feedback {
 	private Integer id;
 	private Integer dataset_id;
 	private double avaliacao_media;
-	private Set<Avaliacao> avaliacao = new HashSet<Avaliacao>();
+	private List<Avaliacao> avaliacao;
 	
 	public Feedback() {
 		super();
@@ -33,11 +35,14 @@ public class Feedback {
 	public void setAvaliacao_media(double avaliacao_media) {
 		this.avaliacao_media = avaliacao_media;
 	}
-	public Set<Avaliacao> getAvaliacao() {
+
+	public List<Avaliacao> getAvaliacao() {
 		return avaliacao;
 	}
-	public void setAvaliacao(Set<Avaliacao> avaliacao) {
+
+	public void setAvaliacao(List<Avaliacao> avaliacao) {
 		this.avaliacao = avaliacao;
 	}
+
 	
 }

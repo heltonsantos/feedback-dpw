@@ -36,7 +36,22 @@ public class AvaliacaoService implements IAvaliacaoService{
 		
 	}
 
-	public void atualizarAvaliacao(Avaliacao avaliacao) {
+	public void atualizarAvaliacao(int dataset_id, Avaliacao avaliacao) {
+		
+		Feedback feedback = feedbackRepository.buscarFeedback(dataset_id);
+		
+		if(feedback.getAvaliacao_media() == 0){
+			feedback.setAvaliacao_media(avaliacao.getAvaliacao());
+		}
+		else{
+			double avaliacao_final = (feedback.getAvaliacao_media() + avaliacao.getAvaliacao())/2;
+			
+			feedback.setAvaliacao_media(avaliacao_final);
+		}
+		
+		feedbackRepository.atualizarFeedback(feedback);
+		
+		avaliacao.setFeedback(feedback);
 		avaliacaoRepository.atualizarAvaliacao(avaliacao);
 		
 	}

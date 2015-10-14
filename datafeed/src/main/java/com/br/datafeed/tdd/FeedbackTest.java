@@ -23,7 +23,7 @@ public class FeedbackTest {
 	public void adicionarFeedback() {
 		
 		Feedback feedback = new Feedback();   
-        feedback.setDataset_id(3);
+        feedback.setDataset_id(1);
         
         servico.adicionarFeedback(feedback);
 		
@@ -32,10 +32,9 @@ public class FeedbackTest {
 	//@Test
 	public void buscarFeedback() {
 		Feedback feedback = servico.buscarFeedback(1);
-		List<Avaliacao> listAvaliacao = new ArrayList<Avaliacao>(feedback.getAvaliacao());
 		
 		System.out.println(feedback.getDataset_id());
-		System.out.println(listAvaliacao.get(0).getComentario());
+		System.out.println(feedback.getAvaliacao().get(0).getComentario());
 				
 	}
 	

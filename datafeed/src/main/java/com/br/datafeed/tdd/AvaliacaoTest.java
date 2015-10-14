@@ -37,24 +37,25 @@ public class AvaliacaoTest {
         avaliacao.setComentario("up up");
         avaliacao.setAvaliacao(6.0);
         
-        servicoAvaliacao.adicionarAvaliacao(2, avaliacao);
+        servicoAvaliacao.adicionarAvaliacao(1, avaliacao);
 	}
 	
 	//@Test
 	public void atualizarAvaliacao() {
 		
 		Feedback feedback = servicoFeedback.buscarFeedback(1);
-		List<Avaliacao> listAvaliacao = new ArrayList<Avaliacao>(feedback.getAvaliacao());
+		List<Avaliacao> list = new ArrayList<Avaliacao>(feedback.getAvaliacao());
 		
-		listAvaliacao.get(0).setComentario("alterou");
-        
-        servicoAvaliacao.atualizarAvaliacao(listAvaliacao.get(0));
+		list.get(0).setComentario("alterou");
+		list.get(0).setAvaliacao(7.0);
+		 
+        servicoAvaliacao.atualizarAvaliacao(1, list.get(0));
 	}
 	
 	//@Test
 	public void buscarAvaliacao() {
         
-        Avaliacao avaliacao = servicoAvaliacao.buscarAvaliacao(2);
+        Avaliacao avaliacao = servicoAvaliacao.buscarAvaliacao(1);
         System.out.println(avaliacao.getComentario());
 	}
 	
@@ -63,6 +64,5 @@ public class AvaliacaoTest {
         
 		servicoAvaliacao.deletarAvaliacao(8);
 	}
-
 
 }
