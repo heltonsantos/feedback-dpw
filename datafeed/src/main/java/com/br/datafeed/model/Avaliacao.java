@@ -1,6 +1,6 @@
 package com.br.datafeed.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 @Entity
 @Table(name="avaliacao")
@@ -36,6 +38,7 @@ public class Avaliacao {
 	
 	@ManyToOne
 	@JoinColumn(name="FEEDBACK_ID", nullable=false)
+	@JsonIgnore
 	private Feedback feedback;
 	
 	public Avaliacao() {

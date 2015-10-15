@@ -2,6 +2,11 @@ package com.br.datafeed.tdd;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 
 import com.br.datafeed.inject.FeedbackModule;
@@ -26,11 +31,11 @@ public class FeedbackTest {
 	}
 	
 	//@Test
-	public void buscarFeedback() {
+	public void buscarFeedback() throws JsonGenerationException, JsonMappingException, IOException {
 		Feedback feedback = servico.buscarFeedback(1);
 		
-		System.out.println(feedback.getDataset_id());
-		System.out.println(feedback.getAvaliacao().get(0).getComentario());
+		ObjectMapper mapper = new ObjectMapper();
+		System.out.println(mapper.writeValueAsString(feedback));
 				
 	}
 	

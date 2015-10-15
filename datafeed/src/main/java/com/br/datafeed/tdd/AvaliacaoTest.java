@@ -2,9 +2,7 @@ package com.br.datafeed.tdd;
 
 import static org.junit.Assert.*;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -29,9 +27,10 @@ public class AvaliacaoTest {
 	//@Test
 	public void adicionarAvaliacao() {
 			
-		Date sqlDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		Date date = new Date();
+		
 		Avaliacao avaliacao = new Avaliacao();
-        avaliacao.setData_avaliacao(sqlDate);
+        avaliacao.setData_avaliacao(date);
         avaliacao.setNome_usuario("helton1");
         avaliacao.setEmail_usuario("helton1@gmail.com");
         avaliacao.setComentario("up up");
