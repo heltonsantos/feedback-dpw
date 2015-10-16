@@ -11,19 +11,23 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
+
+import com.br.datafeed.model.Feedback;
 
 public class ServicesRestTest {
 
-	@Test
-	public void test() {
+	
+	public void executarPost(String json, String url) {
 		try {
 
 			DefaultHttpClient httpClient = new DefaultHttpClient();
-			HttpPost postRequest = new HttpPost(
-				"http://localhost:8080/datafeed/rest/feedback/adicionar");
+			HttpPost postRequest = new HttpPost(url);
 
-			StringEntity input = new StringEntity("{\"dataset_id\":5,\"avaliacao_media\": 5}");
+			StringEntity input = new StringEntity(json);
 			input.setContentType("application/json");
 			postRequest.setEntity(input);
 
@@ -54,7 +58,21 @@ public class ServicesRestTest {
 			e.printStackTrace();
 
 		  }
-
+	}
+	
+	@Test
+	public void adicionarFeedback() throws JsonGenerationException, JsonMappingException, IOException {
+		String url = "http://localhost:8080/datafeed/rest/feedback/adicionar";
+		Feedback feedback = new Feedback();		
+		feedback.setDataset_id(7);
+		feedback.setAvaliacao_media(7);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(feedback);
+		System.out.println(json);
+		
+		executarPost(json, url);
+		
 	}
 
 }
