@@ -47,18 +47,13 @@
 		<artifactId>resteasy-jaxrs</artifactId>
 		<version>3.0.1.Final</version>
 	</dependency>
-
-    <dependency>
-		<groupId>org.jboss.resteasy</groupId>
-		<artifactId>resteasy-jaxb-provider</artifactId>
-		<version>3.0.1.Final</version>
-	</dependency>
 	
 	<dependency>
 		<groupId>org.jboss.resteasy</groupId>
-		<artifactId>resteasy-jettison-provider</artifactId>
+		<artifactId>resteasy-jackson-provider</artifactId>
 		<version>3.0.1.Final</version>
 	</dependency>
+	
    
 	<!-- Hibernate framework -->
 	<dependency>
@@ -88,6 +83,13 @@
 		<version>1.9.13</version>
 	</dependency>
 	
+	<!-- Http Client -->
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<version>4.3.6</version>
+	</dependency>
+		
   </dependencies>
 
   <build>

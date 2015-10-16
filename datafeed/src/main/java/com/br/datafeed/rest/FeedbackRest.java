@@ -59,8 +59,8 @@ public class FeedbackRest {
     }
 	
 	@POST
-    @Path("/adicionar/")
-    @Consumes("application/json")
+    @Path("/adicionar")
+	@Consumes("application/json")
     public Response adicionarFeedback(Feedback feedback){
 	
 		servico.adicionarFeedback(feedback);
