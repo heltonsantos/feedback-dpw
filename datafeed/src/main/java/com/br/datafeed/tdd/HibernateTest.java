@@ -10,23 +10,9 @@ import org.junit.Test;
 import com.br.datafeed.hibernate.util.HibernateUtil;
 import com.br.datafeed.model.Avaliacao;
 import com.br.datafeed.model.Feedback;
-import com.br.datafeed.model.FeedbackTest;
 
 public class HibernateTest {
 
-	//@Test
-	public void test() {
-		Session session = HibernateUtil.getSessionFactory().openSession();	 
-        session.beginTransaction();
-        
-        FeedbackTest feedback = new FeedbackTest();
-        feedback.setComentario("up");
-        
-        session.saveOrUpdate(feedback);
-        session.getTransaction().commit();
-        session.close();
-	}
-	
 	//@Test
 	public void adicionarFeedback() {
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
