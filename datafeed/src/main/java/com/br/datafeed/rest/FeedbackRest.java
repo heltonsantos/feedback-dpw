@@ -2,7 +2,9 @@ package com.br.datafeed.rest;
 
 import java.io.IOException;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -29,7 +31,7 @@ public class FeedbackRest {
 	@GET
     @Path("/buscar/{id}")
     @Produces("application/json")
-    public Response getFeedbackTest(@PathParam("id") int id){
+    public Response buscarFeedback(@PathParam("id") int id){
 		
 		Feedback feed = servico.buscarFeedback(id);
 		
@@ -53,8 +55,18 @@ public class FeedbackRest {
 			e.printStackTrace();
 			return Response.status(Status.NOT_ACCEPTABLE).build();		
 		}
+			
+    }
+	
+	@POST
+    @Path("/adicionar")
+    @Consumes("application/json")
+    public Response adicionarFeedback(Feedback feedback){
+	
+		servico.adicionarFeedback(feedback);
 		
-		
+		return Response.ok().build();
+				
     }
 
 }
