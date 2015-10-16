@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @Entity
 @Table(name="avaliacao")
@@ -21,6 +22,7 @@ public class Avaliacao {
     @Column(name="ID")
 	private int id;
 	
+	@JsonSerialize(using=com.br.datafeed.util.JsonDateSerializer.class)
 	@Column(name="DATA_AVALIACAO", nullable=false)
 	private Date data_avaliacao;
 	

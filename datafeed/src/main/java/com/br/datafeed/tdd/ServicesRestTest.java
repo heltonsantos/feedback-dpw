@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.util.Date;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -16,6 +17,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 
+import com.br.datafeed.model.Avaliacao;
 import com.br.datafeed.model.Feedback;
 
 public class ServicesRestTest {
@@ -60,15 +62,33 @@ public class ServicesRestTest {
 		  }
 	}
 	
-	@Test
+	//@Test
 	public void adicionarFeedback() throws JsonGenerationException, JsonMappingException, IOException {
 		String url = "http://localhost:8080/datafeed/rest/feedback/adicionar";
 		Feedback feedback = new Feedback();		
 		feedback.setDataset_id(7);
-		feedback.setAvaliacao_media(7);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String json = mapper.writeValueAsString(feedback);
+		System.out.println(json);
+		
+		executarPost(json, url);
+		
+	}
+	
+	@Test
+	public void adicionarAvaliacao() throws JsonGenerationException, JsonMappingException, IOException {
+		int dataset_id = 1;
+		String url = "http://localhost:8080/datafeed/rest/avaliacao/adicionar?dataset_id=" + dataset_id;
+			
+		Avaliacao avaliacao = new Avaliacao();
+        avaliacao.setNome_usuario("helton1");
+        avaliacao.setEmail_usuario("helton1@gmail.com");
+        avaliacao.setComentario("up up");
+        avaliacao.setAvaliacao(10.0);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String json = mapper.writeValueAsString(avaliacao);
 		System.out.println(json);
 		
 		executarPost(json, url);
