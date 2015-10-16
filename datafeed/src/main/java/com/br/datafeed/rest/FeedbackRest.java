@@ -27,7 +27,7 @@ public class FeedbackRest {
 	IFeedbackService servico = injector.getInstance(IFeedbackService.class);
 	
 	@GET
-    @Path("/buscarFeedback/{id}")
+    @Path("/buscar/{id}")
     @Produces("application/json")
     public Response getFeedbackTest(@PathParam("id") int id){
 		
