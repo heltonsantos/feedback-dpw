@@ -59,7 +59,7 @@ public class FeedbackRest {
     }
 	
 	@POST
-    @Path("/adicionar")
+    @Path("/adicionar/")
     @Consumes("application/json")
     public Response adicionarFeedback(Feedback feedback){
 	
