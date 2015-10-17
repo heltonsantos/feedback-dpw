@@ -2,9 +2,13 @@ package com.br.datafeed.tdd;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import org.codehaus.jackson.JsonGenerationException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 
 import com.br.datafeed.inject.AvaliacaoModule;
@@ -36,7 +40,7 @@ public class AvaliacaoTest {
         avaliacao.setComentario("up up");
         avaliacao.setAvaliacao(10.0);
         
-        servicoAvaliacao.adicionarAvaliacao(1, avaliacao);
+        servicoAvaliacao.adicionarAvaliacao(2, avaliacao);
 	}
 	
 	//@Test
@@ -62,6 +66,27 @@ public class AvaliacaoTest {
 	public void deletaAvaliacao() {
         
 		servicoAvaliacao.deletarAvaliacao(1);
+	}
+	
+	@Test
+	public void buscarAvaliacaoList() {
+		List<Avaliacao> avaliacaoList;
+		ObjectMapper mapper = new ObjectMapper();
+		
+		avaliacaoList = servicoAvaliacao.buscarAvaliacaoList(1, 0, 0);
+		
+		try {
+			System.out.println(mapper.writeValueAsString(avaliacaoList));
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

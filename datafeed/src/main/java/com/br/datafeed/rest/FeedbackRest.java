@@ -29,20 +29,20 @@ public class FeedbackRest {
 	@GET
     @Path("/buscar")
     @Produces("application/json")
-    public Response buscarFeedback(@QueryParam("dataset_id") int id){
+    public Response buscarFeedback(@QueryParam("dataset_id") int dataset_id){
 		
 		Feedback feedback = new Feedback();
 		Feedback newFeedback = new Feedback();
 		ObjectMapper mapper = new ObjectMapper();
 		String json;
 		
-		feedback = servico.buscarFeedbackView(id);
+		feedback = servico.buscarFeedbackView(dataset_id);
 		
 		if(feedback == null){
-			newFeedback.setDataset_id(id);
+			newFeedback.setDataset_id(dataset_id);
 			servico.adicionarFeedback(newFeedback);
 			
-			feedback = servico.buscarFeedbackView(id);
+			feedback = servico.buscarFeedbackView(dataset_id);
 			
 			try {
 				json = mapper.writeValueAsString(feedback);

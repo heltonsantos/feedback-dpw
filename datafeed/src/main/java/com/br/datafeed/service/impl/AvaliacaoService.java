@@ -1,5 +1,7 @@
 package com.br.datafeed.service.impl;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import com.br.datafeed.model.Avaliacao;
@@ -64,6 +66,10 @@ public class AvaliacaoService implements IAvaliacaoService{
 		Avaliacao avaliacao = avaliacaoRepository.buscarAvaliacao(avaliacao_id);
 		avaliacaoRepository.deletarAvaliacao(avaliacao);
 		
+	}
+
+	public List<Avaliacao> buscarAvaliacaoList(int dataset_id, int offset, int limit) {
+		return avaliacaoRepository.buscarAvaliacaoList(dataset_id, offset, limit);
 	}
 
 }
