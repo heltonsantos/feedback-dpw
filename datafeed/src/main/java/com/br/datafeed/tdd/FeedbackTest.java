@@ -49,5 +49,34 @@ public class FeedbackTest {
         servico.atualizarFeedback(feedback);
 		
 	}
+	
+	//@Test
+	public void buscarFeedbackView() throws JsonGenerationException, JsonMappingException, IOException {
+		Feedback feedback = servico.buscarFeedbackView(1);
+		
+		ObjectMapper mapper = new ObjectMapper();
+		System.out.println(mapper.writeValueAsString(feedback));
+				
+	}
+	
+	//@Test
+	public void buscarAdicionarFeedback() throws JsonGenerationException, JsonMappingException, IOException {
+		Feedback feedback = new Feedback();
+		Feedback newFeedback = new Feedback();
+		
+		feedback = servico.buscarFeedbackView(10);
+		
+		if(feedback == null){
+			newFeedback.setDataset_id(10);
+			servico.adicionarFeedback(newFeedback);
+		}
+		else{
+		
+		ObjectMapper mapper = new ObjectMapper();
+		System.out.println(mapper.writeValueAsString(feedback));
+		
+		}
+				
+	}
 
 }

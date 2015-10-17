@@ -2,9 +2,7 @@ package com.br.datafeed.rest;
 
 import java.io.IOException;
 
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -33,40 +31,58 @@ public class FeedbackRest {
     @Produces("application/json")
     public Response buscarFeedback(@QueryParam("dataset_id") int id){
 		
-		Feedback feed = servico.buscarFeedback(id);
-		
+		Feedback feedback = new Feedback();
+		Feedback newFeedback = new Feedback();
 		ObjectMapper mapper = new ObjectMapper();
 		String json;
 		
-		try {
-			json = mapper.writeValueAsString(feed);
-			return Response.ok(json, MediaType.APPLICATION_JSON).build();
+		feedback = servico.buscarFeedbackView(id);
+		
+		if(feedback == null){
+			newFeedback.setDataset_id(id);
+			servico.adicionarFeedback(newFeedback);
 			
-		} catch (JsonGenerationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return Response.status(Status.NOT_ACCEPTABLE).build();		
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return Response.status(Status.NOT_ACCEPTABLE).build();		
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return Response.status(Status.NOT_ACCEPTABLE).build();		
+			feedback = servico.buscarFeedbackView(id);
+			
+			try {
+				json = mapper.writeValueAsString(feedback);
+				return Response.ok(json, MediaType.APPLICATION_JSON).build();
+			} catch (JsonGenerationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return Response.status(Status.EXPECTATION_FAILED).build();		
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return Response.status(Status.EXPECTATION_FAILED).build();		
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return Response.status(Status.EXPECTATION_FAILED).build();		
+			}
+			
+		}
+		else{
+		
+			try {
+				json = mapper.writeValueAsString(feedback);
+				return Response.ok(json, MediaType.APPLICATION_JSON).build();
+				
+			} catch (JsonGenerationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return Response.status(Status.EXPECTATION_FAILED).build();		
+			} catch (JsonMappingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return Response.status(Status.EXPECTATION_FAILED).build();		
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return Response.status(Status.EXPECTATION_FAILED).build();		
+			}
 		}
 			
-    }
-	
-	@POST
-    @Path("/adicionar")
-	@Consumes("application/json")
-    public Response adicionarFeedback(Feedback feedback){
-	
-		servico.adicionarFeedback(feedback);
-		
-		return Response.ok().build();
-				
     }
 
 }

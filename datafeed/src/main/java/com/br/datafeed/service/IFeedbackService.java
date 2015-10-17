@@ -7,4 +7,5 @@ public interface IFeedbackService {
 	public void adicionarFeedback(Feedback feedback);
 	public void atualizarFeedback(Feedback feedback);
 	public Feedback buscarFeedback(int dataset_id);
+	public Feedback buscarFeedbackView(int dataset_id);
 }
