@@ -6,12 +6,16 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript">
 			
-			var url = "http://localhost:8080/datafeed/rest/";
+			var url = "http://localhost:8080/datafeed/rest/feedback/buscar?dataset_id=";
 			var dataset_id = 1;
 			
-			$.get(url + "feedback/buscar/" + dataset_id, function(data,status,xhr){
-					console.log(data.avaliacao[0].id);
-					$('h5').text(data.avaliacao[1].id);
+			$.get(url + dataset_id, function(data,status,xhr){
+					console.log(data.id + " " + data.dataset_id + " " + data.avaliacao_media);
+					
+					$("#datafeed").append("<p>"+ data.id +"</p>");
+					$("#datafeed").append("<p>"+ data.dataset_id +"</p>");
+					$("#datafeed").append("<p>"+ data.avaliacao_media +"</p>");
+
 				}
 				).fail(function(jqXHR,htmlError,error){
 				}
@@ -19,6 +23,7 @@
 		</script>
 	</head>
 	<body>
-		<h5></h5>
+		<div id=datafeed>
+		</div>
 	</body>
 </html>
