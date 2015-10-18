@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.transform.Transformers;
@@ -94,7 +95,8 @@ public class AvaliacaoRepository implements IAvaliacaoRepository{
 
         try{
         	Criteria cr = session.createCriteria(Feedback.class).createAlias("avaliacao", "a").add(Restrictions.eq("dataset_id", dataset_id))
-        			.setProjection(Projections.projectionList()
+        			.addOrder(Order.desc("a.data_avaliacao"))
+        				.setProjection(Projections.projectionList()
               		      .add(Projections.property("a.id"), "id")
               		      .add(Projections.property("a.data_avaliacao"), "data_avaliacao")
               		      .add(Projections.property("a.nome_usuario"), "nome_usuario")
