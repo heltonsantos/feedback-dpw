@@ -1,6 +1,7 @@
 package com.br.datafeed.rest;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -39,10 +40,17 @@ public class AvaliacaoRest {
 		Date data = new Date();
 		avaliacao.setData_avaliacao(data);
 		
+		try {	
 		servico.adicionarAvaliacao(dataset_id, avaliacao);
-		
 		return Response.ok().build();
-				
+		
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+	    	return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();	
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    	return Response.status(Status.EXPECTATION_FAILED).entity("Exception " + e.toString()).build();	
+	    }
     }
 	
 	@GET
@@ -62,15 +70,15 @@ public class AvaliacaoRest {
 		} catch (JsonGenerationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return Response.status(Status.EXPECTATION_FAILED).build();	
+			return Response.status(Status.EXPECTATION_FAILED).entity("Exception " + e.toString()).build();		
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return Response.status(Status.EXPECTATION_FAILED).build();	
+			return Response.status(Status.EXPECTATION_FAILED).entity("Exception " + e.toString()).build();	
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return Response.status(Status.EXPECTATION_FAILED).build();	
+			return Response.status(Status.EXPECTATION_FAILED).entity("Exception " + e.toString()).build();	
 		}
 		
 	}
