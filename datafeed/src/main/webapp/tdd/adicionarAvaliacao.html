@@ -2,27 +2,34 @@
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
-		<title>Insert title here</title>
+		<title>Adicionar Avaliacao</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript">
-		var postData={nome_usuario:"up",email_usuario:"up",avaliacao:"5",comentario:"up"};
+		var postData = {nome_usuario:"up",email_usuario:"up",avaliacao:5,comentario:"up"}; 
+		var dataset_id = 2;
+		var json = JSON.stringify(postData);
+		console.log(json);
 		
 		$.ajax({
-		    headers: {
-		        "Content-Type": "application/json"
-		    },
+		    headers: {"Content-Type": "application/json"},
 		    type: "POST",
-		    url: "http://localhost:8080/datafeed/rest/avaliacao/adicionar?dataset_id=30",
-		    data: JSON.stringify(postData),
+		    url: "http://localhost:8080/datafeed/rest/avaliacao/adicionar?dataset_id=" + dataset_id,
+		    data: json,
 		    dataType: "json"
-		    }).done(function( data, textStatus, jqXHR ) {
-		    	console.log(textStatus);
-		    	console.log(jqXHR.responseText );
-		    }).fail(function( jqXHR, textStatus, errorThrown ) {
-		    	console.log(jqXHR.responseText);
-		    	console.log(textStatus);
-		    	console.log(errorThrown);
-		    });
+		    
+		 }).done(function( data, textStatus, jqXHR ) {
+			 
+	    	console.log(textStatus);
+	    	console.log(jqXHR.responseText );
+	    	
+		 }).fail(function( jqXHR, textStatus, errorThrown ) {
+			 
+	    	console.log(jqXHR.responseText);
+	    	console.log(textStatus);
+	    	console.log(errorThrown);
+	    	
+		 });
+		
 		</script>
 
 		<div id=datafeed></div>

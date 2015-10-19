@@ -50,15 +50,15 @@ public class FeedbackRest {
 			} catch (JsonGenerationException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return Response.status(Status.EXPECTATION_FAILED).build();		
+				return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();			
 			} catch (JsonMappingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return Response.status(Status.EXPECTATION_FAILED).build();		
+				return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();		
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				return Response.status(Status.EXPECTATION_FAILED).build();		
+				return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();				
 			}
 			
 		}

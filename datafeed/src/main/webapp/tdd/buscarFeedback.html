@@ -16,10 +16,10 @@
 					$("#datafeed").append("<p>"+ data.dataset_id +"</p>");
 					$("#datafeed").append("<p>"+ data.avaliacao_media +"</p>");
 
-				}
-				).fail(function(jqXHR,htmlError,error){
-				}
-			);
+			}).fail(function(jqXHR,htmlError,error){
+				console.log(jqXHR.responseText);
+			});
+			
 		</script>
 	</head>
 	<body>
