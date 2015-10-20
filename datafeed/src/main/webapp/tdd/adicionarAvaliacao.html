@@ -5,32 +5,55 @@
 		<title>Adicionar Avaliação</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript">
-		var postData = {nome_usuario:"up",email_usuario:"up",avaliacao:5,comentario:"up"}; 
-		var dataset_id = 1;
-		var json = JSON.stringify(postData);
-		console.log(json);
-		
-		$.ajax({
-		    headers: {"Content-Type": "application/json"},
-		    type: "POST",
-		    url: "http://localhost:8080/datafeed/rest/avaliacao/adicionar?dataset_id=" + dataset_id,
-		    data: json
-		    
-		 }).done(function( data, textStatus, jqXHR ) {
-			 
-	    	console.log(textStatus);
-	    	console.log(jqXHR.responseText );
-	    	
-		 }).fail(function( jqXHR, textStatus, errorThrown ) {
-			 
-	    	console.log(jqXHR.responseText);
-	    	console.log(textStatus);
-	    	console.log(errorThrown);
-	    	
-		 });
-		
+		$(function () {	
+			$("#add").click(function () {
+				
+		 		var postData = {nome_usuario:$("#nome_usuario").val(),email_usuario:$("#email_usuario").val(),avaliacao:$("#avaliacao").val(),comentario:$("#comentario").val()};
+				var dataset_id = $("#dataset_id").val();
+				var json = JSON.stringify(postData);
+				console.log(json);
+				
+				$.ajax({
+				    headers: {"Content-Type": "application/json"},
+				    type: "POST",
+				    url: "http://localhost:8080/datafeed/rest/avaliacao/adicionar?dataset_id=" + dataset_id,
+				    data: json
+				    
+				 }).done(function( data, textStatus, jqXHR ) {
+					 
+			    	console.log(textStatus);
+			    	console.log(jqXHR.responseText );
+			    	alert("Sua avaliacação foi adicionada com sucesso!")
+			    	
+				 }).fail(function( jqXHR, textStatus, errorThrown ) {
+					 
+			    	console.log(jqXHR.responseText);
+			    	console.log(textStatus);
+			    	console.log(errorThrown);
+			    	alert("O sistema retornou a seguinte exceção: " + jqXHR.responseText);
+			    	
+				 });
+			});
+		});
 		</script>
 
-		<div id=datafeed></div>
+		<div id=datafeed>
+			<label for="dataset_id">dataset_id</label>
+			<input type="text" id="dataset_id"/><br>
+			
+			<label for="nome_usuario">nome_usuario</label>
+			<input type="text" id="nome_usuario"/><br>
+			
+			<label for="email_usuario">email_usuario</label>
+			<input type="text" id="email_usuario"/><br>
+			
+			<label for="avaliacao">avaliacao</label>
+			<input type="text" id="avaliacao"/><br>
+			
+			<label for="comentario">comentario</label>
+			<input type="text" id="comentario"/><br>
+			
+			<button id="add">Adicionar</button>
+		</div>
 	</body>
 </html>

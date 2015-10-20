@@ -12,35 +12,43 @@
 		
 		<script type="text/javascript">
 			
-			var url = "http://localhost:8080/datafeed/rest/feedback/buscar?dataset_id=";
-			var dataset_id = 1;
-			
-			$.get(url + dataset_id, function(data,status,xhr){
-					data.avaliacao_media = data.avaliacao_media.toFixed(2);
-					
-					console.log(data.id + " " + data.dataset_id + " " + data.avaliacao_media);
-					
-					$("#datafeed").append("<div id='starRating'></div>");
-					$("#datafeed").append("<p>"+ data.id +"</p>");
-					$("#datafeed").append("<p>"+ data.dataset_id +"</p>");
-					$("#datafeed").append("<p>"+ data.avaliacao_media +"</p>");
-					
-					$("#starRating").rateYo({
-					  	readOnly: true,
-					  	numStars: 5,
-					    rating: data.avaliacao_media,
-					    starWidth: "40px",
-		   				halfStar: true
-
-					  });
-
-			}).fail(function(jqXHR,htmlError,error){
-				console.log(jqXHR.responseText);
+		$(function () {	
+			$("#add").click(function () {
+				var url = "http://localhost:8080/datafeed/rest/feedback/buscar?dataset_id=";
+				var dataset_id = 1;
+				
+				$.get(url + dataset_id, function(data,status,xhr){
+						data.avaliacao_media = data.avaliacao_media.toFixed(2);
+						
+						console.log(data.id + " " + data.dataset_id + " " + data.avaliacao_media);
+						
+						$("#datafeed").append("<div id='starRating'></div>");
+						$("#datafeed").append("<p>"+ "id: " + data.id +"</p>");
+						$("#datafeed").append("<p>"+ "dataset id: " + data.dataset_id +"</p>");
+						$("#datafeed").append("<p>"+ "avaliacao media: " + data.avaliacao_media +"</p>");
+						
+						$("#starRating").rateYo({
+						  	readOnly: true,
+						  	numStars: 5,
+						    rating: data.avaliacao_media,
+						    starWidth: "40px",
+			   				halfStar: true
+	
+						  });
+	
+				}).fail(function(jqXHR,htmlError,error){
+					console.log(jqXHR.responseText);
+				});
 			});
-			
+		});
 		</script>
 	</head>
 	<body>
-		<div id=datafeed></div>
+		<div id=datafeed>
+			<label for="dataset_id">dataset_id</label>
+			<input type="text" id="dataset_id"/><br>
+			
+			<button id="add">Buscar</button>
+		</div>
 	</body>
 </html>
