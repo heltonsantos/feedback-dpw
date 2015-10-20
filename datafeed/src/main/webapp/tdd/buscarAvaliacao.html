@@ -2,32 +2,48 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>Buscar Avaliação/title>
+	<title>Buscar Avaliação</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript">
-			
-			var url = "http://localhost:8080/datafeed/rest/avaliacao/buscar?dataset_id=";
-			var dataset_id = 1;
-			var offset = 0;
-			var limit = 10;
-			
-			$.get(url + dataset_id + "&offset=" + offset + "&limit=" + limit, function(data,status,xhr){
+		$(function () {	
+			$("#button").click(function () {
+				var url = "http://localhost:8080/datafeed/rest/avaliacao/buscar?dataset_id=";
+				var dataset_id = $("#dataset_id").val();
+				var offset = $("#offset").val();
+				var limit = $("#limit").val();
 				
-				for (var prop in data) {   
-					console.log(data[prop].id + " " + data[prop].data_avaliacao + " " + data[prop].nome_usuario);
+				$.get(url + dataset_id + "&offset=" + offset + "&limit=" + limit, function(data,status,xhr){
 					
-					$("#datafeed").append("<p>"+ data[prop].id +"</p>");
-					$("#datafeed").append("<p>"+ data[prop].data_avaliacao +"</p>");
-					$("#datafeed").append("<p>"+ data[prop].nome_usuario +"</p>");
-				}	
-				
-			}).fail(function(jqXHR,htmlError,error){
-				console.log(jqXHR.responseText);
+					$("#datafeed").empty();
+					
+					for (var prop in data) {   
+						console.log(data[prop].id + " " + data[prop].data_avaliacao + " " + data[prop].nome_usuario);
+						
+						$("#datafeed").append("<p>"+ "id: " + data[prop].id +"</p>");
+						$("#datafeed").append("<p>"+ "data avaliacao: " + data[prop].data_avaliacao +"</p>");
+						$("#datafeed").append("<p>"+ "nome usuario: " + data[prop].nome_usuario +"</p>");
+					}	
+					
+				}).fail(function(jqXHR,htmlError,error){
+					console.log(jqXHR.responseText);
+				});
 			});
-			
+		});
 		</script>
 	</head>
 	<body>
+		<div id=form>
+			<label for="dataset_id">dataset_id: </label>
+			<input type="text" id="dataset_id"/><br>
+			
+			<label for="offset">offset: </label>
+			<input type="text" id="offset"/><br>
+			
+			<label for="limit">limit: </label>
+			<input type="text" id="limit"/><br>
+			
+			<button id="button">Buscar</button>
+		</div>
 		<div id=datafeed></div>
 	</body>
 </html>

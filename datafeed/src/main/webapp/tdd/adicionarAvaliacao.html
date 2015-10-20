@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<title>Adicionar Avaliação</title>
+	<meta charset="UTF-8">
+	<title>Adicionar Avaliação</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript">
 		$(function () {	
-			$("#add").click(function () {
+			$("#button").click(function () {
 				
 		 		var postData = {nome_usuario:$("#nome_usuario").val(),email_usuario:$("#email_usuario").val(),avaliacao:$("#avaliacao").val(),comentario:$("#comentario").val()};
 				var dataset_id = $("#dataset_id").val();
@@ -36,24 +36,26 @@
 			});
 		});
 		</script>
-
-		<div id=datafeed>
-			<label for="dataset_id">dataset_id</label>
+	</head>
+	<body>
+		<div id=form>
+			<label for="dataset_id">dataset_id: </label>
 			<input type="text" id="dataset_id"/><br>
 			
-			<label for="nome_usuario">nome_usuario</label>
+			<label for="nome_usuario">nome_usuario: </label>
 			<input type="text" id="nome_usuario"/><br>
 			
-			<label for="email_usuario">email_usuario</label>
+			<label for="email_usuario">email_usuario: </label>
 			<input type="text" id="email_usuario"/><br>
 			
-			<label for="avaliacao">avaliacao</label>
+			<label for="avaliacao">avaliacao: </label>
 			<input type="text" id="avaliacao"/><br>
 			
-			<label for="comentario">comentario</label>
+			<label for="comentario">comentario: </label>
 			<input type="text" id="comentario"/><br>
 			
-			<button id="add">Adicionar</button>
+			<button id="button">Adicionar</button>
 		</div>
+		<div id=datafeed></div>
 	</body>
 </html>
