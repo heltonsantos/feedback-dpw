@@ -38,9 +38,9 @@ public class AvaliacaoTest {
         avaliacao.setNome_usuario("helton1");
         avaliacao.setEmail_usuario("helton1@gmail.com");
         avaliacao.setComentario("up up");
-        avaliacao.setAvaliacao(10.0);
+        avaliacao.setAvaliacao(4.5);
         
-        servicoAvaliacao.adicionarAvaliacao(2, avaliacao);
+        servicoAvaliacao.adicionarAvaliacao(1, avaliacao);
 	}
 	
 	//@Test
@@ -50,7 +50,7 @@ public class AvaliacaoTest {
 		List<Avaliacao> list = feedback.getAvaliacao();
 		
 		list.get(0).setComentario("alterou");
-		list.get(0).setAvaliacao(10.0);
+		list.get(0).setAvaliacao(4.0);
 		 
         servicoAvaliacao.atualizarAvaliacao(1, list.get(0));
 	}
@@ -68,7 +68,7 @@ public class AvaliacaoTest {
 		servicoAvaliacao.deletarAvaliacao(1);
 	}
 	
-	@Test
+	//@Test
 	public void buscarAvaliacaoList() {
 		List<Avaliacao> avaliacaoList;
 		ObjectMapper mapper = new ObjectMapper();
