@@ -1,20 +1,38 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="ISO-8859-1">
+		<meta charset="UTF-8">
 		<title>Buscar Feedback</title>
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.0.1/jquery.rateyo.min.css">
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.0.1/jquery.rateyo.min.js"></script>
+		
 		<script type="text/javascript">
 			
 			var url = "http://localhost:8080/datafeed/rest/feedback/buscar?dataset_id=";
 			var dataset_id = 1;
 			
 			$.get(url + dataset_id, function(data,status,xhr){
+					data.avaliacao_media = data.avaliacao_media.toFixed(2);
+					
 					console.log(data.id + " " + data.dataset_id + " " + data.avaliacao_media);
 					
+					$("#datafeed").append("<div id='starRating'></div>");
 					$("#datafeed").append("<p>"+ data.id +"</p>");
 					$("#datafeed").append("<p>"+ data.dataset_id +"</p>");
 					$("#datafeed").append("<p>"+ data.avaliacao_media +"</p>");
+					
+					$("#starRating").rateYo({
+					  	readOnly: true,
+					  	numStars: 5,
+					    rating: data.avaliacao_media,
+					    starWidth: "40px",
+		   				halfStar: true
+
+					  });
 
 			}).fail(function(jqXHR,htmlError,error){
 				console.log(jqXHR.responseText);
