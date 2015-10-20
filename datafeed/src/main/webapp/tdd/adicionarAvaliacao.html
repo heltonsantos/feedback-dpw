@@ -6,7 +6,7 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript">
 		var postData = {nome_usuario:"up",email_usuario:"up",avaliacao:5,comentario:"up"}; 
-		var dataset_id = 2;
+		var dataset_id = 1;
 		var json = JSON.stringify(postData);
 		console.log(json);
 		
@@ -14,8 +14,7 @@
 		    headers: {"Content-Type": "application/json"},
 		    type: "POST",
 		    url: "http://localhost:8080/datafeed/rest/avaliacao/adicionar?dataset_id=" + dataset_id,
-		    data: json,
-		    dataType: "json"
+		    data: json
 		    
 		 }).done(function( data, textStatus, jqXHR ) {
 			 
