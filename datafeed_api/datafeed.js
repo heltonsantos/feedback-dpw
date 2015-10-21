@@ -1,10 +1,10 @@
-/*Load Datafeed API*/
+/*Carrega a Datafeed API*/
 function loadDatafeed(dataset_id){
 	loadFeedback(dataset_id);
 	loadAvaliacao(dataset_id);
 }
 
-/*Load Feedback on Page*/
+/*Carrega o Feedback na pagina*/
 function loadFeedback(dataset_id){
 	var url = "http://localhost:8080/datafeed/rest/feedback/buscar?dataset_id=" + dataset_id;
 	var data = ajaxGet(url);
@@ -22,7 +22,8 @@ function loadFeedback(dataset_id){
 		$("#df_feedback").append("<p>"+ "id: " + id +"</p>");
 		$("#df_feedback").append("<p>"+ "dataset id: " + dataset_id +"</p>");
 		$("#df_feedback").append("<p>"+ "avaliacao media: " + avaliacao_media +"</p>");
-		
+		$("#df_feedback").append("<button id='dt_button_avaliar'>Avaliar</button>");
+
 		$("#df_starRating").rateYo({
 		  	readOnly: true,
 		  	numStars: 5,
@@ -31,20 +32,26 @@ function loadFeedback(dataset_id){
 			halfStar: true
 
 		});
+
+		document.getElementById("dt_button_avaliar").addEventListener("click", function(event) {
+    		loadAvaliarForm(dataset_id);		
+		}, false);
 	}
 	else{
 		alert("Ocorreu um erro no carregamento do feedback!")
 	}
 }
 
-/*Load Avaliacao on Page*/
+/*Carrega a Avaliacao na pagina*/
 function loadAvaliacao(dataset_id){
 	var offset = 0;
 	var limit = 5;
 	var url = "http://localhost:8080/datafeed/rest/avaliacao/buscar?dataset_id=" + dataset_id + "&offset=" + offset + "&limit=" + limit;
 	var data = ajaxGet(url);
+	
 	if(data!=null){
 		$("#datafeed").append("<div id='df_avaliacao'></div>");
+
 		for (var prop in data) { 
 			console.log(data[prop].id + " " + data[prop].data_avaliacao + " " + data[prop].nome_usuario + " " + data[prop].email_usuario + " " + data[prop].avaliacao.toFixed(2) + " " + data[prop].comentario);
 			
@@ -58,13 +65,13 @@ function loadAvaliacao(dataset_id){
 			$("#df_avaliacao" + prop).append("<p>"+ "comentario: " + data[prop].comentario +"</p>");
 
 			$("#df_starRatingAvaliacao" + data[prop].id).rateYo({
-		  	readOnly: true,
-		  	numStars: 5,
-		    rating: data[prop].avaliacao.toFixed(2),
-		    starWidth: "20px",
-			halfStar: true
+			  	readOnly: true,
+			  	numStars: 5,
+			    rating: data[prop].avaliacao.toFixed(2),
+			    starWidth: "20px",
+				halfStar: true
 
-		});
+			});
 		}
 
 	}
@@ -73,9 +80,65 @@ function loadAvaliacao(dataset_id){
 	}
 }
 
+/*Carrega o Formulario de Avaliacao*/
+function loadAvaliarForm(dataset_id){
+	console.log(dataset_id);
+	$("#df_feedback").append("<div id='df_avaliarForm'></div>");
+
+	$("#df_avaliarForm").append("<div id='df_starRatingAvaliarForm'></div>");
+
+	$("#df_avaliarForm").append("<label for='df_avaliarForm_nome_usuario'>nome_usuario: </label>");
+	$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_nome_usuario'/><br>");
+			
+	$("#df_avaliarForm").append("<label for='df_avaliarForm_email_usuario'>email_usuario: </label>");
+	$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_email_usuario'/><br>");
+			
+	//$("#df_avaliarForm").append("<label for='df_avaliarForm_avaliacao'>avaliacao: </label>");
+	//$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_avaliacao'/><br>");
+			
+	$("#df_avaliarForm").append("<label for='df_avaliarForm_comentario'>comentario: </label>");
+	$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_comentario'/><br>");
+			
+	$("#df_avaliarForm").append("<button id='df_avaliarForm_button'>Adicionar</button>");
+	
+
+	$("#df_starRatingAvaliarForm").rateYo({
+	  	readOnly: false,
+	  	numStars: 5,
+	    rating: 0,
+	    starWidth: "20px",
+		halfStar: true
+
+	});
+
+	document.getElementById("df_avaliarForm_button").addEventListener("click", function(event) {	
+    		var rating = $("#df_starRatingAvaliarForm").rateYo("rating");
+    		var json = {nome_usuario:$("#df_avaliarForm_nome_usuario").val(),email_usuario:$("#df_avaliarForm_email_usuario").val(),avaliacao:rating,comentario:$("#df_avaliarForm_comentario").val()};
+    		
+    		enviarAvaliarForm(dataset_id, json);
+
+	}, false);
+	
+}
+
+/*Carrega o Formulario de Avaliacao*/
+function enviarAvaliarForm(dataset_id, json){
+	var url = "http://localhost:8080/datafeed/rest/avaliacao/adicionar?dataset_id=" + dataset_id;
+	var verificacao = ajaxPost(url, json);
+
+	if(verificacao == true){
+		alert("Avaliação cadastrada com sucesso!");
+		$("#df_avaliarForm").remove();
+	}
+	else{
+		alert("A avaliação não pode ser cadastrada!")
+		$("#df_avaliarForm").remove();
+	}
+}
+
 /*Ajax Get
-	if successful return json data
-	if failure return null*/
+	Se for sucesso retorna o dado
+	Se for falha retorna nulo*/
 function ajaxGet(url) {
 	var data_return;
 	
@@ -102,8 +165,8 @@ function ajaxGet(url) {
 }
 
 /*Ajax Post Json
-	if successful return true
-	if failure return false */
+	Se for sucesso retorna true
+	Se for falha retorna false */
 function ajaxPost(url, json) {
 	var data_return;
 	$.ajax({
