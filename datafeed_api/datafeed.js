@@ -129,10 +129,12 @@ function enviarAvaliarForm(dataset_id, json){
 	if(verificacao == true){
 		alert("Avaliação cadastrada com sucesso!");
 		$("#df_avaliarForm").remove();
+		location.reload();
 	}
 	else{
 		alert("A avaliação não pode ser cadastrada!")
 		$("#df_avaliarForm").remove();
+		location.reload();
 	}
 }
 
