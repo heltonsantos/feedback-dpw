@@ -17,12 +17,13 @@ function loadFeedback(dataset_id){
 		console.log(id + " " + dataset_id + " " + avaliacao_media);
 							
 		$("#datafeed").empty();
-		$("#datafeed").append("<div id='starRating'></div>");
-		$("#datafeed").append("<p>"+ "id: " + id +"</p>");
-		$("#datafeed").append("<p>"+ "dataset id: " + dataset_id +"</p>");
-		$("#datafeed").append("<p>"+ "avaliacao media: " + avaliacao_media +"</p>");
+		$("#datafeed").append("<div id='df_feedback'></div>");
+		$("#df_feedback").append("<div id='df_starRating'></div>");
+		$("#df_feedback").append("<p>"+ "id: " + id +"</p>");
+		$("#df_feedback").append("<p>"+ "dataset id: " + dataset_id +"</p>");
+		$("#df_feedback").append("<p>"+ "avaliacao media: " + avaliacao_media +"</p>");
 		
-		$("#starRating").rateYo({
+		$("#df_starRating").rateYo({
 		  	readOnly: true,
 		  	numStars: 5,
 		    rating: avaliacao_media,
@@ -43,18 +44,20 @@ function loadAvaliacao(dataset_id){
 	var url = "http://localhost:8080/datafeed/rest/avaliacao/buscar?dataset_id=" + dataset_id + "&offset=" + offset + "&limit=" + limit;
 	var data = ajaxGet(url);
 	if(data!=null){
+		$("#datafeed").append("<div id='df_avaliacao'></div>");
 		for (var prop in data) { 
 			console.log(data[prop].id + " " + data[prop].data_avaliacao + " " + data[prop].nome_usuario + " " + data[prop].email_usuario + " " + data[prop].avaliacao.toFixed(2) + " " + data[prop].comentario);
 			
-			$("#datafeed").append("<div id='starRatingAvaliacao" + data[prop].id +"'></div>");			
-			$("#datafeed").append("<p>"+ "id: " + data[prop].id +"</p>");
-			$("#datafeed").append("<p>"+ "data avaliacao: " + data[prop].data_avaliacao +"</p>");
-			$("#datafeed").append("<p>"+ "nome usuario: " + data[prop].nome_usuario +"</p>");
-			$("#datafeed").append("<p>"+ "email usuario: " + data[prop].email_usuario +"</p>");
-			$("#datafeed").append("<p>"+ "avaliacao: " + data[prop].avaliacao.toFixed(2) +"</p>");
-			$("#datafeed").append("<p>"+ "comentario: " + data[prop].comentario +"</p>");
+			$("#df_avaliacao").append("<div id='df_avaliacao" + prop + "'></div>");
+			$("#df_avaliacao" + prop).append("<div id='df_starRatingAvaliacao" + data[prop].id +"'></div>");			
+			$("#df_avaliacao" + prop).append("<p>"+ "id: " + data[prop].id +"</p>");
+			$("#df_avaliacao" + prop).append("<p>"+ "data avaliacao: " + data[prop].data_avaliacao +"</p>");
+			$("#df_avaliacao" + prop).append("<p>"+ "nome usuario: " + data[prop].nome_usuario +"</p>");
+			$("#df_avaliacao" + prop).append("<p>"+ "email usuario: " + data[prop].email_usuario +"</p>");
+			$("#df_avaliacao" + prop).append("<p>"+ "avaliacao: " + data[prop].avaliacao.toFixed(2) +"</p>");
+			$("#df_avaliacao" + prop).append("<p>"+ "comentario: " + data[prop].comentario +"</p>");
 
-			$("#starRatingAvaliacao" + data[prop].id).rateYo({
+			$("#df_starRatingAvaliacao" + data[prop].id).rateYo({
 		  	readOnly: true,
 		  	numStars: 5,
 		    rating: data[prop].avaliacao.toFixed(2),
