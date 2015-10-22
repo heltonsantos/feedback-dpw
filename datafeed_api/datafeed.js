@@ -83,6 +83,12 @@ function loadAvaliacao(dataset_id){
 /*Carrega o Formulario de Avaliacao*/
 function loadAvaliarForm(dataset_id){
 	console.log(dataset_id);
+
+	if ($("#df_avaliarForm").length){
+		
+		$("#df_avaliarForm").remove();
+	}
+
 	$("#df_feedback").append("<div id='df_avaliarForm'></div>");
 
 	$("#df_avaliarForm").append("<div id='df_starRatingAvaliarForm'></div>");
@@ -92,9 +98,6 @@ function loadAvaliarForm(dataset_id){
 			
 	$("#df_avaliarForm").append("<label for='df_avaliarForm_email_usuario'>email_usuario: </label>");
 	$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_email_usuario'/><br>");
-			
-	//$("#df_avaliarForm").append("<label for='df_avaliarForm_avaliacao'>avaliacao: </label>");
-	//$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_avaliacao'/><br>");
 			
 	$("#df_avaliarForm").append("<label for='df_avaliarForm_comentario'>comentario: </label>");
 	$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_comentario'/><br>");
