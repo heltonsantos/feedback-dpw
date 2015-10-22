@@ -40,19 +40,19 @@ public class AvaliacaoTest {
         avaliacao.setComentario("up up");
         avaliacao.setAvaliacao(4.5);
         
-        servicoAvaliacao.adicionarAvaliacao(1, avaliacao);
+        servicoAvaliacao.adicionarAvaliacao("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", avaliacao);
 	}
 	
 	//@Test
 	public void atualizarAvaliacao() {
 		
-		Feedback feedback = servicoFeedback.buscarFeedback(1);
+		Feedback feedback = servicoFeedback.buscarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
 		List<Avaliacao> list = feedback.getAvaliacao();
 		
 		list.get(0).setComentario("alterou");
 		list.get(0).setAvaliacao(4.0);
 		 
-        servicoAvaliacao.atualizarAvaliacao(1, list.get(0));
+        servicoAvaliacao.atualizarAvaliacao("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", list.get(0));
 	}
 	
 	//@Test
@@ -73,7 +73,7 @@ public class AvaliacaoTest {
 		List<Avaliacao> avaliacaoList;
 		ObjectMapper mapper = new ObjectMapper();
 		
-		avaliacaoList = servicoAvaliacao.buscarAvaliacaoList(1, 0, 0);
+		avaliacaoList = servicoAvaliacao.buscarAvaliacaoList("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", 0, 0);
 		
 		try {
 			System.out.println(mapper.writeValueAsString(avaliacaoList));

@@ -19,7 +19,7 @@ public class HibernateTest {
         session.beginTransaction();
         
         Feedback feedback = new Feedback();   
-        feedback.setDataset_id(1);
+        feedback.setDataset_id("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
         feedback.setAvaliacao_media(8.5);
         session.save(feedback);
               

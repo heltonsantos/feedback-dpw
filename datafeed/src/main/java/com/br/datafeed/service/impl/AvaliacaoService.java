@@ -18,7 +18,7 @@ public class AvaliacaoService implements IAvaliacaoService{
 	@Inject
 	IFeedbackRepository feedbackRepository;
 
-	public void adicionarAvaliacao(int dataset_id, Avaliacao avaliacao) {
+	public void adicionarAvaliacao(String dataset_id, Avaliacao avaliacao) {
 		
 		Feedback feedback = feedbackRepository.buscarFeedback(dataset_id);
 		
@@ -38,7 +38,7 @@ public class AvaliacaoService implements IAvaliacaoService{
 		
 	}
 
-	public void atualizarAvaliacao(int dataset_id, Avaliacao avaliacao) {
+	public void atualizarAvaliacao(String dataset_id, Avaliacao avaliacao) {
 		
 		Feedback feedback = feedbackRepository.buscarFeedback(dataset_id);
 		
@@ -68,7 +68,7 @@ public class AvaliacaoService implements IAvaliacaoService{
 		
 	}
 
-	public List<Avaliacao> buscarAvaliacaoList(int dataset_id, int offset, int limit) {
+	public List<Avaliacao> buscarAvaliacaoList(String dataset_id, int offset, int limit) {
 		return avaliacaoRepository.buscarAvaliacaoList(dataset_id, offset, limit);
 	}
 

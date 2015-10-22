@@ -29,7 +29,7 @@ public class FeedbackRest {
 	@GET
     @Path("/buscar")
     @Produces("application/json")
-    public Response buscarFeedback(@QueryParam("dataset_id") int dataset_id){
+    public Response buscarFeedback(@QueryParam("dataset_id") String dataset_id){
 		
 		Feedback feedback = new Feedback();
 		Feedback newFeedback = new Feedback();

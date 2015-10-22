@@ -49,7 +49,7 @@ public class FeedbackRepository implements IFeedbackRepository{
 		
 	}
 	
-	public Feedback buscarFeedback(int dataset_id) {
+	public Feedback buscarFeedback(String dataset_id) {
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
         session.beginTransaction();
@@ -68,7 +68,7 @@ public class FeedbackRepository implements IFeedbackRepository{
 		return feedback;
 	}
 	
-	public Feedback buscarFeedbackView(int dataset_id) {
+	public Feedback buscarFeedbackView(String dataset_id) {
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
         session.beginTransaction();

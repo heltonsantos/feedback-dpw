@@ -87,7 +87,7 @@ public class AvaliacaoRepository implements IAvaliacaoRepository{
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Avaliacao> buscarAvaliacaoList(int dataset_id, int offset, int limit) {
+	public List<Avaliacao> buscarAvaliacaoList(String dataset_id, int offset, int limit) {
 		
 		Session session = HibernateUtil.getSessionFactory().openSession();	 
         session.beginTransaction();

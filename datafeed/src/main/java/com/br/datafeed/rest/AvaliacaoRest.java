@@ -35,7 +35,7 @@ public class AvaliacaoRest {
 	@POST
     @Path("/adicionar")
 	@Consumes("application/json")
-    public Response adicionarFeedback(@QueryParam("dataset_id") int dataset_id, Avaliacao avaliacao){
+    public Response adicionarFeedback(@QueryParam("dataset_id") String dataset_id, Avaliacao avaliacao){
 		
 		Date data = new Date();
 		avaliacao.setData_avaliacao(data);
@@ -56,7 +56,7 @@ public class AvaliacaoRest {
 	@GET
     @Path("/buscar")
     @Produces("application/json")
-    public Response buscarAvaliacaoList(@QueryParam("dataset_id") int dataset_id, @QueryParam("offset") int offset, @QueryParam("limit") int limit){
+    public Response buscarAvaliacaoList(@QueryParam("dataset_id") String dataset_id, @QueryParam("offset") int offset, @QueryParam("limit") int limit){
 		
 		List<Avaliacao> avaliacaoList;
 		ObjectMapper mapper = new ObjectMapper();

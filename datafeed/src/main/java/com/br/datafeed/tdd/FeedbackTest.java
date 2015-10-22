@@ -24,7 +24,7 @@ public class FeedbackTest {
 	public void adicionarFeedback() {
 		
 		Feedback feedback = new Feedback();   
-        feedback.setDataset_id(1);
+        feedback.setDataset_id("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
         
         servico.adicionarFeedback(feedback);
 		
@@ -32,7 +32,7 @@ public class FeedbackTest {
 	
 	//@Test
 	public void buscarFeedback() throws JsonGenerationException, JsonMappingException, IOException {
-		Feedback feedback = servico.buscarFeedback(1);
+		Feedback feedback = servico.buscarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(mapper.writeValueAsString(feedback));
@@ -42,7 +42,7 @@ public class FeedbackTest {
 	//@Test
 	public void atualizarFeedback() {
 		
-		Feedback feedback = servico.buscarFeedback(1);
+		Feedback feedback = servico.buscarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
 		
         feedback.setAvaliacao_media(9.5);
         
@@ -52,7 +52,7 @@ public class FeedbackTest {
 	
 	//@Test
 	public void buscarFeedbackView() throws JsonGenerationException, JsonMappingException, IOException {
-		Feedback feedback = servico.buscarFeedbackView(1);
+		Feedback feedback = servico.buscarFeedbackView("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
 		
 		ObjectMapper mapper = new ObjectMapper();
 		System.out.println(mapper.writeValueAsString(feedback));
@@ -64,10 +64,10 @@ public class FeedbackTest {
 		Feedback feedback = new Feedback();
 		Feedback newFeedback = new Feedback();
 		
-		feedback = servico.buscarFeedbackView(10);
+		feedback = servico.buscarFeedbackView("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
 		
 		if(feedback == null){
-			newFeedback.setDataset_id(10);
+			newFeedback.setDataset_id("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
 			servico.adicionarFeedback(newFeedback);
 		}
 		else{

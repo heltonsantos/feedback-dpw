@@ -10,6 +10,6 @@ public interface IAvaliacaoRepository {
 	public void atualizarAvaliacao(Avaliacao avaliacao);
 	public Avaliacao buscarAvaliacao(int avaliacao_id);
 	public void deletarAvaliacao(Avaliacao avaliacao);
-	public List<Avaliacao> buscarAvaliacaoList(int dataset_id, int offset, int limit);
+	public List<Avaliacao> buscarAvaliacaoList(String dataset_id, int offset, int limit);
 
 }

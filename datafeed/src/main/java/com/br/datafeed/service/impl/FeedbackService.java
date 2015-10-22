@@ -20,11 +20,11 @@ public class FeedbackService implements IFeedbackService{
 		
 	}
 
-	public Feedback buscarFeedback(int dataset_id) {
+	public Feedback buscarFeedback(String dataset_id) {
 		return repository.buscarFeedback(dataset_id);
 	}
 	
-	public Feedback buscarFeedbackView(int dataset_id) {
+	public Feedback buscarFeedbackView(String dataset_id) {
 		return repository.buscarFeedbackView(dataset_id);
 	}
 }

@@ -20,7 +20,7 @@ public class Feedback {
 	private int id;
 	
 	@Column(name="DATASET_ID", unique=true, nullable=false)
-	private int dataset_id;
+	private String dataset_id;
 	
 	@Column(name="AVALIACAO_MEDIA", nullable=false)
 	private double avaliacao_media;
@@ -39,10 +39,10 @@ public class Feedback {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getDataset_id() {
+	public String getDataset_id() {
 		return dataset_id;
 	}
-	public void setDataset_id(int dataset_id) {
+	public void setDataset_id(String dataset_id) {
 		this.dataset_id = dataset_id;
 	}
 	public double getAvaliacao_media() {
