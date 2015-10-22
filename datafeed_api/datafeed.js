@@ -1,15 +1,17 @@
+/*DataFeed URL*/
+$urlBase = "http://localhost:8080/datafeed/";
+
 /*Carrega a Datafeed API*/
 function loadDatafeed(dataset_id){
 	loadFeedback(dataset_id);
-	loadAvaliacao(dataset_id);
 }
 
 /*Carrega o Feedback na pagina*/
 function loadFeedback(dataset_id){
-	var url = "http://localhost:8080/datafeed/rest/feedback/buscar?dataset_id=" + dataset_id;
+	var url = $urlBase + "rest/feedback/buscar?dataset_id=" + dataset_id;
 	var data = ajaxGet(url);
 
-	if(data!=null){
+	if(data!="fail"){
 		var id = data.id;
 		var dataset_id = data.dataset_id;
 		var avaliacao_media = data.avaliacao_media.toFixed(2);
@@ -33,12 +35,14 @@ function loadFeedback(dataset_id){
 
 		});
 
-		document.getElementById("dt_button_avaliar").addEventListener("click", function(event) {
+		loadAvaliacao(dataset_id);
+
+		$("#dt_button_avaliar").click(function() {
     		loadAvaliarForm(dataset_id);		
-		}, false);
+		});
 	}
 	else{
-		alert("Ocorreu um erro no carregamento do feedback!")
+		alert("Ocorreu um erro no carregamento do feedback!");
 	}
 }
 
@@ -46,10 +50,10 @@ function loadFeedback(dataset_id){
 function loadAvaliacao(dataset_id){
 	var offset = 0;
 	var limit = 5;
-	var url = "http://localhost:8080/datafeed/rest/avaliacao/buscar?dataset_id=" + dataset_id + "&offset=" + offset + "&limit=" + limit;
+	var url = $urlBase + "rest/avaliacao/buscar?dataset_id=" + dataset_id + "&offset=" + offset + "&limit=" + limit;
 	var data = ajaxGet(url);
 	
-	if(data!=null){
+	if(data!="fail"){
 		$("#datafeed").append("<div id='df_avaliacao'></div>");
 
 		for (var prop in data) { 
@@ -76,16 +80,14 @@ function loadAvaliacao(dataset_id){
 
 	}
 	else{
-
+		alert("Ocorreu um erro no carregamento da avaliação!");
 	}
 }
 
 /*Carrega o Formulario de Avaliacao*/
 function loadAvaliarForm(dataset_id){
-	console.log(dataset_id);
-
+	
 	if ($("#df_avaliarForm").length){
-		
 		$("#df_avaliarForm").remove();
 	}
 
@@ -103,7 +105,6 @@ function loadAvaliarForm(dataset_id){
 	$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_comentario'/><br>");
 			
 	$("#df_avaliarForm").append("<button id='df_avaliarForm_button'>Adicionar</button>");
-	
 
 	$("#df_starRatingAvaliarForm").rateYo({
 	  	readOnly: false,
@@ -114,19 +115,19 @@ function loadAvaliarForm(dataset_id){
 
 	});
 
-	document.getElementById("df_avaliarForm_button").addEventListener("click", function(event) {	
-    		var rating = $("#df_starRatingAvaliarForm").rateYo("rating");
-    		var json = {nome_usuario:$("#df_avaliarForm_nome_usuario").val(),email_usuario:$("#df_avaliarForm_email_usuario").val(),avaliacao:rating,comentario:$("#df_avaliarForm_comentario").val()};
-    		
-    		enviarAvaliarForm(dataset_id, json);
+	$("#df_avaliarForm_button").click(function() {	
+		var rating = $("#df_starRatingAvaliarForm").rateYo("rating");
+		var json = {nome_usuario:$("#df_avaliarForm_nome_usuario").val(),email_usuario:$("#df_avaliarForm_email_usuario").val(),avaliacao:rating,comentario:$("#df_avaliarForm_comentario").val()};
+		
+		enviarAvaliarForm(dataset_id, json);
 
-	}, false);
+	});
 	
 }
 
 /*Carrega o Formulario de Avaliacao*/
 function enviarAvaliarForm(dataset_id, json){
-	var url = "http://localhost:8080/datafeed/rest/avaliacao/adicionar?dataset_id=" + dataset_id;
+	var url = $urlBase + "rest/avaliacao/adicionar?dataset_id=" + dataset_id;
 	var verificacao = ajaxPost(url, json);
 
 	if(verificacao == true){
@@ -162,7 +163,7 @@ function ajaxGet(url) {
     	console.log(textStatus);
     	console.log(errorThrown);
 
-    	data_return = null;
+    	data_return = "fail";
   	});
 	
 	console.log(data_return);
