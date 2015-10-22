@@ -3,7 +3,7 @@ $urlBase = "http://localhost:8080/datafeed/";
 
 /*Carrega a Datafeed API*/
 function loadDatafeed(dataset_id){
-	loadFeedback(dataset_id);
+	loadFeedback(encodeURIComponent(dataset_id));
 }
 
 /*Carrega o Feedback na pagina*/
@@ -11,25 +11,21 @@ function loadFeedback(dataset_id){
 	var url = $urlBase + "rest/feedback/buscar?dataset_id=" + dataset_id;
 	var data = ajaxGet(url);
 
-	if(data!="fail"){
-		var id = data.id;
-		var dataset_id = data.dataset_id;
-		var avaliacao_media = data.avaliacao_media.toFixed(2);
-							
-		console.log(id + " " + dataset_id + " " + avaliacao_media);
+	if(data!="fail"){					
+		console.log(data.id + " " + data.dataset_id + " " + data.avaliacao_media.toFixed(2));
 							
 		$("#datafeed").empty();
 		$("#datafeed").append("<div id='df_feedback'></div>");
 		$("#df_feedback").append("<div id='df_starRating'></div>");
-		$("#df_feedback").append("<p>"+ "id: " + id +"</p>");
-		$("#df_feedback").append("<p>"+ "dataset id: " + dataset_id +"</p>");
-		$("#df_feedback").append("<p>"+ "avaliacao media: " + avaliacao_media +"</p>");
+		$("#df_feedback").append("<p>"+ "id: " + data.id +"</p>");
+		$("#df_feedback").append("<p>"+ "dataset id: " +  data.dataset_id +"</p>");
+		$("#df_feedback").append("<p>"+ "avaliacao media: " + data.avaliacao_media.toFixed(2) +"</p>");
 		$("#df_feedback").append("<button id='dt_button_avaliar'>Avaliar</button>");
 
 		$("#df_starRating").rateYo({
 		  	readOnly: true,
 		  	numStars: 5,
-		    rating: avaliacao_media,
+		    rating: data.avaliacao_media.toFixed(2),
 		    starWidth: "40px",
 			halfStar: true
 
@@ -86,7 +82,7 @@ function loadAvaliacao(dataset_id){
 
 /*Carrega o Formulario de Avaliacao*/
 function loadAvaliarForm(dataset_id){
-	
+
 	if ($("#df_avaliarForm").length){
 		$("#df_avaliarForm").remove();
 	}
