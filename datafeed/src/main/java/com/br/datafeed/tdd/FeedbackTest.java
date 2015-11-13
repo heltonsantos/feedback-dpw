@@ -3,6 +3,8 @@ package com.br.datafeed.tdd;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
@@ -10,73 +12,106 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 
 import com.br.datafeed.inject.FeedbackModule;
+import com.br.datafeed.inject.DatasetModule;
 import com.br.datafeed.model.Feedback;
+import com.br.datafeed.model.Dataset;
 import com.br.datafeed.service.IFeedbackService;
+import com.br.datafeed.service.IDatasetService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
 public class FeedbackTest {
 	
-	Injector injector = Guice.createInjector(new FeedbackModule());
-	IFeedbackService servico = injector.getInstance(IFeedbackService.class);
+	Injector injectorFeedback = Guice.createInjector(new FeedbackModule());
+	IFeedbackService servicoFeedback = injectorFeedback.getInstance(IFeedbackService.class);
+	
+	Injector injectorDataset = Guice.createInjector(new DatasetModule());
+	IDatasetService servicoDataset = injectorDataset.getInstance(IDatasetService.class);
 
 	//@Test
-	public void adicionarFeedback() {
+	public void adicionarFeedbackRating() {
+			
+		Date date = new Date();
 		
-		Feedback feedback = new Feedback();   
-        feedback.setDataset_id("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
-        
-        servico.adicionarFeedback(feedback);
-		
-	}
-	
-	//@Test
-	public void buscarFeedback() throws JsonGenerationException, JsonMappingException, IOException {
-		Feedback feedback = servico.buscarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
-		
-		ObjectMapper mapper = new ObjectMapper();
-		System.out.println(mapper.writeValueAsString(feedback));
-				
-	}
-	
-	//@Test
-	public void atualizarFeedback() {
-		
-		Feedback feedback = servico.buscarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
-		
-        feedback.setAvaliacao_media(9.5);
-        
-        servico.atualizarFeedback(feedback);
-		
-	}
-	
-	//@Test
-	public void buscarFeedbackView() throws JsonGenerationException, JsonMappingException, IOException {
-		Feedback feedback = servico.buscarFeedbackView("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
-		
-		ObjectMapper mapper = new ObjectMapper();
-		System.out.println(mapper.writeValueAsString(feedback));
-				
-	}
-	
-	//@Test
-	public void buscarAdicionarFeedback() throws JsonGenerationException, JsonMappingException, IOException {
 		Feedback feedback = new Feedback();
-		Feedback newFeedback = new Feedback();
+        feedback.setDateSubmitted(date);
+        feedback.setHasBody("4.5");
+        feedback.setMotivatedBy("RATING");
+        
+        servicoFeedback.adicionarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", feedback);
+	}
+	
+	//@Test
+	public void atualizarFeedbackRating() {
 		
-		feedback = servico.buscarFeedbackView("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
+		Dataset dataset = servicoDataset.buscarDataset("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
+		List<Feedback> list = dataset.getFeedback();
 		
-		if(feedback == null){
-			newFeedback.setDataset_id("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
-			servico.adicionarFeedback(newFeedback);
-		}
-		else{
+		list.get(0).setHasBody("3.0");;
+		list.get(0).setMotivatedBy("RATING");
+		 
+        servicoFeedback.atualizarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", list.get(0));
+	}
+	
+
+	//@Test
+	public void adicionarFeedbackCorrection() {
+			
+		Date date = new Date();
 		
+		Feedback feedback = new Feedback();
+        feedback.setDateSubmitted(date);
+        feedback.setHasBody("Defeito relatado");
+        feedback.setMotivatedBy("CORRECTION");
+        
+        servicoFeedback.adicionarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", feedback);
+	}
+	
+	//@Test
+	public void atualizarFeedbackCorrection() {
+		
+		Dataset dataset = servicoDataset.buscarDataset("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
+		List<Feedback> list = dataset.getFeedback();
+		
+		list.get(0).setHasBody("Defeito");;
+		list.get(0).setMotivatedBy("CORRECTION");
+		 
+        servicoFeedback.atualizarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", list.get(0));
+	}
+	
+	
+	//@Test
+	public void buscarFeedback() {
+        
+        Feedback feedback = servicoFeedback.buscarFeedback(1);
+        System.out.println(feedback.getHasBody());
+	}
+	
+	//@Test
+	public void deletaFeedback() {
+        
+		servicoFeedback.deletarFeedback(1);
+	}
+	
+	//@Test
+	public void buscarFeedbackList() {
+		List<Feedback> feedbackList;
 		ObjectMapper mapper = new ObjectMapper();
-		System.out.println(mapper.writeValueAsString(feedback));
 		
+		feedbackList = servicoFeedback.buscarFeedbackList("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", 0, 0);
+		
+		try {
+			System.out.println(mapper.writeValueAsString(feedbackList));
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-				
 	}
 
 }

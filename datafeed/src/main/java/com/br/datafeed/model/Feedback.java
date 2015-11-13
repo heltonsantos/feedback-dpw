@@ -1,63 +1,88 @@
 package com.br.datafeed.model;
 
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 @Entity
-@Table(name="feedback")
+@Table(name="Feedback")
 public class Feedback {
 	
+	public final static String MOTIVATED_BY_RATING = "RATING";
+	public final static String MOTIVATED_BY_CORRECTION = "CORRECTION";
+	
 	@Id
-	@GeneratedValue
-	@Column(name="ID")
+    @GeneratedValue
+    @Column(name="id")
 	private int id;
 	
-	@Column(name="DATASET_ID", unique=true, nullable=false)
-	private String dataset_id;
+	@JsonSerialize(using=com.br.datafeed.util.JsonDateSerializer.class)
+	@Column(name="dateSubmitted", nullable=false)
+	private Date dateSubmitted;
 	
-	@Column(name="AVALIACAO_MEDIA", nullable=false)
-	private double avaliacao_media;
+	@Column(name="hasBody", nullable=false)
+	private String hasBody;
 	
-	@OneToMany(mappedBy="feedback", fetch = FetchType.EAGER)
-	private List<Avaliacao> avaliacao;
+	@Column(name="motivatedBy")
+	private String motivatedBy;
+	
+	@ManyToOne
+	@JoinColumn(name="hasTarget", nullable=false)
+	@JsonIgnore
+	private Dataset hasTarget;
 	
 	public Feedback() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getDataset_id() {
-		return dataset_id;
-	}
-	public void setDataset_id(String dataset_id) {
-		this.dataset_id = dataset_id;
-	}
-	public double getAvaliacao_media() {
-		return avaliacao_media;
-	}
-	public void setAvaliacao_media(double avaliacao_media) {
-		this.avaliacao_media = avaliacao_media;
+
+	public Date getDateSubmitted() {
+		return dateSubmitted;
 	}
 
-	public List<Avaliacao> getAvaliacao() {
-		return avaliacao;
+	public void setDateSubmitted(Date dateSubmitted) {
+		this.dateSubmitted = dateSubmitted;
 	}
 
-	public void setAvaliacao(List<Avaliacao> avaliacao) {
-		this.avaliacao = avaliacao;
+	public String getHasBody() {
+		return hasBody;
 	}
 
+	public void setHasBody(String hasBody) {
+		this.hasBody = hasBody;
+	}
+
+	public String getMotivatedBy() {
+		return motivatedBy;
+	}
+
+	public void setMotivatedBy(String motivatedBy) {
+		this.motivatedBy = motivatedBy;
+	}
+
+	public Dataset getHasTarget() {
+		return hasTarget;
+	}
+
+	public void setHasTarget(Dataset hasTarget) {
+		this.hasTarget = hasTarget;
+	}
+		
 }

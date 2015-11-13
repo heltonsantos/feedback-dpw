@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
-import java.util.Date;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -18,7 +17,6 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 
-import com.br.datafeed.model.Avaliacao;
 import com.br.datafeed.model.Feedback;
 
 public class ServicesRestTest {
@@ -63,20 +61,18 @@ public class ServicesRestTest {
 		  }
 	}	
 	
-	//@Test
-	public void adicionarAvaliacao() throws JsonGenerationException, JsonMappingException, IOException {
+	@Test
+	public void adicionarFeedback() throws JsonGenerationException, JsonMappingException, IOException {
 		
-		String dataset_id = URLEncoder.encode("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", "UTF-8");
-		String url = "http://localhost:8080/datafeed/rest/avaliacao/adicionar?dataset_id=" + dataset_id;
+		String identifier = URLEncoder.encode("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", "UTF-8");
+		String url = "http://localhost:8080/datafeed/rest/feedback/adicionar?identifier=" + identifier;
 			
-		Avaliacao avaliacao = new Avaliacao();
-        avaliacao.setNome_usuario("helton1");
-        avaliacao.setEmail_usuario("helton1@gmail.com");
-        avaliacao.setComentario("up up");
-        avaliacao.setAvaliacao(5.0);
+		Feedback feedback = new Feedback();
+        feedback.setHasBody("4.5");
+        feedback.setMotivatedBy("RATING");
 		
 		ObjectMapper mapper = new ObjectMapper();
-		String json = mapper.writeValueAsString(avaliacao);
+		String json = mapper.writeValueAsString(feedback);
 		System.out.println(json);
 		
 		executarPost(json, url);

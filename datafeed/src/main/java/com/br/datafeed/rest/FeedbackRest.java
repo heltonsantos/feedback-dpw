@@ -1,8 +1,14 @@
 package com.br.datafeed.rest;
 
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
 
+import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -26,63 +32,64 @@ public class FeedbackRest {
 	Injector injector = Guice.createInjector(new FeedbackModule());
 	IFeedbackService servico = injector.getInstance(IFeedbackService.class);
 	
+	@POST
+    @Path("/adicionar")
+	@Consumes("application/json")
+    public Response adicionarFeedback(@QueryParam("identifier") String identifier, Feedback feedback){
+
+		Date data = new Date();
+		feedback.setDateSubmitted(data);
+		
+		try {	
+		servico.adicionarFeedback(identifier, feedback);
+		return Response.ok().build();
+		
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+	    	return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();	
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    	return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();	
+	    }
+    }
+	
 	@GET
     @Path("/buscar")
     @Produces("application/json")
-    public Response buscarFeedback(@QueryParam("dataset_id") String dataset_id){
+    public Response buscarFeedbackList(@QueryParam("identifier") String identifier, @QueryParam("offset") int offset, @QueryParam("limit") int limit){
 		
-		Feedback feedback = new Feedback();
-		Feedback newFeedback = new Feedback();
+		List<Feedback> feedbackList;
 		ObjectMapper mapper = new ObjectMapper();
 		String json;
 		
-		feedback = servico.buscarFeedbackView(dataset_id);
+		feedbackList = servico.buscarFeedbackList(identifier, offset, limit);
 		
-		if(feedback == null){
-			newFeedback.setDataset_id(dataset_id);
-			servico.adicionarFeedback(newFeedback);
-			
-			feedback = servico.buscarFeedbackView(dataset_id);
-			
-			try {
-				json = mapper.writeValueAsString(feedback);
-				return Response.ok(json, MediaType.APPLICATION_JSON).build();
-			} catch (JsonGenerationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();			
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();		
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();				
-			}
-			
+		try {
+			json = mapper.writeValueAsString(feedbackList);
+			return Response.ok(json, MediaType.APPLICATION_JSON).build();
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();		
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();	
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();	
 		}
-		else{
 		
-			try {
-				json = mapper.writeValueAsString(feedback);
-				return Response.ok(json, MediaType.APPLICATION_JSON).build();
-				
-			} catch (JsonGenerationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return Response.status(Status.EXPECTATION_FAILED).build();		
-			} catch (JsonMappingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return Response.status(Status.EXPECTATION_FAILED).build();		
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return Response.status(Status.EXPECTATION_FAILED).build();		
-			}
-		}
-			
-    }
-
+	}
+	
+	@DELETE
+	@Path("/deletar")
+	public Response deletarFeedback(@QueryParam("feedback_id") int feedback_id){
+		
+		servico.deletarFeedback(feedback_id);
+		
+		return Response.ok().build();
+		
+	}
 }
