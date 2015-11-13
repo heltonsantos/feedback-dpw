@@ -14,5 +14,6 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 		<mapping class="com.br.datafeed.model.Dataset"/>
 		<mapping class="com.br.datafeed.model.Feedback"/>
+		<mapping class="com.br.datafeed.model.Person"/>
 	</session-factory>
 </hibernate-configuration>

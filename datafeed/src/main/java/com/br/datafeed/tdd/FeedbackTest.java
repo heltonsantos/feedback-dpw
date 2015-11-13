@@ -54,7 +54,7 @@ public class FeedbackTest {
 	}
 	
 
-	//@Test
+	@Test
 	public void adicionarFeedbackCorrection() {
 			
 		Date date = new Date();

@@ -2,37 +2,28 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>Buscar Feedback</title>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>	
-		<!-- RateYo Framework -->
-		<link rel="stylesheet" href="rateYo/2.0.1/jquery.rateyo.min.css">
-		<script src="rateYo/2.0.1/jquery.rateyo.min.js"></script>	
-		<script type="text/javascript">			
+	<title>Buscar Avaliação</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script type="text/javascript">
 		$(function () {	
 			$("#button").click(function () {
-				var url = "http://localhost:8080/datafeed/rest/feedback/buscar?dataset_id=";
+				var url = "http://localhost:8080/datafeed/rest/avaliacao/buscar?dataset_id=";
 				var dataset_id = $("#dataset_id").val();
+				var offset = $("#offset").val();
+				var limit = $("#limit").val();
 				
-				$.get(url + dataset_id, function(data,status,xhr){
-						data.avaliacao_media = data.avaliacao_media.toFixed(2);
+				$.get(url + dataset_id + "&offset=" + offset + "&limit=" + limit, function(data,status,xhr){
+					
+					$("#datafeed").empty();
+					
+					for (var prop in data) {   
+						console.log(data[prop].id + " " + data[prop].data_avaliacao + " " + data[prop].nome_usuario);
 						
-						console.log(data.id + " " + data.dataset_id + " " + data.avaliacao_media);
-						
-						$("#datafeed").empty();
-						$("#datafeed").append("<div id='starRating'></div>");
-						$("#datafeed").append("<p>"+ "id: " + data.id +"</p>");
-						$("#datafeed").append("<p>"+ "dataset id: " + data.dataset_id +"</p>");
-						$("#datafeed").append("<p>"+ "avaliacao media: " + data.avaliacao_media +"</p>");
-						
-						$("#starRating").rateYo({
-						  	readOnly: true,
-						  	numStars: 5,
-						    rating: data.avaliacao_media,
-						    starWidth: "40px",
-			   				halfStar: true
-	
-						  });
-	
+						$("#datafeed").append("<p>"+ "id: " + data[prop].id +"</p>");
+						$("#datafeed").append("<p>"+ "data avaliacao: " + data[prop].data_avaliacao +"</p>");
+						$("#datafeed").append("<p>"+ "nome usuario: " + data[prop].nome_usuario +"</p>");
+					}	
+					
 				}).fail(function(jqXHR,htmlError,error){
 					console.log(jqXHR.responseText);
 				});
@@ -44,6 +35,12 @@
 		<div id="form">
 			<label for="dataset_id">dataset_id: </label>
 			<input type="text" id="dataset_id"/><br>
+			
+			<label for="offset">offset: </label>
+			<input type="text" id="offset"/><br>
+			
+			<label for="limit">limit: </label>
+			<input type="text" id="limit"/><br>
 			
 			<button id="button">Buscar</button>
 		</div>

@@ -40,6 +40,11 @@ public class Feedback {
 	@JsonIgnore
 	private Dataset hasTarget;
 	
+	@ManyToOne
+	@JoinColumn(name="annotatedBy", nullable=true)
+	@JsonIgnore
+	private Person annotatedBy;
+	
 	public Feedback() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -83,6 +88,14 @@ public class Feedback {
 
 	public void setHasTarget(Dataset hasTarget) {
 		this.hasTarget = hasTarget;
+	}
+
+	public Person getAnnotatedBy() {
+		return annotatedBy;
+	}
+
+	public void setAnnotatedBy(Person annotatedBy) {
+		this.annotatedBy = annotatedBy;
 	}
 		
 }

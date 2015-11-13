@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Buscar Dataset</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>	
+		<!-- RateYo Framework -->
+		<link rel="stylesheet" href="rateYo/2.0.1/jquery.rateyo.min.css">
+		<script src="rateYo/2.0.1/jquery.rateyo.min.js"></script>	
+		<script type="text/javascript">			
+		$(function () {	
+			$("#button").click(function () {
+				var url = "http://localhost:8080/datafeed/rest/dataset/buscar?identifier=";
+				var identifier = encodeURIComponent($("#identifier").val());
+				var title = $("#title").val();
+					
+				$.get(url + identifier + "&title=" + title, function(data,status,xhr){
+						data.hasRating = data.hasRating.toFixed(2);
+						
+						console.log(data.id + " " + data.identifier + " " + data.title + " " + data.hasRating);
+						
+						$("#datafeed").empty();
+						$("#datafeed").append("<div id='starRating'></div>");
+						$("#datafeed").append("<p>"+ "id: " + data.id +"</p>");
+						$("#datafeed").append("<p>"+ "Identificador: " + data.identifier +"</p>");
+						$("#datafeed").append("<p>"+ "Título: " + data.title +"</p>");
+						$("#datafeed").append("<p>"+ "Classificação: " + data.hasRating +"</p>");
+						
+						$("#starRating").rateYo({
+						  	readOnly: true,
+						  	numStars: 5,
+						    rating: data.hasRating,
+						    starWidth: "40px",
+			   				halfStar: true
+	
+						  });
+	
+				}).fail(function(jqXHR,htmlError,error){
+					console.log(jqXHR.responseText);
+				});
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<div id="form">
+			<label for="identifier">identifier: </label>
+			<input type="text" id="identifier"/><br>
+			<label for="title">title: </label>
+			<input type="text" id="title"/><br>
+			
+			<button id="button">Buscar</button>
+		</div>
+		<div id="datafeed"></div>
+	</body>
+</html>

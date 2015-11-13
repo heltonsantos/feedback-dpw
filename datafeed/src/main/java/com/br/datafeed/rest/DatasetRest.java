@@ -29,7 +29,7 @@ public class DatasetRest {
 	@GET
     @Path("/buscar")
     @Produces("application/json")
-    public Response buscarDataset(@QueryParam("identifier") String identifier){
+    public Response buscarDataset(@QueryParam("identifier") String identifier, @QueryParam("title") String title){
 		
 		Dataset dataset = new Dataset();
 		Dataset newDataset = new Dataset();
@@ -40,6 +40,7 @@ public class DatasetRest {
 		
 		if(dataset == null){
 			newDataset.setIdentifier(identifier);
+			newDataset.setTitle(title);
 			servico.adicionarDataset(newDataset);
 			
 			dataset = servico.buscarDatasetView(identifier);

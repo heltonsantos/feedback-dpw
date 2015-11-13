@@ -22,6 +22,9 @@ public class Dataset {
 	@Column(name="identifier", unique=true, nullable=false)
 	private String identifier;
 	
+	@Column(name="title", nullable=false)
+	private String title;
+	
 	@Column(name="hasRating", nullable=false)
 	private double hasRating;
 	
@@ -45,6 +48,15 @@ public class Dataset {
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
 	}
+	
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public double getHasRating() {
 		return hasRating;
 	}
