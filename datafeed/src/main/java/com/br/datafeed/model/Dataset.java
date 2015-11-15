@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="Dataset")
+@Table(name="dataset")
 public class Dataset {
 	
 	@Id

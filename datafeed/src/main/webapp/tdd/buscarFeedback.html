@@ -2,13 +2,13 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
-	<title>Buscar Avaliação</title>
+	<title>Buscar Feedback</title>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 		<script type="text/javascript">
 		$(function () {	
 			$("#button").click(function () {
-				var url = "http://localhost:8080/datafeed/rest/avaliacao/buscar?dataset_id=";
-				var dataset_id = $("#dataset_id").val();
+				var url = "http://localhost:8080/datafeed/rest/feedback/buscar?identifier=";
+				var dataset_id = encodeURIComponent($("#dataset_id").val());
 				var offset = $("#offset").val();
 				var limit = $("#limit").val();
 				
@@ -17,11 +17,12 @@
 					$("#datafeed").empty();
 					
 					for (var prop in data) {   
-						console.log(data[prop].id + " " + data[prop].data_avaliacao + " " + data[prop].nome_usuario);
+						console.log(data[prop].id + " " + data[prop].dateSubmitted + " " + data[prop].hasBody + " " + data[prop].motivatedBy);
 						
 						$("#datafeed").append("<p>"+ "id: " + data[prop].id +"</p>");
-						$("#datafeed").append("<p>"+ "data avaliacao: " + data[prop].data_avaliacao +"</p>");
-						$("#datafeed").append("<p>"+ "nome usuario: " + data[prop].nome_usuario +"</p>");
+						$("#datafeed").append("<p>"+ "dateSubmitted: " + data[prop].dateSubmitted +"</p>");
+						$("#datafeed").append("<p>"+ "hasBody: " + data[prop].hasBody +"</p>");
+						$("#datafeed").append("<p>"+ "motivatedBy: " + data[prop].motivatedBy +"</p>");
 					}	
 					
 				}).fail(function(jqXHR,htmlError,error){

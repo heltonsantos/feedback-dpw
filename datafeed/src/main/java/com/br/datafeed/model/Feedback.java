@@ -14,7 +14,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @Entity
-@Table(name="Feedback")
+@Table(name="feedback")
 public class Feedback {
 	
 	public final static String MOTIVATED_BY_RATING = "RATING";

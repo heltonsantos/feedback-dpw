@@ -94,7 +94,7 @@ public class FeedbackRepository implements IFeedbackRepository{
         List<Feedback> feedbackList;
 
         try{
-        	Criteria cr = session.createCriteria(Dataset.class).createAlias("Feedback", "f").add(Restrictions.eq("identifier", identifier))
+        	Criteria cr = session.createCriteria(Dataset.class).add(Restrictions.eq("identifier", identifier)).createAlias("feedback", "f")
         			.addOrder(Order.desc("f.dateSubmitted"))
         				.setProjection(Projections.projectionList()
               		      .add(Projections.property("f.id"), "id")
@@ -108,6 +108,8 @@ public class FeedbackRepository implements IFeedbackRepository{
         	 feedbackList = cr.list();
         	
         }catch(HibernateException e){
+        	System.out.println(e.getMessage());
+        	System.out.println(e.getSuppressed());
         	session.getTransaction().rollback();
         	return null;
         }
