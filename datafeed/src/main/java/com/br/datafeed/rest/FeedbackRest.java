@@ -21,8 +21,12 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.br.datafeed.inject.FeedbackModule;
+import com.br.datafeed.inject.PersonModule;
 import com.br.datafeed.model.Feedback;
+import com.br.datafeed.model.Person;
+import com.br.datafeed.rest.json.FeedbackAnnotated;
 import com.br.datafeed.service.IFeedbackService;
+import com.br.datafeed.service.IPersonService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -32,11 +36,51 @@ public class FeedbackRest {
 	Injector injector = Guice.createInjector(new FeedbackModule());
 	IFeedbackService servico = injector.getInstance(IFeedbackService.class);
 	
+	Injector injectorPerson = Guice.createInjector(new PersonModule());
+	IPersonService servicoPerson = injectorPerson.getInstance(IPersonService.class);
+
+	
 	@POST
     @Path("/adicionar")
 	@Consumes("application/json")
     public Response adicionarFeedback(@QueryParam("identifier") String identifier, Feedback feedback){
 
+		Date data = new Date();
+		feedback.setDateSubmitted(data);
+		
+		try {	
+		servico.adicionarFeedback(identifier, feedback);
+		return Response.ok().build();
+		
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+	    	return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();	
+	    } catch (Exception e) {
+	    	e.printStackTrace();
+	    	return Response.status(Status.EXPECTATION_FAILED).entity("Exception: " + e.toString()).build();	
+	    }
+    }
+	
+	@POST
+    @Path("/adicionarAnotado")
+	@Consumes("application/json")
+    public Response adicionarFeedbackAnotado(@QueryParam("identifier") String identifier, FeedbackAnnotated feedbackAnnotated){
+		
+		Feedback feedback = new Feedback();
+		Person person = new Person();
+		
+		feedback = feedbackAnnotated.getFeedback();
+		
+		person = servicoPerson.buscarPersonPorEmail(feedbackAnnotated.getPerson().getMbox());
+		
+		if(person == null){
+			servicoPerson.adicionarPerson(feedbackAnnotated.getPerson());
+			feedback.setAnnotatedBy(feedbackAnnotated.getPerson());
+		}
+		else{
+			feedback.setAnnotatedBy(person);
+		}
+	
 		Date data = new Date();
 		feedback.setDateSubmitted(data);
 		

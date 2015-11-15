@@ -12,10 +12,13 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Test;
 
 import com.br.datafeed.inject.FeedbackModule;
+import com.br.datafeed.inject.PersonModule;
 import com.br.datafeed.inject.DatasetModule;
 import com.br.datafeed.model.Feedback;
+import com.br.datafeed.model.Person;
 import com.br.datafeed.model.Dataset;
 import com.br.datafeed.service.IFeedbackService;
+import com.br.datafeed.service.IPersonService;
 import com.br.datafeed.service.IDatasetService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -27,6 +30,9 @@ public class FeedbackTest {
 	
 	Injector injectorDataset = Guice.createInjector(new DatasetModule());
 	IDatasetService servicoDataset = injectorDataset.getInstance(IDatasetService.class);
+	
+	Injector injectorPerson = Guice.createInjector(new PersonModule());
+	IPersonService servicoPerson = injectorPerson.getInstance(IPersonService.class);
 
 	//@Test
 	public void adicionarFeedbackRating() {
@@ -112,6 +118,21 @@ public class FeedbackTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void adicionarFeedbackAnotado() {
+        Person person = new Person();
+		
+		person = servicoPerson.buscarPersonPorEmail("hdas@cin.ufpe.br");
+		Date date = new Date();
+		Feedback feedback = new Feedback();
+        feedback.setDateSubmitted(date);
+        feedback.setHasBody("4.5");
+        feedback.setMotivatedBy("RATING");
+        feedback.setAnnotatedBy(person);
+        
+        servicoFeedback.adicionarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", feedback);
 	}
 
 }

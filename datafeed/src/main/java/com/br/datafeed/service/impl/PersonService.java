@@ -19,4 +19,8 @@ public class PersonService implements IPersonService{
 		return repository.buscarPerson(person_id);
 	}
 
+	public Person buscarPersonPorEmail(String mbox) {
+		return repository.buscarPersonPorEmail(mbox);
+	}
+
 }

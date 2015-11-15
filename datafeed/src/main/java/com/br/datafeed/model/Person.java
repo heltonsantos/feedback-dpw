@@ -21,7 +21,7 @@ public class Person {
 	@Column(name="giveName", nullable=false)
 	private String giveName;
 	
-	@Column(name="mbox")
+	@Column(name="mbox", unique=true)
 	private String mbox;
 	
 	@OneToMany(mappedBy="annotatedBy", fetch = FetchType.EAGER)

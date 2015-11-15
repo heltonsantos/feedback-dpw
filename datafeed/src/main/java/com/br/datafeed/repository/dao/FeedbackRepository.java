@@ -108,8 +108,6 @@ public class FeedbackRepository implements IFeedbackRepository{
         	 feedbackList = cr.list();
         	
         }catch(HibernateException e){
-        	System.out.println(e.getMessage());
-        	System.out.println(e.getSuppressed());
         	session.getTransaction().rollback();
         	return null;
         }

@@ -48,4 +48,22 @@ public class PersonRepository implements IPersonRepository{
 		return person;
 	}
 	
+	public Person buscarPersonPorEmail(String mbox) {
+		
+		Session session = HibernateUtil.getSessionFactory().openSession();	 
+        session.beginTransaction();
+        Person person;
+
+        try{
+	        person = (Person) session.createCriteria(Person.class).add(Restrictions.eq("mbox", mbox)).uniqueResult();
+	        session.getTransaction().commit();
+
+        }catch(HibernateException e){
+        	session.getTransaction().rollback();
+        	return null;
+        }
+		session.close();
+		
+		return person;
+	}
 }

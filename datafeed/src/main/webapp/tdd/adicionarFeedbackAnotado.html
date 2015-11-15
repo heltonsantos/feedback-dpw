@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Adicionar Feedback Anotado</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script type="text/javascript">
+		$(function () {	
+			$("#button").click(function () {
+				
+				var feedbackData = {hasBody:$("#hasBody").val(),motivatedBy:$("#motivatedBy").val()};
+				var personData = {giveName:$("#giveName").val(),mbox:$("#mbox").val()};
+		 		var postData = {feedback:feedbackData,person:personData};
+				var dataset_id = encodeURIComponent($("#dataset_id").val());
+				var json = JSON.stringify(postData);
+				console.log(json);
+				
+				$.ajax({
+				    headers: {"Content-Type": "application/json"},
+				    type: "POST",
+				    url: "http://localhost:8080/datafeed/rest/feedback/adicionarAnotado?identifier=" + dataset_id,
+				    data: json
+				    
+				 }).done(function( data, textStatus, jqXHR ) {
+					 
+			    	console.log(textStatus);
+			    	console.log(jqXHR.responseText );
+			    	alert("Sua avaliacação foi adicionada com sucesso!")
+			    	
+				 }).fail(function( jqXHR, textStatus, errorThrown ) {
+					 
+			    	console.log(jqXHR.responseText);
+			    	console.log(textStatus);
+			    	console.log(errorThrown);
+			    	alert("O sistema retornou a seguinte exceção: " + jqXHR.responseText);
+			    	
+				 });
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<div id="form">
+			<label for="dataset_id">dataset_id: </label>
+			<input type="text" id="dataset_id"/><br>
+			
+			<label for="hasBody">hasBody: </label>
+			<input type="text" id="hasBody"/><br>
+			
+			<label for="motivatedBy">motivatedBy: </label>
+			<input type="text" id="motivatedBy"/><br>
+			
+			<label for="giveName">giveName: </label>
+			<input type="text" id="giveName"/><br>
+			
+			<label for="mbox">mbox: </label>
+			<input type="text" id="mbox"/><br>
+			
+			<button id="button">Adicionar</button>
+		</div>
+		<div id="datafeed"></div>
+	</body>
+</html>
