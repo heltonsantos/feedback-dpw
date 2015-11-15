@@ -20,7 +20,7 @@ public class PersonTest {
 	Injector injector = Guice.createInjector(new PersonModule());
 	IPersonService servico = injector.getInstance(IPersonService.class);
 
-	@Test
+	//@Test
 	public void adicionarPerson() {
 		
 		Person person = new Person();   

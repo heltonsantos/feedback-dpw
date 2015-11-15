@@ -32,7 +32,7 @@ public class Feedback {
 	@Column(name="hasBody", nullable=false)
 	private String hasBody;
 	
-	@Column(name="motivatedBy")
+	@Column(name="motivatedBy", nullable=false)
 	private String motivatedBy;
 	
 	@ManyToOne

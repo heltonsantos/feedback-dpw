@@ -120,7 +120,7 @@ public class FeedbackTest {
 		}
 	}
 	
-	@Test
+	//@Test
 	public void adicionarFeedbackAnotado() {
         Person person = new Person();
 		
