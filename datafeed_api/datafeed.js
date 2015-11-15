@@ -2,128 +2,149 @@
 $urlBase = "http://localhost:8080/datafeed/";
 
 /*Carrega a Datafeed API*/
-function loadDatafeed(dataset_id){
-	loadFeedback(encodeURIComponent(dataset_id));
+function loadDatafeed(identifier, title){
+	loadDataset(encodeURIComponent(identifier), title);
 }
 
 /*Carrega o Feedback na pagina*/
-function loadFeedback(dataset_id){
-	var url = $urlBase + "rest/feedback/buscar?dataset_id=" + dataset_id;
+function loadDataset(identifier, title){
+	var url = $urlBase + "rest/dataset/buscar?identifier=" + identifier + "&title=" + title;
 	var data = ajaxGet(url);
 
 	if(data!="fail"){					
-		console.log(data.id + " " + data.dataset_id + " " + data.avaliacao_media.toFixed(2));
+		console.log(data.id + " " + data.identifier + " " + data.title + " " + data.hasRating.toFixed(2));
 							
 		$("#datafeed").empty();
-		$("#datafeed").append("<div id='df_feedback'></div>");
-		$("#df_feedback").append("<div id='df_starRating'></div>");
-		$("#df_feedback").append("<p>"+ "id: " + data.id +"</p>");
-		$("#df_feedback").append("<p>"+ "dataset id: " +  data.dataset_id +"</p>");
-		$("#df_feedback").append("<p>"+ "avaliacao media: " + data.avaliacao_media.toFixed(2) +"</p>");
-		$("#df_feedback").append("<button id='dt_button_avaliar'>Avaliar</button>");
+		$("#datafeed").append("<div id='df_dataset'></div>");
+		$("#df_dataset").append("<div id='df_starRating'></div>");
+		$("#df_dataset").append("<p>"+ "id: " + data.id +"</p>");
+		$("#df_dataset").append("<p>"+ "identifier: " +  data.identifier +"</p>");
+		$("#df_dataset").append("<p>"+ "title: " +  data.title +"</p>");
+		$("#df_dataset").append("<p>"+ "hasRating: " + data.hasRating.toFixed(2) +"</p>");
+		$("#df_dataset").append("<button id='dt_button_feedback_form'>Adicionar Feedback</button>");
 
 		$("#df_starRating").rateYo({
 		  	readOnly: true,
 		  	numStars: 5,
-		    rating: data.avaliacao_media.toFixed(2),
+		    rating: data.hasRating.toFixed(2),
 		    starWidth: "40px",
 			halfStar: true
 
 		});
 
-		loadAvaliacao(dataset_id);
+		loadFeedback(identifier);
 
-		$("#dt_button_avaliar").click(function() {
-    		loadAvaliarForm(dataset_id);		
+		$("#dt_button_feedback_form").click(function() {
+    		loadFeedbackForm(identifier);		
 		});
+	}
+	else{
+		alert("Ocorreu um erro no carregamento do dataset!");
+	}
+}
+
+/*Carrega a Avaliacao na pagina*/
+function loadFeedback(identifier){
+	var offset = 0;
+	var limit = 5;
+	var url = $urlBase + "rest/feedback/buscar?identifier=" + identifier + "&offset=" + offset + "&limit=" + limit;
+	var data = ajaxGet(url);
+	
+	if(data!="fail"){
+		$("#datafeed").append("<div id='df_feedback'></div>");
+
+		for (var prop in data) { 
+			console.log(data[prop].id + " " + data[prop].dateSubmitted + " " + data[prop].hasBody + " " + data[prop].motivatedBy);
+			
+			$("#df_feedback").append("<div id='df_feedback" + prop + "'></div>");
+
+			if(data[prop].motivatedBy == "RATING"){	
+				$("#df_feedback" + prop).append("<div id='df_starRatingDataset" + data[prop].id +"'></div>");
+				
+				$("#df_starRatingDataset" + data[prop].id).rateYo({
+				  	readOnly: true,
+				  	numStars: 5,
+				    rating: parseFloat(data[prop].hasBody).toFixed(2),
+				    starWidth: "20px",
+					halfStar: true
+
+				});
+			}
+						
+			$("#df_feedback" + prop).append("<p>"+ "id: " + data[prop].id +"</p>");
+			$("#df_feedback" + prop).append("<p>"+ "dateSubmitted: " + data[prop].dateSubmitted +"</p>");
+			$("#df_feedback" + prop).append("<p>"+ "hasBody: " + data[prop].hasBody +"</p>");
+			$("#df_feedback" + prop).append("<p>"+ "motivatedBy: " + data[prop].motivatedBy +"</p>");
+			
+		}
+
 	}
 	else{
 		alert("Ocorreu um erro no carregamento do feedback!");
 	}
 }
 
-/*Carrega a Avaliacao na pagina*/
-function loadAvaliacao(dataset_id){
-	var offset = 0;
-	var limit = 5;
-	var url = $urlBase + "rest/avaliacao/buscar?dataset_id=" + dataset_id + "&offset=" + offset + "&limit=" + limit;
-	var data = ajaxGet(url);
-	
-	if(data!="fail"){
-		$("#datafeed").append("<div id='df_avaliacao'></div>");
+/*Carrega o Formulario de Avaliacao*/
+function loadFeedbackForm(identifier){
+	var selectVal;
 
-		for (var prop in data) { 
-			console.log(data[prop].id + " " + data[prop].data_avaliacao + " " + data[prop].nome_usuario + " " + data[prop].email_usuario + " " + data[prop].avaliacao.toFixed(2) + " " + data[prop].comentario);
-			
-			$("#df_avaliacao").append("<div id='df_avaliacao" + prop + "'></div>");
-			$("#df_avaliacao" + prop).append("<div id='df_starRatingAvaliacao" + data[prop].id +"'></div>");			
-			$("#df_avaliacao" + prop).append("<p>"+ "id: " + data[prop].id +"</p>");
-			$("#df_avaliacao" + prop).append("<p>"+ "data avaliacao: " + data[prop].data_avaliacao +"</p>");
-			$("#df_avaliacao" + prop).append("<p>"+ "nome usuario: " + data[prop].nome_usuario +"</p>");
-			$("#df_avaliacao" + prop).append("<p>"+ "email usuario: " + data[prop].email_usuario +"</p>");
-			$("#df_avaliacao" + prop).append("<p>"+ "avaliacao: " + data[prop].avaliacao.toFixed(2) +"</p>");
-			$("#df_avaliacao" + prop).append("<p>"+ "comentario: " + data[prop].comentario +"</p>");
-
-			$("#df_starRatingAvaliacao" + data[prop].id).rateYo({
-			  	readOnly: true,
-			  	numStars: 5,
-			    rating: data[prop].avaliacao.toFixed(2),
-			    starWidth: "20px",
-				halfStar: true
-
-			});
-		}
-
+	if ($("#df_feedbackForm").length){
+		$("#df_feedbackForm").remove();
 	}
-	else{
-		alert("Ocorreu um erro no carregamento da avaliação!");
-	}
+
+	$("#df_dataset").append("<div id='df_feedbackForm'></div>");
+
+	$("#df_feedbackForm").append("<select id='df_feedbackForm_box'><option selected disabled hidden value=''></option><option value='RATING'>Classificação</option><option value='CORRECTION'>Correção</option></select>");
+
+	$("#df_feedbackForm_box").change(function() {
+	   
+	    $("select option:selected").each(function() {
+	    	selectVal = $(this).val();
+
+	      	if(selectVal == "RATING"){
+				$("#df_feedbackForm").append("<div id='df_starRatingFeedbackForm'></div>");
+						
+				$("#df_feedbackForm").append("<button id='df_feedbackForm_button'>Adicionar</button>");
+
+				$("#df_starRatingFeedbackForm").rateYo({
+				  	readOnly: false,
+				  	numStars: 5,
+				    rating: 0,
+				    starWidth: "20px",
+					halfStar: true
+
+				});
+
+				$("#df_feedbackForm_button").click(function() {	
+					var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
+					var json = {hasBody:rating,motivatedBy:selectVal};
+					enviarFeedbackForm(identifier, json);	
+
+				});
+			}
+			else if(selectVal == "CORRECTION"){
+
+				$("#df_feedbackForm").append("<label for='df_feedbackForm_hasBody'>hasBody: </label>");
+				$("#df_feedbackForm").append("<input type='text' id='df_feedbackForm_hasBody'/><br>");	
+
+				$("#df_feedbackForm").append("<button id='df_feedbackForm_button'>Adicionar</button>");
+
+				$("#df_feedbackForm_button").click(function() {	
+
+					var json = {hasBody:$("#df_feedbackForm_hasBody").val(),motivatedBy:selectVal};
+					enviarFeedbackForm(identifier, json);	
+
+				});
+
+			}
+	    
+	    });
+	  }).trigger("change");	
 }
 
 /*Carrega o Formulario de Avaliacao*/
-function loadAvaliarForm(dataset_id){
-
-	if ($("#df_avaliarForm").length){
-		$("#df_avaliarForm").remove();
-	}
-
-	$("#df_feedback").append("<div id='df_avaliarForm'></div>");
-
-	$("#df_avaliarForm").append("<div id='df_starRatingAvaliarForm'></div>");
-
-	$("#df_avaliarForm").append("<label for='df_avaliarForm_nome_usuario'>nome_usuario: </label>");
-	$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_nome_usuario'/><br>");
-			
-	$("#df_avaliarForm").append("<label for='df_avaliarForm_email_usuario'>email_usuario: </label>");
-	$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_email_usuario'/><br>");
-			
-	$("#df_avaliarForm").append("<label for='df_avaliarForm_comentario'>comentario: </label>");
-	$("#df_avaliarForm").append("<input type='text' id='df_avaliarForm_comentario'/><br>");
-			
-	$("#df_avaliarForm").append("<button id='df_avaliarForm_button'>Adicionar</button>");
-
-	$("#df_starRatingAvaliarForm").rateYo({
-	  	readOnly: false,
-	  	numStars: 5,
-	    rating: 0,
-	    starWidth: "20px",
-		halfStar: true
-
-	});
-
-	$("#df_avaliarForm_button").click(function() {	
-		var rating = $("#df_starRatingAvaliarForm").rateYo("rating");
-		var json = {nome_usuario:$("#df_avaliarForm_nome_usuario").val(),email_usuario:$("#df_avaliarForm_email_usuario").val(),avaliacao:rating,comentario:$("#df_avaliarForm_comentario").val()};
-		
-		enviarAvaliarForm(dataset_id, json);
-
-	});
-	
-}
-
-/*Carrega o Formulario de Avaliacao*/
-function enviarAvaliarForm(dataset_id, json){
-	var url = $urlBase + "rest/avaliacao/adicionar?dataset_id=" + dataset_id;
+function enviarFeedbackForm(identifier, json){
+	var url = $urlBase + "rest/feedback/adicionar?identifier=" + identifier;
 	var verificacao = ajaxPost(url, json);
 
 	if(verificacao == true){
