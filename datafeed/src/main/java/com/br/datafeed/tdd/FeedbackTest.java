@@ -16,6 +16,7 @@ import com.br.datafeed.inject.PersonModule;
 import com.br.datafeed.inject.DatasetModule;
 import com.br.datafeed.model.Feedback;
 import com.br.datafeed.model.Person;
+import com.br.datafeed.rest.json.FeedbackAnnotatedView;
 import com.br.datafeed.model.Dataset;
 import com.br.datafeed.service.IFeedbackService;
 import com.br.datafeed.service.IPersonService;
@@ -134,5 +135,27 @@ public class FeedbackTest {
         
         servicoFeedback.adicionarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", feedback);
 	}
+	
+	@Test
+	public void buscarFeedbackAnotado() {
+		List<FeedbackAnnotatedView> list;
+		ObjectMapper mapper = new ObjectMapper();
+		
+		list = servicoFeedback.buscarFeedbackListAnnotated("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", 0, 0);
+		System.out.println(list.get(0).getFeedbackId());
+		
+		try {
+			System.out.println(mapper.writeValueAsString(list));
+		} catch (JsonGenerationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
 
 }

@@ -1,5 +1,7 @@
 package com.br.datafeed.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,6 +11,7 @@ import com.br.datafeed.model.Dataset;
 import com.br.datafeed.repository.IFeedbackRepository;
 import com.br.datafeed.repository.IDatasetRepository;
 import com.br.datafeed.service.IFeedbackService;
+import com.br.datafeed.rest.json.FeedbackAnnotatedView;
 
 public class FeedbackService implements IFeedbackService{
 	
@@ -75,6 +78,36 @@ public class FeedbackService implements IFeedbackService{
 
 	public List<Feedback> buscarFeedbackList(String dataset_id, int offset, int limit) {
 		return feedbackRepository.buscarFeedbackList(dataset_id, offset, limit);
+	}
+	
+	public List<FeedbackAnnotatedView> buscarFeedbackListAnnotated(String identifier, int offset, int limit){
+		List<Object[]> rows;
+		List<FeedbackAnnotatedView> retorno = new ArrayList<FeedbackAnnotatedView>();
+
+		rows = feedbackRepository.buscarFeedbackListAnnotated(identifier, offset, limit);
+		
+		for(Object[] row: rows){
+			FeedbackAnnotatedView feedback = new FeedbackAnnotatedView();
+			feedback.setFeedbackId((Integer)row[0]);
+			feedback.setDateSubmitted((Date)row[1]);
+			
+			feedback.setHasBody((String)row[2]);
+			feedback.setMotivatedBy((String)row[3]);
+			if(row[4] != null){
+				feedback.setPersonId((Integer)row[4]);
+				
+				if(row[5] != null){
+					feedback.setGiveName((String)row[5]);
+				}
+				if(row[6] != null){
+					feedback.setMbox((String)row[6]);
+				}
+			}
+			
+			retorno.add(feedback);
+		}
+		return retorno;
+				
 	}
 
 }
