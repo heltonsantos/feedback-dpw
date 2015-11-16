@@ -61,7 +61,7 @@ public class ServicesRestTest {
 		  }
 	}	
 	
-	@Test
+	//@Test
 	public void adicionarFeedback() throws JsonGenerationException, JsonMappingException, IOException {
 		
 		String identifier = URLEncoder.encode("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", "UTF-8");

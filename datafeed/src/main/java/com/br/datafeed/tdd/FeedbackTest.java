@@ -136,13 +136,12 @@ public class FeedbackTest {
         servicoFeedback.adicionarFeedback("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", feedback);
 	}
 	
-	@Test
+	//@Test
 	public void buscarFeedbackAnotado() {
 		List<FeedbackAnnotatedView> list;
 		ObjectMapper mapper = new ObjectMapper();
 		
 		list = servicoFeedback.buscarFeedbackListAnnotated("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28", 0, 0);
-		System.out.println(list.get(0).getFeedbackId());
 		
 		try {
 			System.out.println(mapper.writeValueAsString(list));

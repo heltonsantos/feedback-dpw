@@ -24,7 +24,7 @@ import com.br.datafeed.inject.FeedbackModule;
 import com.br.datafeed.inject.PersonModule;
 import com.br.datafeed.model.Feedback;
 import com.br.datafeed.model.Person;
-import com.br.datafeed.rest.json.FeedbackAnnotated;
+import com.br.datafeed.rest.json.FeedbackPerson;
 import com.br.datafeed.service.IFeedbackService;
 import com.br.datafeed.service.IPersonService;
 import com.google.inject.Guice;
@@ -64,18 +64,18 @@ public class FeedbackRest {
 	@POST
     @Path("/adicionarAnotado")
 	@Consumes("application/json")
-    public Response adicionarFeedbackAnotado(@QueryParam("identifier") String identifier, FeedbackAnnotated feedbackAnnotated){
+    public Response adicionarFeedbackAnotado(@QueryParam("identifier") String identifier, FeedbackPerson feedbackPerson){
 		
 		Feedback feedback = new Feedback();
 		Person person = new Person();
 		
-		feedback = feedbackAnnotated.getFeedback();
+		feedback = feedbackPerson.getFeedback();
 		
-		person = servicoPerson.buscarPersonPorEmail(feedbackAnnotated.getPerson().getMbox());
+		person = servicoPerson.buscarPersonPorEmail(feedbackPerson.getPerson().getMbox());
 		
 		if(person == null){
-			servicoPerson.adicionarPerson(feedbackAnnotated.getPerson());
-			feedback.setAnnotatedBy(feedbackAnnotated.getPerson());
+			servicoPerson.adicionarPerson(feedbackPerson.getPerson());
+			feedback.setAnnotatedBy(feedbackPerson.getPerson());
 		}
 		else{
 			feedback.setAnnotatedBy(person);

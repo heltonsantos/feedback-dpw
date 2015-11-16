@@ -3,12 +3,12 @@ package com.br.datafeed.rest.json;
 import com.br.datafeed.model.Feedback;
 import com.br.datafeed.model.Person;
 
-public class FeedbackAnnotated {
+public class FeedbackPerson {
 	
 	private Feedback feedback;
 	private Person person;
 	
-	public FeedbackAnnotated() {
+	public FeedbackPerson() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

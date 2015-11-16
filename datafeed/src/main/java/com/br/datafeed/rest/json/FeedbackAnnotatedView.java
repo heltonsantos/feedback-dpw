@@ -2,9 +2,12 @@ package com.br.datafeed.rest.json;
 
 import java.util.Date;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 public class FeedbackAnnotatedView {
 	
 	private int feedbackId;
+	@JsonSerialize(using=com.br.datafeed.util.JsonDateSerializer.class)
 	private Date dateSubmitted;
 	private String hasBody;
 	private String motivatedBy;
