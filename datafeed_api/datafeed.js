@@ -98,7 +98,7 @@ function loadFeedbackForm(identifier){
 
 	$("#df_dataset").append("<div id='df_feedbackForm'></div>");
 
-	$("#df_feedbackForm").append("<select id='df_feedbackForm_box'><option selected disabled hidden value=''></option><option value='RATING'>Classificação</option><option value='CORRECTION'>Correção</option></select>");
+	$("#df_feedbackForm").append("<select id='df_feedbackForm_box'><option selected disabled hidden value=''>Escolha uma motivação</option><option value='RATING'>Classificação</option><option value='CORRECTION'>Correção</option></select>");
 	
 	$("#df_feedbackForm_box").change(function() {
 
