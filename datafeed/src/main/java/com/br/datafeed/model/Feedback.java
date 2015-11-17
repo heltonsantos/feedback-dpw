@@ -41,8 +41,7 @@ public class Feedback {
 	private Dataset hasTarget;
 	
 	@ManyToOne
-	@JoinColumn(name="annotatedBy", nullable=true)
-	@JsonIgnore
+	@JoinColumn(name = "annotatedBy")
 	private Person annotatedBy;
 	
 	public Feedback() {

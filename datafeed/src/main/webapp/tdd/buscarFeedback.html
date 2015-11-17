@@ -17,13 +17,16 @@
 					$("#datafeed").empty();
 					
 					for (var prop in data) {   
-						console.log(data[prop].id + " " + data[prop].dateSubmitted + " " + data[prop].hasBody + " " + data[prop].motivatedBy + " " + data[prop].annotatedBy.giveName);
+						//console.log(data[prop].id + " " + data[prop].dateSubmitted + " " + data[prop].hasBody + " " + data[prop].motivatedBy + " " + data[prop].annotatedBy.giveName);
 						
 						$("#datafeed").append("<p>"+ "id: " + data[prop].id +"</p>");
 						$("#datafeed").append("<p>"+ "dateSubmitted: " + data[prop].dateSubmitted +"</p>");
 						$("#datafeed").append("<p>"+ "hasBody: " + data[prop].hasBody +"</p>");
 						$("#datafeed").append("<p>"+ "motivatedBy: " + data[prop].motivatedBy +"</p>");
-						$("#datafeed").append("<p>"+ "giveName: " + data[prop].annotatedBy.giveName +"</p>");
+						if(data[prop].annotatedBy != null){
+							$("#datafeed").append("<p>"+ "giveName: " + data[prop].annotatedBy.giveName +"</p>");
+							$("#datafeed").append("<p>"+ "mbox: " + data[prop].annotatedBy.mbox +"</p>");
+						}
 					}	
 					
 				}).fail(function(jqXHR,htmlError,error){

@@ -26,7 +26,6 @@ public class PersonTest {
 		Person person = new Person();   
         person.setGiveName("Helton");
         person.setMbox("hdas@cin.ufpe.br");
-        person.setFeedback(null);
         
         servico.adicionarPerson(person);
 		

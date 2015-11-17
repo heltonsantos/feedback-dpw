@@ -11,6 +11,5 @@ public interface IFeedbackRepository {
 	public Feedback buscarFeedback(int feedback_id);
 	public void deletarFeedback(Feedback feedback);
 	public List<Feedback> buscarFeedbackList(String identifier, int offset, int limit);
-	public List<Object[]> buscarFeedbackListAnnotated(String identifier, int offset, int limit);
 
 }

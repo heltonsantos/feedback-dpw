@@ -101,7 +101,8 @@ public class FeedbackRepository implements IFeedbackRepository{
               		      .add(Projections.property("f.id"), "id")
               		      .add(Projections.property("f.dateSubmitted"), "dateSubmitted")
             		      .add(Projections.property("f.hasBody"), "hasBody")
-            		      .add(Projections.property("f.motivatedBy"), "motivatedBy"))
+            		      .add(Projections.property("f.motivatedBy"), "motivatedBy")
+            		      .add(Projections.property("f.annotatedBy"), "annotatedBy"))
         					.setFirstResult(offset)
         					.setMaxResults(limit)
         					.setResultTransformer(Transformers.aliasToBean(Feedback.class));;
@@ -115,39 +116,6 @@ public class FeedbackRepository implements IFeedbackRepository{
 		session.close();
 		
 		return feedbackList;
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Object[]> buscarFeedbackListAnnotated(String identifier, int offset, int limit) {
-		
-		Session session = HibernateUtil.getSessionFactory().openSession();	 
-        session.beginTransaction();
-
-        List<Object[]> list = null;
-        
-        String sqlQuery = "SELECT f.id as feedbackId, f.dateSubmitted, f.hasBody, f.motivatedBy, p.id as personId, p.giveName, p.mbox FROM dataset d" +
-				" JOIN feedback f ON (f.hasTarget = d.id)" +
-				" LEFT JOIN person p ON (p.id = f.annotatedBy)" +
-				" WHERE d.identifier like '" + identifier + "'" +
-				" ORDER BY f.dateSubmitted DESC";
-        if(limit != 0 && offset != 0){
-        	sqlQuery = sqlQuery + " OFFSET " + offset + " LIMIT " + limit; 
-        }
-        else if(limit != 0 && offset == 0){
-        	sqlQuery = sqlQuery + " LIMIT " + limit;
-        }
-        
-        try{
-        	SQLQuery query = session.createSQLQuery(sqlQuery);
-        	
-        	list = query.list();
-        }catch(HibernateException e){
-        	session.getTransaction().rollback();
-        	return null;
-        }
-		session.close();
-		
-		return list;
 	}
 
 }

@@ -23,9 +23,6 @@ public class Person {
 	
 	@Column(name="mbox", unique=true)
 	private String mbox;
-	
-	@OneToMany(mappedBy="annotatedBy", fetch = FetchType.EAGER)
-	private List<Feedback> feedback;
 
 	public Person() {
 		super();
@@ -55,14 +52,5 @@ public class Person {
 	public void setMbox(String mbox) {
 		this.mbox = mbox;
 	}
-
-	public List<Feedback> getFeedback() {
-		return feedback;
-	}
-
-	public void setFeedback(List<Feedback> feedback) {
-		this.feedback = feedback;
-	}
-	
 
 }
