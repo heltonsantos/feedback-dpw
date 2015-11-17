@@ -54,7 +54,6 @@ function loadFeedback(identifier){
 		$("#datafeed").append("<div id='df_feedback'></div>");
 
 		for (var prop in data) { 
-			console.log(data[prop].id + " " + data[prop].dateSubmitted + " " + data[prop].hasBody + " " + data[prop].motivatedBy);
 			
 			$("#df_feedback").append("<div id='df_feedback" + prop + "'></div>");
 
@@ -75,6 +74,11 @@ function loadFeedback(identifier){
 			$("#df_feedback" + prop).append("<p>"+ "dateSubmitted: " + data[prop].dateSubmitted +"</p>");
 			$("#df_feedback" + prop).append("<p>"+ "hasBody: " + data[prop].hasBody +"</p>");
 			$("#df_feedback" + prop).append("<p>"+ "motivatedBy: " + data[prop].motivatedBy +"</p>");
+
+			if(data[prop].annotatedBy != null){
+				$("#df_feedback" + prop).append("<p>"+ "giveName: " + data[prop].annotatedBy.giveName +"</p>");
+				$("#df_feedback" + prop).append("<p>"+ "mbox: " + data[prop].annotatedBy.mbox +"</p>");
+			}
 			
 		}
 
@@ -102,6 +106,12 @@ function loadFeedbackForm(identifier){
 	    	selectVal = $(this).val();
 
 	      	if(selectVal == "RATING"){
+	      		$("#df_feedbackForm").append("<label for='df_feedbackForm_giveName'>giveName: </label>");
+				$("#df_feedbackForm").append("<input type='text' id='df_feedbackForm_giveName'/><br>");	
+
+				$("#df_feedbackForm").append("<label for='df_feedbackForm_mbox'>mbox: </label>");
+				$("#df_feedbackForm").append("<input type='text' id='df_feedbackForm_mbox'/><br>");	
+
 				$("#df_feedbackForm").append("<div id='df_starRatingFeedbackForm'></div>");
 						
 				$("#df_feedbackForm").append("<button id='df_feedbackForm_button'>Adicionar</button>");
@@ -115,14 +125,32 @@ function loadFeedbackForm(identifier){
 
 				});
 
-				$("#df_feedbackForm_button").click(function() {	
-					var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
-					var json = {hasBody:rating,motivatedBy:selectVal};
-					enviarFeedbackForm(identifier, json);	
+				$("#df_feedbackForm_button").click(function() {
 
+					if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
+						var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
+						var json = {hasBody:rating,motivatedBy:selectVal};
+					
+						enviarFeedbackForm(identifier, json);
+					}
+					else{
+						var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
+						var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
+						var feedbackJson = {hasBody:rating,motivatedBy:selectVal};
+						var json = {feedback:feedbackJson, person:personJson};
+					
+						enviarFeedbackFormAnnotated(identifier, json);	
+
+					}
+					
 				});
 			}
 			else if(selectVal == "CORRECTION"){
+				$("#df_feedbackForm").append("<label for='df_feedbackForm_giveName'>giveName: </label>");
+				$("#df_feedbackForm").append("<input type='text' id='df_feedbackForm_giveName'/><br>");	
+
+				$("#df_feedbackForm").append("<label for='df_feedbackForm_mbox'>mbox: </label>");
+				$("#df_feedbackForm").append("<input type='text' id='df_feedbackForm_mbox'/><br>");	
 
 				$("#df_feedbackForm").append("<label for='df_feedbackForm_hasBody'>hasBody: </label>");
 				$("#df_feedbackForm").append("<input type='text' id='df_feedbackForm_hasBody'/><br>");	
@@ -130,9 +158,19 @@ function loadFeedbackForm(identifier){
 				$("#df_feedbackForm").append("<button id='df_feedbackForm_button'>Adicionar</button>");
 
 				$("#df_feedbackForm_button").click(function() {	
-
-					var json = {hasBody:$("#df_feedbackForm_hasBody").val(),motivatedBy:selectVal};
-					enviarFeedbackForm(identifier, json);	
+					
+					if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
+						var json = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
+					
+						enviarFeedbackForm(identifier, json);
+					}
+					else{
+						var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
+						var feedbackJson = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
+						var json = {feedback:feedbackJson, person:personJson};
+						
+						enviarFeedbackFormAnnotated(identifier, json);	
+					}	
 
 				});
 
@@ -142,9 +180,26 @@ function loadFeedbackForm(identifier){
 	  }).trigger("change");	
 }
 
-/*Carrega o Formulario de Avaliacao*/
+/*Envia o Formulario de Feedback*/
 function enviarFeedbackForm(identifier, json){
 	var url = $urlBase + "rest/feedback/adicionar?identifier=" + identifier;
+	var verificacao = ajaxPost(url, json);
+
+	if(verificacao == true){
+		alert("Avaliação cadastrada com sucesso!");
+		$("#df_avaliarForm").remove();
+		location.reload();
+	}
+	else{
+		alert("A avaliação não pode ser cadastrada!")
+		$("#df_avaliarForm").remove();
+		location.reload();
+	}
+}
+
+/*Envia o Formulario de Feedback*/
+function enviarFeedbackFormAnnotated(identifier, json){
+	var url = $urlBase + "rest/feedback/adicionarAnotado?identifier=" + identifier;
 	var verificacao = ajaxPost(url, json);
 
 	if(verificacao == true){
