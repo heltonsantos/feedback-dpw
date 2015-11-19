@@ -6,7 +6,7 @@ function loadDatafeed(identifier, title){
 	loadDataset(encodeURIComponent(identifier), title);
 }
 
-/*Carrega o Feedback na pagina*/
+/*Carrega os dados do Dataset na pagina*/
 function loadDataset(identifier, title){
 	var url = $urlBase + "rest/dataset/buscar?identifier=" + identifier + "&title=" + title;
 	var data = ajaxGet(url);
@@ -15,13 +15,12 @@ function loadDataset(identifier, title){
 		console.log(data.id + " " + data.identifier + " " + data.title + " " + data.hasRating.toFixed(2));
 							
 		$("#datafeed").empty();
-		$("#datafeed").append("<div id='df_dataset'></div>");
+		$("#datafeed").append("<div id='df_dataset' class='reset_datafeed'></div>");
+		$("#df_dataset").append("<h4>Classificação do Dataset:</h4>");
 		$("#df_dataset").append("<div id='df_starRating'></div>");
-		$("#df_dataset").append("<p>"+ "id: " + data.id +"</p>");
-		$("#df_dataset").append("<p>"+ "identifier: " +  data.identifier +"</p>");
-		$("#df_dataset").append("<p>"+ "title: " +  data.title +"</p>");
-		$("#df_dataset").append("<p>"+ "hasRating: " + data.hasRating.toFixed(2) +"</p>");
-		$("#df_dataset").append("<button id='dt_button_feedback_form'>Adicionar Feedback</button>");
+		$("#df_dataset").append("<h5>Forneça-nos seu feedback, ele contribuirá para melhorar a qualidade dos dados publicados.</h5>");
+		$("#df_dataset").append("<button id='dt_button_feedback_form' class='reset_datafeed btn btn-primary white'>Adicionar Feedback</button>");
+		$("#df_dataset").append("<br></br>");
 
 		$("#df_starRating").rateYo({
 		  	readOnly: true,
@@ -43,7 +42,7 @@ function loadDataset(identifier, title){
 	}
 }
 
-/*Carrega a Avaliacao na pagina*/
+/*Carrega os dados do Feedback na pagina*/
 function loadFeedback(identifier){
 	var offset = 0;
 	var limit = 5;
@@ -51,11 +50,13 @@ function loadFeedback(identifier){
 	var data = ajaxGet(url);
 	
 	if(data!="fail"){
-		$("#datafeed").append("<div id='df_feedback'></div>");
+		$("#datafeed").append("<div id='df_feedback' class='reset_datafeed form-group'></div>");
+		$("#df_feedback").append("<br></br>");
+		$("#df_feedback").append("<h4>Últimos feedbacks:</h4>");
 
 		for (var prop in data) { 
 			
-			$("#df_feedback").append("<div id='df_feedback" + prop + "'></div>");
+			$("#df_feedback").append("<div id='df_feedback" + prop + "' class='reset_datafeed'></div>");
 
 			if(data[prop].motivatedBy == "RATING"){	
 				$("#df_feedback" + prop).append("<div id='df_starRatingDataset" + data[prop].id +"'></div>");
@@ -79,6 +80,8 @@ function loadFeedback(identifier){
 				$("#df_feedback" + prop).append("<p>"+ "giveName: " + data[prop].annotatedBy.giveName +"</p>");
 				$("#df_feedback" + prop).append("<p>"+ "mbox: " + data[prop].annotatedBy.mbox +"</p>");
 			}
+
+			$("#df_feedback").append("<br></br>");
 			
 		}
 
@@ -96,32 +99,31 @@ function loadFeedbackForm(identifier){
 		$("#df_feedbackForm").remove();
 	}
 
-	$("#df_dataset").append("<div id='df_feedbackForm'></div>");
+	$("#df_dataset").append("<div id='df_feedbackForm' class='reset_datafeed form-group'></div>");
 
-	$("#df_feedbackForm").append("<select id='df_feedbackForm_box'><option selected disabled hidden value=''>Escolha uma motivação</option><option value='RATING'>Classificação</option><option value='CORRECTION'>Correção</option></select>");
-	
+	$("#df_feedbackForm").append("<select id='df_feedbackForm_box' class='reset_datafeed form-control df_feedbackForm_box'><option selected disabled hidden value=''>Escolha uma motivação</option><option value='RATING'>Classificação</option><option value='CORRECTION'>Correção</option></select>");
+
 	$("#df_feedbackForm_box").change(function() {
-
+		
 		if ($("#df_feedbackForm_content").length){
 				$("#df_feedbackForm_content").remove();
 		}
 
-	    $("#df_feedbackForm").append("<div id='df_feedbackForm_content'></div>");
+	    $("#df_feedbackForm").append("<div id='df_feedbackForm_content' class='form-group'></div>");
 	   
 	    $("select option:selected").each(function() {
-
 	    	selectVal = $(this).val();
 
 	      	if(selectVal == "RATING"){
-	      		$("#df_feedbackForm_content").append("<label for='df_feedbackForm_giveName'>giveName: </label>");
-				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName'/><br>");	
+	      		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>giveName: </label>");
+				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed'/><br>");	
 
-				$("#df_feedbackForm_content").append("<label for='df_feedbackForm_mbox'>mbox: </label>");
-				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox'/><br>");	
+				$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_mbox'>mbox: </label>");
+				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox' class='reset_datafeed'/><br>");	
 
-				$("#df_feedbackForm_content").append("<div id='df_starRatingFeedbackForm'></div>");
+				$("#df_feedbackForm_content").append("<div id='df_starRatingFeedbackForm' class='reset_datafeed'></div>");
 						
-				$("#df_feedbackForm_content").append("<button id='df_feedbackForm_button'>Adicionar</button>");
+				$("#df_feedbackForm_content").append("<button id='df_feedbackForm_button' class='reset_datafeed btn btn-success white'>Adicionar</button>");
 
 				$("#df_starRatingFeedbackForm").rateYo({
 				  	readOnly: false,
@@ -153,16 +155,16 @@ function loadFeedbackForm(identifier){
 				});
 			}
 			else if(selectVal == "CORRECTION"){
-				$("#df_feedbackForm_content").append("<label for='df_feedbackForm_giveName'>giveName: </label>");
-				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName'/><br>");	
+				$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>giveName: </label>");
+				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed'/><br>");	
 
-				$("#df_feedbackForm_content").append("<label for='df_feedbackForm_mbox'>mbox: </label>");
-				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox'/><br>");	
+				$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_mbox'>mbox: </label>");
+				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox' class='reset_datafeed'/><br>");	
 
-				$("#df_feedbackForm_content").append("<label for='df_feedbackForm_hasBody'>hasBody: </label>");
-				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_hasBody'/><br>");	
+				$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_hasBody'>hasBody: </label>");
+				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_hasBody' class='reset_datafeed'/><br>");	
 
-				$("#df_feedbackForm_content").append("<button id='df_feedbackForm_button'>Adicionar</button>");
+				$("#df_feedbackForm_content").append("<button id='df_feedbackForm_button' class='reset_datafeed btn btn-success white'>Adicionar</button>");
 
 				$("#df_feedbackForm_button").click(function() {	
 					
