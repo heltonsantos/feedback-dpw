@@ -12,8 +12,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="dataset")
-public class Dataset {
+public class Dataset implements java.io.Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue
 	@Column(name="id")

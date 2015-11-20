@@ -15,8 +15,9 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @Entity
 @Table(name="feedback")
-public class Feedback {
-	
+public class Feedback implements java.io.Serializable{
+
+	private static final long serialVersionUID = 1L;
 	public final static String MOTIVATED_BY_RATING = "RATING";
 	public final static String MOTIVATED_BY_CORRECTION = "CORRECTION";
 	
@@ -36,7 +37,7 @@ public class Feedback {
 	private String motivatedBy;
 	
 	@ManyToOne
-	@JoinColumn(name="hasTarget", nullable=false)
+	@JoinColumn(name="hasTarget", referencedColumnName="identifier", nullable=false)
 	@JsonIgnore
 	private Dataset hasTarget;
 	

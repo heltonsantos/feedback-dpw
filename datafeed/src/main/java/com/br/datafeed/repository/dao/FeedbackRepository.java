@@ -102,6 +102,7 @@ public class FeedbackRepository implements IFeedbackRepository{
               		      .add(Projections.property("f.dateSubmitted"), "dateSubmitted")
             		      .add(Projections.property("f.hasBody"), "hasBody")
             		      .add(Projections.property("f.motivatedBy"), "motivatedBy")
+            		      .add(Projections.property("f.hasTarget"), "hasTarget")
             		      .add(Projections.property("f.annotatedBy"), "annotatedBy"))
         					.setFirstResult(offset)
         					.setMaxResults(limit)

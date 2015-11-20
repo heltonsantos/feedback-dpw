@@ -11,8 +11,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="person")
-public class Person {
+public class Person implements java.io.Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id
     @GeneratedValue
     @Column(name="id")
