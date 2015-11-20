@@ -1,7 +1,6 @@
 package com.br.datafeed.rest;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 

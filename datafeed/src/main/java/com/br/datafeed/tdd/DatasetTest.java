@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import com.br.datafeed.inject.DatasetModule;
 import com.br.datafeed.model.Dataset;
+import com.br.datafeed.rest.json.DatasetJson;
 import com.br.datafeed.service.IDatasetService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -77,6 +78,15 @@ public class DatasetTest {
 		System.out.println(mapper.writeValueAsString(dataset));
 		
 		}
+				
+	}
+	
+	@Test
+	public void buscarDatasetJson() throws JsonGenerationException, JsonMappingException, IOException {
+		DatasetJson dataset = servico.buscarDatasetJson("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
+		
+		ObjectMapper mapper = new ObjectMapper();
+		System.out.println(mapper.writeValueAsString(dataset));
 				
 	}
 

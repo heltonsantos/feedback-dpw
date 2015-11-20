@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Buscar DatasetFeedback</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>	
+		<!-- RateYo Framework -->
+		<link rel="stylesheet" href="rateYo/2.0.1/jquery.rateyo.min.css">
+		<script src="rateYo/2.0.1/jquery.rateyo.min.js"></script>	
+		<script type="text/javascript">			
+		$(function () {	
+			$("#button").click(function () {
+				var url = "http://localhost:8080/datafeed/rest/open/getDatasetFeedback?identifier=";
+				var identifier = encodeURIComponent($("#identifier").val());
+					
+				$.get(url + identifier, function(data,status,xhr){
+						
+					console.log(data);
+	
+				}).fail(function(jqXHR,htmlError,error){
+					console.log(jqXHR.responseText);
+				});
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<div id="form">
+			<label for="identifier">identifier: </label>
+			<input type="text" id="identifier"/><br>
+			
+			<button id="button">Buscar</button>
+		</div>
+		<div id="datafeed"></div>
+	</body>
+</html>
