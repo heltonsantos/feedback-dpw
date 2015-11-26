@@ -2,17 +2,17 @@
 $urlBase = "http://localhost:8080/datafeed/";
 
 /*Carrega a Datafeed API*/
-function loadDatafeed(identifier, title){
-	loadDataset(encodeURIComponent(identifier), title);
+function loadDatafeed(identifier){
+	loadDataset(encodeURIComponent(identifier));
 }
 
 /*Carrega os dados do Dataset na pagina*/
-function loadDataset(identifier, title){
-	var url = $urlBase + "rest/dataset/buscar?identifier=" + identifier + "&title=" + title;
+function loadDataset(identifier){
+	var url = $urlBase + "rest/dataset/buscar?identifier=" + identifier;
 	var data = ajaxGet(url);
 
 	if(data!="fail"){					
-		console.log(data.id + " " + data.identifier + " " + data.title + " " + data.hasRating.toFixed(2));
+		console.log(data.id + " " + data.identifier + " " + data.hasRating.toFixed(2));
 							
 		$("#datafeed").empty();
 		$("#datafeed").append("<div id='df_dataset' class='reset_datafeed'></div>");
@@ -101,92 +101,97 @@ function loadFeedbackForm(identifier){
 
 	$("#df_dataset").append("<div id='df_feedbackForm' class='reset_datafeed form-group'></div>");
 
-	$("#df_feedbackForm").append("<select id='df_feedbackForm_box' class='reset_datafeed form-control df_feedbackForm_box'><option selected disabled hidden value=''>Escolha uma motivação</option><option value='RATING'>Classificação</option><option value='CORRECTION'>Correção</option></select>");
+	$("#df_feedbackForm").append("<h5>Escolha abaixo a motivação para o seu feedback:</h5>");
 
-	$("#df_feedbackForm_box").change(function() {
+	$("#df_feedbackForm").append(" <form role='reset_datafeed form'><div class='reset_datafeed radio'><label class='reset_datafeed'><input id='df_feedbackForm_radio_rating' class='reset_datafeed' type='radio' name='optradio' value='RATING'>Classificação</label></div><div class='radio'><label class='reset_datafeed'><input id='df_feedbackForm_radio_correction' class='reset_datafeed' type='radio' name='optradio' value='CORRECTION'>Correção</label></div></form>");
+   
+	$("#df_feedbackForm_radio_rating").change(function() {
+		selectVal = $(this).val();
 		
-		if ($("#df_feedbackForm_content").length){
+		if ($("#df_feedbackForm_content").length == 1){
 				$("#df_feedbackForm_content").remove();
 		}
+		
+		$("#df_feedbackForm").append("<div id='df_feedbackForm_content' class='form-group'></div>");
 
-	    $("#df_feedbackForm").append("<div id='df_feedbackForm_content' class='form-group'></div>");
-	   
-	    $("select option:selected").each(function() {
-	    	selectVal = $(this).val();
+  		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>giveName: </label>");
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed'/><br>");	
 
-	      	if(selectVal == "RATING"){
-	      		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>giveName: </label>");
-				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed'/><br>");	
+		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_mbox'>mbox: </label>");
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox' class='reset_datafeed'/><br>");	
 
-				$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_mbox'>mbox: </label>");
-				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox' class='reset_datafeed'/><br>");	
+		$("#df_feedbackForm_content").append("<div id='df_starRatingFeedbackForm' class='reset_datafeed'></div>");
+				
+		$("#df_feedbackForm_content").append("<button id='df_feedbackForm_button' class='reset_datafeed btn btn-success white'>Adicionar</button>");
 
-				$("#df_feedbackForm_content").append("<div id='df_starRatingFeedbackForm' class='reset_datafeed'></div>");
-						
-				$("#df_feedbackForm_content").append("<button id='df_feedbackForm_button' class='reset_datafeed btn btn-success white'>Adicionar</button>");
+		$("#df_starRatingFeedbackForm").rateYo({
+		  	readOnly: false,
+		  	numStars: 5,
+		    rating: 0,
+		    starWidth: "20px",
+			halfStar: true
 
-				$("#df_starRatingFeedbackForm").rateYo({
-				  	readOnly: false,
-				  	numStars: 5,
-				    rating: 0,
-				    starWidth: "20px",
-					halfStar: true
+		});
 
-				});
+		$("#df_feedbackForm_button").click(function() {
 
-				$("#df_feedbackForm_button").click(function() {
-
-					if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
-						var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
-						var json = {hasBody:rating,motivatedBy:selectVal};
-					
-						enviarFeedbackForm(identifier, json);
-					}
-					else{
-						var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
-						var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
-						var feedbackJson = {hasBody:rating,motivatedBy:selectVal};
-						var json = {feedback:feedbackJson, person:personJson};
-					
-						enviarFeedbackFormAnnotated(identifier, json);	
-
-					}
-					
-				});
+			if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
+				var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
+				var json = {hasBody:rating,motivatedBy:selectVal};
+			
+				enviarFeedbackForm(identifier, json);
 			}
-			else if(selectVal == "CORRECTION"){
-				$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>giveName: </label>");
-				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed'/><br>");	
-
-				$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_mbox'>mbox: </label>");
-				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox' class='reset_datafeed'/><br>");	
-
-				$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_hasBody'>hasBody: </label>");
-				$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_hasBody' class='reset_datafeed'/><br>");	
-
-				$("#df_feedbackForm_content").append("<button id='df_feedbackForm_button' class='reset_datafeed btn btn-success white'>Adicionar</button>");
-
-				$("#df_feedbackForm_button").click(function() {	
-					
-					if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
-						var json = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
-					
-						enviarFeedbackForm(identifier, json);
-					}
-					else{
-						var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
-						var feedbackJson = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
-						var json = {feedback:feedbackJson, person:personJson};
-						
-						enviarFeedbackFormAnnotated(identifier, json);	
-					}	
-
-				});
+			else{
+				var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
+				var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
+				var feedbackJson = {hasBody:rating,motivatedBy:selectVal};
+				var json = {feedback:feedbackJson, person:personJson};
+			
+				enviarFeedbackFormAnnotated(identifier, json);	
 
 			}
-	    
-	    });
-	  }).trigger("change");	
+			
+		});
+	});
+	$("#df_feedbackForm_radio_correction").change(function() {
+		selectVal = $(this).val();
+
+		if ($("#df_feedbackForm_content").length == 1){
+				$("#df_feedbackForm_content").remove();
+		}
+		
+		$("#df_feedbackForm").append("<div id='df_feedbackForm_content' class='form-group'></div>");
+
+		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>giveName: </label>");
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed'/><br>");	
+
+		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_mbox'>mbox: </label>");
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox' class='reset_datafeed'/><br>");	
+
+		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_hasBody'>hasBody: </label>");
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_hasBody' class='reset_datafeed'/><br>");	
+
+		$("#df_feedbackForm_content").append("<button id='df_feedbackForm_button' class='reset_datafeed btn btn-success white'>Adicionar</button>");
+
+		$("#df_feedbackForm_button").click(function() {	
+			
+			if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
+				var json = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
+			
+				enviarFeedbackForm(identifier, json);
+			}
+			else{
+				var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
+				var feedbackJson = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
+				var json = {feedback:feedbackJson, person:personJson};
+				
+				enviarFeedbackFormAnnotated(identifier, json);	
+			}	
+
+		});
+
+	});
+	 
 }
 
 /*Envia o Formulario de Feedback*/
