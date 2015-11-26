@@ -5,7 +5,6 @@ import java.util.List;
 public class DatasetJson {
 
 	private String identifier;
-	private String title;
 	private double hasRating;
 	private List<FeedbackJson> feedback;
 	
@@ -20,14 +19,6 @@ public class DatasetJson {
 
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public double getHasRating() {

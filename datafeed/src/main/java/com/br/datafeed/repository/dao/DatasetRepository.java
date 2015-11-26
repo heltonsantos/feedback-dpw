@@ -79,7 +79,6 @@ public class DatasetRepository implements IDatasetRepository{
         		    .setProjection(Projections.projectionList()
         		      .add(Projections.property("id"), "id")
         		      .add(Projections.property("identifier"), "identifier")
-        		      .add(Projections.property("title"), "title")
         		      .add(Projections.property("hasRating"), "hasRating"))
         		    	.setResultTransformer(Transformers.aliasToBean(Dataset.class));
 

@@ -44,7 +44,6 @@ public class DatasetService implements IDatasetService{
 		if(dataset != null){
 			//Montar DatasetJson
 			datasetJson.setIdentifier(dataset.getIdentifier());
-			datasetJson.setTitle(dataset.getTitle());
 			datasetJson.setHasRating(dataset.getHasRating());
 			
 			if(dataset.getFeedback() != null){

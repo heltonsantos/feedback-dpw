@@ -12,18 +12,16 @@
 			$("#button").click(function () {
 				var url = "http://localhost:8080/datafeed/rest/dataset/buscar?identifier=";
 				var identifier = encodeURIComponent($("#identifier").val());
-				var title = $("#title").val();
 					
-				$.get(url + identifier + "&title=" + title, function(data,status,xhr){
+				$.get(url + identifier, function(data,status,xhr){
 						data.hasRating = data.hasRating.toFixed(2);
 						
-						console.log(data.id + " " + data.identifier + " " + data.title + " " + data.hasRating);
+						console.log(data.id + " " + data.identifier + " " + data.hasRating);
 						
 						$("#datafeed").empty();
 						$("#datafeed").append("<div id='starRating'></div>");
 						$("#datafeed").append("<p>"+ "id: " + data.id +"</p>");
 						$("#datafeed").append("<p>"+ "Identificador: " + data.identifier +"</p>");
-						$("#datafeed").append("<p>"+ "Título: " + data.title +"</p>");
 						$("#datafeed").append("<p>"+ "Classificação: " + data.hasRating +"</p>");
 						
 						$("#starRating").rateYo({
@@ -46,8 +44,6 @@
 		<div id="form">
 			<label for="identifier">identifier: </label>
 			<input type="text" id="identifier"/><br>
-			<label for="title">title: </label>
-			<input type="text" id="title"/><br>
 			
 			<button id="button">Buscar</button>
 		</div>

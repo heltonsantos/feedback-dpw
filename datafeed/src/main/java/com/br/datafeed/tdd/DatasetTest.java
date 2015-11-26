@@ -26,7 +26,6 @@ public class DatasetTest {
 		
 		Dataset dataset = new Dataset();   
         dataset.setIdentifier("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
-        dataset.setTitle("A tarifa de cada linha de ônibus com as suas respectivas Empresas.");
         
         servico.adicionarDataset(dataset);
 		
@@ -81,7 +80,7 @@ public class DatasetTest {
 				
 	}
 	
-	@Test
+	//@Test
 	public void buscarDatasetJson() throws JsonGenerationException, JsonMappingException, IOException {
 		DatasetJson dataset = servico.buscarDatasetJson("http://www.dadosabertosbrasil.com.br/?p=dataset&id=1577&dtId=28");
 		

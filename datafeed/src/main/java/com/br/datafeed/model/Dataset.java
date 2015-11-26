@@ -24,9 +24,6 @@ public class Dataset implements java.io.Serializable{
 	@Column(name="identifier", unique=true, nullable=false)
 	private String identifier;
 	
-	@Column(name="title", nullable=false)
-	private String title;
-	
 	@Column(name="hasRating", nullable=false)
 	private double hasRating;
 	
@@ -49,14 +46,6 @@ public class Dataset implements java.io.Serializable{
 	}
 	public void setIdentifier(String identifier) {
 		this.identifier = identifier;
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
 	}
 
 	public double getHasRating() {
