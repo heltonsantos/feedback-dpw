@@ -3,6 +3,19 @@
 	width: 20%;
 }
 
+.df_feedbackForm_div {
+	margin: 3px; 
+	width: 450px;
+	padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    border-radius: 6px;
+    background-color: #f2f2f2;
+    color: inherit;
+    margin-bottom: 30px;
+}
+
 /*rateYo V2.0.1, A simple and flexible star rating plugin
 prashanth pamidi (https://github.com/prrashi)*/
 .jq-ry-container{position:relative;padding:0 5px;line-height:0;display:block;cursor:pointer}.jq-ry-container[readonly=readonly]{cursor:default}.jq-ry-container>.jq-ry-group-wrapper{position:relative;width:100%}.jq-ry-container>.jq-ry-group-wrapper>.jq-ry-group{position:relative;line-height:0;z-index:10;white-space:nowrap}.jq-ry-container>.jq-ry-group-wrapper>.jq-ry-group>svg{display:inline-block}.jq-ry-container>.jq-ry-group-wrapper>.jq-ry-group.jq-ry-normal-group{width:100%}.jq-ry-container>.jq-ry-group-wrapper>.jq-ry-group.jq-ry-rated-group{width:0;z-index:11;position:absolute;top:0;left:0;overflow:hidden}

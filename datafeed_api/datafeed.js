@@ -18,6 +18,7 @@ function loadDataset(identifier){
 		$("#datafeed").append("<div id='df_dataset' class='reset_datafeed'></div>");
 		$("#df_dataset").append("<h4>Classificação do Dataset:</h4>");
 		$("#df_dataset").append("<div id='df_starRating'></div>");
+		$("#df_dataset").append("<br></br>");
 		$("#df_dataset").append("<h5>Forneça-nos seu feedback, ele contribuirá para melhorar a qualidade dos dados publicados.</h5>");
 		$("#df_dataset").append("<button id='dt_button_feedback_form' class='reset_datafeed btn btn-primary white'>Adicionar Feedback</button>");
 		$("#df_dataset").append("<br></br>");
@@ -99,12 +100,14 @@ function loadFeedbackForm(identifier){
 		$("#df_feedbackForm").remove();
 	}
 
-	$("#df_dataset").append("<div id='df_feedbackForm' class='reset_datafeed form-group'></div>");
+	$("#df_dataset").append("<div id='df_feedbackForm' class='reset_datafeed df_feedbackForm_div'></div>");
 
 	$("#df_feedbackForm").append("<h5>Escolha abaixo a motivação para o seu feedback:</h5>");
 
-	$("#df_feedbackForm").append(" <form role='reset_datafeed form'><div class='reset_datafeed radio'><label class='reset_datafeed'><input id='df_feedbackForm_radio_rating' class='reset_datafeed' type='radio' name='optradio' value='RATING'>Classificação</label></div><div class='radio'><label class='reset_datafeed'><input id='df_feedbackForm_radio_correction' class='reset_datafeed' type='radio' name='optradio' value='CORRECTION'>Correção</label></div></form>");
-   
+	$("#df_feedbackForm").append("<div class='reset_datafeed'><div class='reset_datafeed radio'><label class='reset_datafeed'><input id='df_feedbackForm_radio_rating' class='reset_datafeed' type='radio' name='optradio' value='RATING'>Classificação</label></div><div class='reset_datafeed radio'><label class='reset_datafeed'><input id='df_feedbackForm_radio_correction' class='reset_datafeed' type='radio' name='optradio' value='CORRECTION'>Correção</label></div></div>");
+
+	$("#df_feedbackForm").append("<br></br>");
+
 	$("#df_feedbackForm_radio_rating").change(function() {
 		selectVal = $(this).val();
 		
@@ -112,43 +115,53 @@ function loadFeedbackForm(identifier){
 				$("#df_feedbackForm_content").remove();
 		}
 		
-		$("#df_feedbackForm").append("<div id='df_feedbackForm_content' class='form-group'></div>");
+		$("#df_feedbackForm").append("<div id='df_feedbackForm_content'></div>");
 
-  		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>giveName: </label>");
-		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed'/><br>");	
-
-		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_mbox'>mbox: </label>");
-		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox' class='reset_datafeed'/><br>");	
-
+		$("#df_feedbackForm_content").append("<label class='reset_datafeed'>Classificação: </label>");
 		$("#df_feedbackForm_content").append("<div id='df_starRatingFeedbackForm' class='reset_datafeed'></div>");
-				
+
+		$("#df_feedbackForm_content").append("<br></br>");
+
+		$("#df_feedbackForm_content").append("<h5>Se você deseja registrar seus dados pessoais insira-os abaixo:</h5>");
+
+  		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>Nome: </label>");
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed' size='35' maxlength='45'/><br>");	
+
+		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_mbox'>Email: </label>");
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox' class='reset_datafeed' size='35' maxlength='45'/><br>");	
+		
 		$("#df_feedbackForm_content").append("<button id='df_feedbackForm_button' class='reset_datafeed btn btn-success white'>Adicionar</button>");
 
 		$("#df_starRatingFeedbackForm").rateYo({
 		  	readOnly: false,
 		  	numStars: 5,
 		    rating: 0,
-		    starWidth: "20px",
+		    starWidth: "35px",
 			halfStar: true
 
 		});
 
 		$("#df_feedbackForm_button").click(function() {
 
-			if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
-				var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
-				var json = {hasBody:rating,motivatedBy:selectVal};
-			
-				enviarFeedbackForm(identifier, json);
+			if($("#df_starRatingFeedbackForm").rateYo("rating") == ""){
+				alert("Insira uma classifiação para o dataset!");
 			}
 			else{
-				var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
-				var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
-				var feedbackJson = {hasBody:rating,motivatedBy:selectVal};
-				var json = {feedback:feedbackJson, person:personJson};
-			
-				enviarFeedbackFormAnnotated(identifier, json);	
+				if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
+					var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
+					var json = {hasBody:rating,motivatedBy:selectVal};
+				
+					enviarFeedbackForm(identifier, json);
+				}
+				else{
+					var rating = $("#df_starRatingFeedbackForm").rateYo("rating");
+					var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
+					var feedbackJson = {hasBody:rating,motivatedBy:selectVal};
+					var json = {feedback:feedbackJson, person:personJson};
+				
+					enviarFeedbackFormAnnotated(identifier, json);	
 
+				}
 			}
 			
 		});
@@ -160,34 +173,52 @@ function loadFeedbackForm(identifier){
 				$("#df_feedbackForm_content").remove();
 		}
 		
-		$("#df_feedbackForm").append("<div id='df_feedbackForm_content' class='form-group'></div>");
+		$("#df_feedbackForm").append("<div id='df_feedbackForm_content'></div>");
 
-		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>giveName: </label>");
-		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed'/><br>");	
+		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_hasBody'>Comentário: </label>");
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_hasBody' class='reset_datafeed' size='67' maxlength='255'/><br>");	
 
-		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_mbox'>mbox: </label>");
-		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox' class='reset_datafeed'/><br>");	
+		$("#df_feedbackForm_content").append("<h5>Se você deseja registrar seus dados pessoais insira-os abaixo:</h5>");
 
-		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_hasBody'>hasBody: </label>");
-		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_hasBody' class='reset_datafeed'/><br>");	
+		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>Nome: </label>");
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed' size='35' maxlength='45'/><br>");	
+
+		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_mbox'>Email: </label>");
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_mbox' class='reset_datafeed' size='35' maxlength='45'/><br>");	
 
 		$("#df_feedbackForm_content").append("<button id='df_feedbackForm_button' class='reset_datafeed btn btn-success white'>Adicionar</button>");
 
-		$("#df_feedbackForm_button").click(function() {	
-			
-			if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
-				var json = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
-			
-				enviarFeedbackForm(identifier, json);
-			}
-			else{
-				var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
-				var feedbackJson = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
-				var json = {feedback:feedbackJson, person:personJson};
+		$("#df_feedbackForm_button").click(function() {
+
+			if($("#df_feedbackForm_hasBody").val() == ""){
+
+				$("#df_feedbackForm_hasBody").css("border","1px solid red");
+				alert("Insira um comentário para a correção!");
 				
-				enviarFeedbackFormAnnotated(identifier, json);	
+				return;
+			}
+
+			else{
+			
+				if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
+					var json = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
+				
+					enviarFeedbackForm(identifier, json);
+				}
+				else{
+					var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
+					var feedbackJson = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
+					var json = {feedback:feedbackJson, person:personJson};
+					
+					enviarFeedbackFormAnnotated(identifier, json);	
+				}
 			}	
 
+		});
+
+		$( "#df_feedbackForm_hasBody" ).focus(function() {
+
+ 			$("#df_feedbackForm_hasBody").css("border","");
 		});
 
 	});
