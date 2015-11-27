@@ -54,13 +54,14 @@ function loadFeedback(identifier){
 		$("#datafeed").append("<div id='df_feedback' class='reset_datafeed form-group'></div>");
 		$("#df_feedback").append("<br></br>");
 		$("#df_feedback").append("<h4>Últimos feedbacks:</h4>");
+		$("#df_feedback").append("<ul id='df_feedback_list' class='reset_datafeed list-group df_feedback_list pull-left'></ul>");
 
 		for (var prop in data) { 
 			
-			$("#df_feedback").append("<div id='df_feedback" + prop + "' class='reset_datafeed'></div>");
+			$("#df_feedback_list").append("<li id='df_feedback_list" + prop + "' class='list-group-item'></li>");
 
 			if(data[prop].motivatedBy == "RATING"){	
-				$("#df_feedback" + prop).append("<div id='df_starRatingDataset" + data[prop].id +"'></div>");
+				$("#df_feedback_list" + prop).append("<div id='df_starRatingDataset" + data[prop].id +"'></div>");
 				
 				$("#df_starRatingDataset" + data[prop].id).rateYo({
 				  	readOnly: true,
@@ -70,19 +71,31 @@ function loadFeedback(identifier){
 					halfStar: true
 
 				});
-			}
-						
-			$("#df_feedback" + prop).append("<p>"+ "id: " + data[prop].id +"</p>");
-			$("#df_feedback" + prop).append("<p>"+ "dateSubmitted: " + data[prop].dateSubmitted +"</p>");
-			$("#df_feedback" + prop).append("<p>"+ "hasBody: " + data[prop].hasBody +"</p>");
-			$("#df_feedback" + prop).append("<p>"+ "motivatedBy: " + data[prop].motivatedBy +"</p>");
 
-			if(data[prop].annotatedBy != null){
-				$("#df_feedback" + prop).append("<p>"+ "giveName: " + data[prop].annotatedBy.giveName +"</p>");
-				$("#df_feedback" + prop).append("<p>"+ "mbox: " + data[prop].annotatedBy.mbox +"</p>");
-			}
+				$("#df_feedback_list" + prop).append("<p>"+ "<strong>Data de subimissão: </strong>" + data[prop].dateSubmitted +"</p>");
+				$("#df_feedback_list" + prop).append("<p>"+ "<strong>Motivação: </strong>" + "Classificação" +"</p>");
 
-			$("#df_feedback").append("<br></br>");
+				if(data[prop].annotatedBy != null){
+					$("#df_feedback_list" + prop).append("<p>"+ "<strong>Nome: </strong>" + data[prop].annotatedBy.giveName +"</p>");
+					$("#df_feedback_list" + prop).append("<p>"+ "<strong>Email: </strong>" + data[prop].annotatedBy.mbox +"</p>");
+				}
+
+				//$("#df_feedback_list").append("<br></br>");
+
+			}
+			else if(data[prop].motivatedBy == "CORRECTION"){
+				$("#df_feedback_list" + prop).append("<p>"+ "<strong>Data de subimissão: </strong>" + data[prop].dateSubmitted +"</p>");
+				$("#df_feedback_list" + prop).append("<p>"+ "<strong>Comentario: </strong>" + data[prop].hasBody +"</p>");
+				$("#df_feedback_list" + prop).append("<p>"+ "<strong>Motivação: </strong>" + "Correção" +"</p>");
+
+				if(data[prop].annotatedBy != null){
+					$("#df_feedback_list" + prop).append("<p>"+ "<strong>Nome: " + data[prop].annotatedBy.giveName +"</p>");
+					$("#df_feedback_list" + prop).append("<p>"+ "<strong>Email: " + data[prop].annotatedBy.mbox +"</p>");
+				}
+
+				//$("#df_feedback_list").append("<br></br>");
+
+			}	
 			
 		}
 
