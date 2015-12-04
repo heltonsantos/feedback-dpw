@@ -39,7 +39,7 @@ function loadDataset(identifier){
 		});
 	}
 	else{
-		alert("Ocorreu um erro no carregamento do dataset!");
+		$("#datafeed").append("<h5>Não foi possível se conectar ao servidor de feedback.</h5>");
 	}
 }
 
@@ -66,7 +66,7 @@ function loadFeedback(identifier){
 				$("#df_starRatingDataset" + data[prop].id).rateYo({
 				  	readOnly: true,
 				  	numStars: 5,
-				    rating: parseFloat(data[prop].hasBody).toFixed(2),
+				    rating: parseFloat(data[prop].hasBody),
 				    starWidth: "20px",
 					halfStar: true
 
@@ -80,8 +80,6 @@ function loadFeedback(identifier){
 					$("#df_feedback_list" + prop).append("<p>"+ "<strong>Email: </strong>" + data[prop].annotatedBy.mbox +"</p>");
 				}
 
-				//$("#df_feedback_list").append("<br></br>");
-
 			}
 			else if(data[prop].motivatedBy == "CORRECTION"){
 				$("#df_feedback_list" + prop).append("<p>"+ "<strong>Data de subimissão: </strong>" + data[prop].dateSubmitted +"</p>");
@@ -93,7 +91,7 @@ function loadFeedback(identifier){
 					$("#df_feedback_list" + prop).append("<p>"+ "<strong>Email: " + data[prop].annotatedBy.mbox +"</p>");
 				}
 
-				//$("#df_feedback_list").append("<br></br>");
+				$("#df_feedback_list" + prop).css("background-color", "#f2f2f2");
 
 			}	
 			
@@ -189,7 +187,7 @@ function loadFeedbackForm(identifier){
 		$("#df_feedbackForm").append("<div id='df_feedbackForm_content'></div>");
 
 		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_hasBody'>Comentário: </label>");
-		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_hasBody' class='reset_datafeed' size='67' maxlength='255'/><br>");	
+		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_hasBody' class='reset_datafeed' size='50' maxlength='255'/><br>");	
 
 		$("#df_feedbackForm_content").append("<h5>Se você deseja registrar seus dados pessoais insira-os abaixo:</h5>");
 
