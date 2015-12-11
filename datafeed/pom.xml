@@ -20,26 +20,18 @@
   <dependencies>
   
   	<!-- Javax Servlet -->
-    <dependency>
-      <groupId>javax.servlet</groupId>
-      <artifactId>servlet-api</artifactId>
-      <version>2.5</version>
-      <scope>provided</scope>
-    </dependency>
-    
-    <dependency>
-      <groupId>javax.servlet.jsp</groupId>
-      <artifactId>jsp-api</artifactId>
-      <version>2.1</version>
-      <scope>provided</scope>
-    </dependency>
+	<dependency>
+	    <groupId>javax.servlet</groupId>
+	    <artifactId>javax.servlet-api</artifactId>
+	    <version>3.0.1</version>
+	    <scope>provided</scope>
+	</dependency>
     
     <!-- JUnit -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>
-      <scope>test</scope>
     </dependency>
     
     <!-- Jboss Resteasy -->
@@ -96,6 +88,14 @@
 		<artifactId>httpclient</artifactId>
 		<version>4.3.6</version>
 	</dependency>
+	
+	<!-- Apache Tomcat Catalina-->
+	 <dependency>
+        <groupId>org.apache.tomcat</groupId>
+        <artifactId>tomcat-catalina</artifactId>
+        <version>7.0.42</version>
+        <scope>provided</scope>
+    </dependency>
 		
   </dependencies>
 
