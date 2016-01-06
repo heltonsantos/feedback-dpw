@@ -7,7 +7,7 @@
 @prefix duv: <http://www.w3.org/ns/duv#> .
 @prefix : <http://example.org#> .
 
-:user-001
+:consumer-001
    a duv:Person  ;
    foaf:givenName "Helton Santos"  ;
    foaf:mbox "hdas@cin.ufpe.br" ;
@@ -24,7 +24,7 @@
    dct:dateSubmitted "09-11-2015 23:27:00" ;
    oa:hasBody "Título com erro ortográfico." ;
    oa:hasTarget :dataset-001 ;
-   oa:annotatedBy :user-001 ;
+   oa:annotatedBy :consumer-001 ;
    oa:motivatedBy "CORRECTION" ;
 .
 
@@ -33,6 +33,6 @@
    dct:dateSubmitted "10-11-2015 23:27:00" ;
    oa:hasBody "3" ;
    oa:hasTarget :dataset-001 ;
-   oa:annotatedBy :user-001 ;
+   oa:annotatedBy :consumer-001 ;
    oa:motivatedBy "RATING" ;
 .
