@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+	<title>Coletar Feedback</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>	
+		<script type="text/javascript">			
+		$(function () {	
+			$("#button").click(function () {
+				var url = "http://localhost:8080/datafeed/rest/open/getDatasetFeedback?identifier=";
+				//var url = "http://datafeed-hdas.rhcloud.com/datafeed/rest/open/getDatasetFeedback?identifier=";
+				
+				var identifier = encodeURIComponent($("#identifier").val());
+					
+				$.get(url + identifier, function(data,status,xhr){
+						
+						console.log(JSON.stringify(data));
+						$("#datafeed").empty();
+						$("#datafeed").append("<p>"+ JSON.stringify(data) +"</p>");
+						
+				}).fail(function(jqXHR,htmlError,error){
+					console.log(jqXHR.responseText);
+				});
+			});
+		});
+		</script>
+	</head>
+	<body>
+		<div id="form">
+			<h2>Insira o identificador do dataset</h2>
+			<label for="identifier">Identifier: </label>
+			<input type="text" id="identifier" size="100" maxlength="255"/><br>
+			
+			<button id="button">Coletar</button>
+		</div>
+		<div id="datafeed"></div>
+	</body>
+</html>
