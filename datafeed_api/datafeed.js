@@ -83,12 +83,12 @@ function loadFeedback(identifier){
 			}
 			else if(data[prop].motivatedBy == "CORRECTION"){
 				$("#df_feedback_list" + prop).append("<p>"+ "<strong>Data de subimissão: </strong>" + data[prop].dateSubmitted +"</p>");
-				$("#df_feedback_list" + prop).append("<p>"+ "<strong>Comentario: </strong>" + data[prop].hasBody +"</p>");
+				$("#df_feedback_list" + prop).append("<p>"+ "<strong>Sobre a correção: </strong>" + data[prop].hasBody +"</p>");
 				$("#df_feedback_list" + prop).append("<p>"+ "<strong>Motivação: </strong>" + "Correção" +"</p>");
 
 				if(data[prop].annotatedBy != null){
-					$("#df_feedback_list" + prop).append("<p>"+ "<strong>Nome: " + data[prop].annotatedBy.giveName +"</p>");
-					$("#df_feedback_list" + prop).append("<p>"+ "<strong>Email: " + data[prop].annotatedBy.mbox +"</p>");
+					$("#df_feedback_list" + prop).append("<p>"+ "<strong>Nome: </strong>" + data[prop].annotatedBy.giveName +"</p>");
+					$("#df_feedback_list" + prop).append("<p>"+ "<strong>Email: </strong>" + data[prop].annotatedBy.mbox +"</p>");
 				}
 
 				$("#df_feedback_list" + prop).css("background-color", "#f2f2f2");
@@ -113,7 +113,7 @@ function loadFeedbackForm(identifier){
 
 	$("#df_dataset").append("<div id='df_feedbackForm' class='reset_datafeed df_feedbackForm_div'></div>");
 
-	$("#df_feedbackForm").append("<h5>Escolha abaixo a motivação para o seu feedback:</h5>");
+	$("#df_feedbackForm").append("<h5>Nos informe a motivação do seu feedback:</h5>");
 
 	$("#df_feedbackForm").append("<div class='reset_datafeed'><div class='reset_datafeed radio'><label class='reset_datafeed'><input id='df_feedbackForm_radio_rating' class='reset_datafeed' type='radio' name='optradio' value='RATING'>Classificação</label></div><div class='reset_datafeed radio'><label class='reset_datafeed'><input id='df_feedbackForm_radio_correction' class='reset_datafeed' type='radio' name='optradio' value='CORRECTION'>Correção</label></div></div>");
 
@@ -133,7 +133,7 @@ function loadFeedbackForm(identifier){
 
 		$("#df_feedbackForm_content").append("<br></br>");
 
-		$("#df_feedbackForm_content").append("<h5>Se você deseja registrar seus dados pessoais insira-os abaixo:</h5>");
+		$("#df_feedbackForm_content").append("<h5>Se você deseja se identificar, informe seus dados pessoais abaixo:</h5>");
 
   		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>Nome: </label>");
 		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed' size='35' maxlength='45'/><br>");	
@@ -186,10 +186,25 @@ function loadFeedbackForm(identifier){
 		
 		$("#df_feedbackForm").append("<div id='df_feedbackForm_content'></div>");
 
-		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_hasBody'>Comentário: </label>");
-		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_hasBody' class='reset_datafeed' size='50' maxlength='255'/><br>");	
+		$("#df_feedbackForm_content").append("<h5>Informe qual anomalia ou dificuldade encontrada:</h5>");
+		$("#df_feedbackForm_content").append("<div class='reset_datafeed'> " +
+			"<select id='df_feedbackForm_select_correction' class='form-control df_feedbackForm_select'>" +
+				  "<option></option>" +
+				  "<option value='Dados incompletos'>Os dados estão incompletos</option>" +
+				  "<option value='Dados desatualizados'>Os dados estão desatualizados</option>" +
+				  "<option value='Dados irrelevantes'>Os dados são irrelevantes</option>" +
+				  "<option value='Dados contraditórios'>Os dados são contraditórios</option>" +
+				  "<option value='Erros ortográficos'>Existe erros ortográficos</option>" +
+				  "<option value='Dificuldade no acesso aos dados'>Há dificuldade no acesso aos dados</option>" +
+				  "<option value='Poucos formatos disponibilizados'>Poucos formatos são disponibilizados</option>" +
+				  "<option value='Outro'>Outro</option>" +
+				"</select>" +
+		"</div>");
 
-		$("#df_feedbackForm_content").append("<h5>Se você deseja registrar seus dados pessoais insira-os abaixo:</h5>");
+		$("#df_feedbackForm_content").append("<h5>Comentário:</h5>");
+		$("#df_feedbackForm_content").append("<textarea id='df_feedbackForm_hasBody' class='reset_datafeed' size='50' rows='5' maxlength='255'/><br>");
+
+		$("#df_feedbackForm_content").append("<h5>Se você deseja se identificar, informe seus dados pessoais abaixo:</h5>");
 
 		$("#df_feedbackForm_content").append("<label class='reset_datafeed' for='df_feedbackForm_giveName'>Nome: </label>");
 		$("#df_feedbackForm_content").append("<input type='text' id='df_feedbackForm_giveName' class='reset_datafeed' size='35' maxlength='45'/><br>");	
@@ -201,10 +216,18 @@ function loadFeedbackForm(identifier){
 
 		$("#df_feedbackForm_button").click(function() {
 
-			if($("#df_feedbackForm_hasBody").val() == ""){
+			
+			if($("#df_feedbackForm_select_correction").val() == ""){
+				$("#df_feedbackForm_select_correction").css("border","1px solid red");
+				alert("Informe qual anomalia ou dificuldade encontrada!");
+				
+				return;
+			}
+
+			else if($("#df_feedbackForm_hasBody").val() == ""){
 
 				$("#df_feedbackForm_hasBody").css("border","1px solid red");
-				alert("Insira um comentário para a correção!");
+				alert("Insira informações adicionais sobre a anomalia ou dificuldade encontrada!");
 				
 				return;
 			}
@@ -212,13 +235,17 @@ function loadFeedbackForm(identifier){
 			else{
 			
 				if($("#df_feedbackForm_giveName").val() == "" && $("#df_feedbackForm_mbox").val() == ""){
-					var json = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
+					var body = $("#df_feedbackForm_select_correction").val() + ": " + $("#df_feedbackForm_hasBody").val();
+
+					var json = {hasBody:body, motivatedBy:selectVal};
 				
 					enviarFeedbackForm(identifier, json);
 				}
 				else{
+					var body = $("#df_feedbackForm_select_correction").val() + ": " + $("#df_feedbackForm_hasBody").val();
+
 					var personJson = {giveName:$("#df_feedbackForm_giveName").val(), mbox:$("#df_feedbackForm_mbox").val()};
-					var feedbackJson = {hasBody:$("#df_feedbackForm_hasBody").val(), motivatedBy:selectVal};
+					var feedbackJson = {hasBody:body, motivatedBy:selectVal};
 					var json = {feedback:feedbackJson, person:personJson};
 					
 					enviarFeedbackFormAnnotated(identifier, json);	
