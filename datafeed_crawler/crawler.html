@@ -7,8 +7,8 @@
 		<script type="text/javascript">			
 		$(function () {	
 			$("#button").click(function () {
-				var url = "http://localhost:8080/datafeed/rest/open/getDatasetFeedback?identifier=";
-				//var url = "http://datafeed-hdas.rhcloud.com/datafeed/rest/open/getDatasetFeedback?identifier=";
+				//var url = "http://localhost:8080/datafeed/rest/open/getDatasetFeedback?identifier=";
+				var url = "http://datafeed-hdas.rhcloud.com/datafeed/rest/open/getDatasetFeedback?identifier=";
 				
 				var identifier = encodeURIComponent($("#identifier").val());
 					
@@ -28,11 +28,13 @@
 	<body>
 		<div id="form">
 			<h2>Insira o identificador do dataset</h2>
-			<label for="identifier">Identifier: </label>
-			<input type="text" id="identifier" size="100" maxlength="255"/><br>
-			
+			<br></br>
+			<label for="identifier">Identificador: </label>
+			<input type="text" id="identifier" size="155" maxlength="255"/><br>
+			<br></br>
 			<button id="button">Coletar</button>
 		</div>
+		<br></br>
 		<div id="datafeed"></div>
 	</body>
 </html>
